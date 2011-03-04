@@ -9,7 +9,7 @@ namespace wintracer {
 	public ref class WinTracerMain
 	{
 	public:
-		static int getWindowPID()
+		static int getActWindowPID()
 		{
 			HWND wnd = GetForegroundWindow();
 			DWORD processId = -1;
@@ -20,17 +20,34 @@ namespace wintracer {
 			return processId;
 		}
 		
-		static TCHAR *getWindowProcName()
+		static LPTSTR getActWindowCaption()
 		{
-			DWORD processId = getWindowPID();
+			HWND wnd = GetForegroundWindow();
+			LPWSTR windowText;
+			if (wnd)
+			{
+				int buffLen = GetWindowTextLength(wnd) + 1;
+				windowText = new wchar_t[buffLen];
+				GetWindowText(wnd, windowText, buffLen);
+			}
+			else
+			{
+				windowText = L"no active process";
+			}
+			return windowText;
+		}
+
+		static LPWSTR getActWindowProcName()
+		{
+			DWORD processId = getActWindowPID();
 
 			PROCESSENTRY32 pe;
 			HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
-			TCHAR *pName;
+			LPWSTR pName;
 
 			if(!hSnapshot || processId == -1)
-				pName = (TCHAR *)"no active process";
+				pName = L"no active process";
 			else
 			{
 				// Initialize size in structure

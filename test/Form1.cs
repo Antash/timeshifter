@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using std;
 using wintracer;
 
 namespace test
@@ -20,10 +19,11 @@ namespace test
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            label1.Text = WinTracerMain.getWindowPID().ToString();
+            label1.Text = WinTracerMain.getActWindowPID().ToString();
             unsafe
             {
-                label3.Text = charToString(WinTracerMain.getWindowProcName());
+                label3.Text = charToString(WinTracerMain.getActWindowProcName());
+                label4.Text = charToString(WinTracerMain.getActWindowCaption());
             }
         }
 
