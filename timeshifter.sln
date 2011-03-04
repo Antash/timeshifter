@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wintracer", "wintracer\wint
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{630F584E-DB68-482D-B901-548DF07F4A2F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winhook", "winhook\winhook.vcxproj", "{D00005A3-F83F-4C9A-B710-B1997B27F843}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -35,6 +37,16 @@ Global
 		{630F584E-DB68-482D-B901-548DF07F4A2F}.Release|Win32.ActiveCfg = Release|x86
 		{630F584E-DB68-482D-B901-548DF07F4A2F}.Release|x86.ActiveCfg = Release|x86
 		{630F584E-DB68-482D-B901-548DF07F4A2F}.Release|x86.Build.0 = Release|x86
+		{D00005A3-F83F-4C9A-B710-B1997B27F843}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{D00005A3-F83F-4C9A-B710-B1997B27F843}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{D00005A3-F83F-4C9A-B710-B1997B27F843}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D00005A3-F83F-4C9A-B710-B1997B27F843}.Debug|Win32.Build.0 = Debug|Win32
+		{D00005A3-F83F-4C9A-B710-B1997B27F843}.Debug|x86.ActiveCfg = Debug|Win32
+		{D00005A3-F83F-4C9A-B710-B1997B27F843}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{D00005A3-F83F-4C9A-B710-B1997B27F843}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{D00005A3-F83F-4C9A-B710-B1997B27F843}.Release|Win32.ActiveCfg = Release|Win32
+		{D00005A3-F83F-4C9A-B710-B1997B27F843}.Release|Win32.Build.0 = Release|Win32
+		{D00005A3-F83F-4C9A-B710-B1997B27F843}.Release|x86.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

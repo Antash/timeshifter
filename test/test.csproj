@@ -76,12 +76,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\wintracer\wintracer.vcxproj">
-      <Project>{33651FD2-1673-4BFE-98A3-1F969625CBB3}</Project>
-      <Name>wintracer</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
