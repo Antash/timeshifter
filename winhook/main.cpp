@@ -14,13 +14,14 @@ extern "C"
 		return processId;
 	}
 
-	__declspec(dllexport) LPTSTR getActWindowCaption()
+	__declspec(dllexport) LPWSTR getActWindowCaption()
 	{
 		HWND wnd = GetForegroundWindow();
 		LPWSTR windowText;
 		if (wnd)
 		{
 			int buffLen = GetWindowTextLength(wnd) + 1;
+			//windowText = (LPWSTR)malloc(buffLen);
 			windowText = new wchar_t[buffLen];
 			GetWindowText(wnd, windowText, buffLen);
 		}
