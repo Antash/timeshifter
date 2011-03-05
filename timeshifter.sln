@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wintracer", "wintracer\wintracer.vcxproj", "{33651FD2-1673-4BFE-98A3-1F969625CBB3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{630F584E-DB68-482D-B901-548DF07F4A2F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winhook", "winhook\winhook.vcxproj", "{D00005A3-F83F-4C9A-B710-B1997B27F843}"
@@ -17,16 +15,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{33651FD2-1673-4BFE-98A3-1F969625CBB3}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{33651FD2-1673-4BFE-98A3-1F969625CBB3}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{33651FD2-1673-4BFE-98A3-1F969625CBB3}.Debug|Win32.ActiveCfg = Debug|Win32
-		{33651FD2-1673-4BFE-98A3-1F969625CBB3}.Debug|Win32.Build.0 = Debug|Win32
-		{33651FD2-1673-4BFE-98A3-1F969625CBB3}.Debug|x86.ActiveCfg = Debug|Win32
-		{33651FD2-1673-4BFE-98A3-1F969625CBB3}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{33651FD2-1673-4BFE-98A3-1F969625CBB3}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{33651FD2-1673-4BFE-98A3-1F969625CBB3}.Release|Win32.ActiveCfg = Release|Win32
-		{33651FD2-1673-4BFE-98A3-1F969625CBB3}.Release|Win32.Build.0 = Release|Win32
-		{33651FD2-1673-4BFE-98A3-1F969625CBB3}.Release|x86.ActiveCfg = Release|Win32
 		{630F584E-DB68-482D-B901-548DF07F4A2F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{630F584E-DB68-482D-B901-548DF07F4A2F}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{630F584E-DB68-482D-B901-548DF07F4A2F}.Debug|Win32.ActiveCfg = Debug|x86

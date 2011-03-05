@@ -23,9 +23,16 @@ namespace test
         [DllImport("winhook.dll")]
         public static extern void getActWindowCaption(StringBuilder s);
 
+        [DllImport("winhook.dll")]
+        public static extern void initHooks();
+
+        [DllImport("winhook.dll")]
+        public static extern void rmHooks();
+
         public Form1()
         {
             InitializeComponent();
+            initHooks();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -40,6 +47,11 @@ namespace test
         private void button1_Click(object sender, EventArgs e)
         {
             timer1.Start();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            rmHooks();
         }
 
     }

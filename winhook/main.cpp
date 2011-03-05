@@ -1,8 +1,53 @@
-#include <windows.h>
-#include <tlhelp32.h>
+#include "stdafx.h"
+#include "hooks.h"
+
+#pragma comment(linker, "/SECTION:.SHARED,RWS")
+
+#pragma data_seg(".SHARED")
+HHOOK hKeyboardHook = 0;
+HHOOK hMouseHook = 0;
+#pragma data_seg()
+
+// instance specific data
+HMODULE hInstance = 0;
+
+// DLL load/unload entry point
+BOOL APIENTRY DllMain(HANDLE hModule, 
+                      DWORD  dwReason, 
+                      LPVOID lpReserved)
+{
+   switch (dwReason)
+   {
+   case DLL_PROCESS_ATTACH :
+      hInstance = (HINSTANCE) hModule;
+      break;
+
+   case DLL_THREAD_ATTACH :
+      break;
+
+   case DLL_THREAD_DETACH :
+      break;
+
+   case DLL_PROCESS_DETACH :
+      break;
+   }
+   return true;
+}
 
 extern "C"
 {
+	__declspec(dllexport) void initHooks()
+	{
+		hMouseHook = SetWindowsHookEx(WH_MOUSE, mouseHookProc, hInstance, 0);
+		hKeyboardHook = SetWindowsHookEx(WH_KEYBOARD, keyboardHookProc, hInstance, 0);
+	}
+
+	__declspec(dllexport) void rmHooks()
+	{
+		UnhookWindowsHookEx(hMouseHook);
+		UnhookWindowsHookEx(hKeyboardHook);
+	}
+
 	__declspec(dllexport) int getActWindowPID()
 	{
 		HWND wnd = GetForegroundWindow();
