@@ -14,35 +14,36 @@ extern "C"
 		return processId;
 	}
 
-	__declspec(dllexport) LPWSTR getActWindowCaption()
+	__declspec(dllexport) void getActWindowCaption(LPSTR windowText)
 	{
 		HWND wnd = GetForegroundWindow();
-		LPWSTR windowText;
+		LPSTR buff;
 		if (wnd)
 		{
 			int buffLen = GetWindowTextLength(wnd) + 1;
-			//windowText = (LPWSTR)malloc(buffLen);
-			windowText = new wchar_t[buffLen];
-			GetWindowText(wnd, windowText, buffLen);
+			buff = new char[buffLen];
+			GetWindowTextA(wnd, buff, buffLen);
 		}
 		else
 		{
-			windowText = L"no active process";
+			buff = "no active process";
 		}
-		return windowText;
+		strcpy(windowText, buff);
 	}
 
 	__declspec(dllexport) LPWSTR getActWindowProcName()
 	{
 		DWORD processId = getActWindowPID();
 
-		PROCESSENTRY32 pe;
+		static PROCESSENTRY32 pe;
 		HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
 		LPWSTR pName;
 
 		if(!hSnapshot || processId == -1)
+		{
 			pName = L"no active process";
+		}
 		else
 		{
 			// Initialize size in structure
@@ -57,7 +58,7 @@ extern "C"
 				}
 			}
 		}
-		CloseHandle(hSnapshot); // Done with this snapshot. Free it
+		CloseHandle(hSnapshot); // free snapshot
 		return pName;
 	}
 }
