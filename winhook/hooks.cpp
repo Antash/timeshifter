@@ -2,30 +2,49 @@
 
 extern HHOOK hKeyboardHook;
 extern HHOOK hMouseHook;
+extern HHOOK hShellHook;
+
+LRESULT CALLBACK shellHookProc(int nCode, WPARAM wParam, LPARAM lParam)
+{
+	if(nCode < 0)
+	{
+		return CallNextHookEx(hShellHook, nCode, wParam, lParam);
+	}
+	//Active window changed
+	if (nCode == HSHELL_WINDOWACTIVATED)
+	{
+		//MessageBeep(0xffffffff);
+	}
+	//Active window redrawed (works, but not correct)
+	//else if (nCode == HSHELL_REDRAW)
+	//{
+	//	MessageBeep(0xffffffff);
+	//}
+	return CallNextHookEx(hShellHook, nCode, wParam, lParam);
+}
 
 LRESULT CALLBACK mouseHookProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
-	//MessageBoxA(NULL, "mouse", "mouse", NULL);
-	return 0;
+	if(nCode < 0)
+	{
+		return CallNextHookEx(hMouseHook, nCode, wParam, lParam);
+	}
+	if (nCode == HC_ACTION)
+	{
+		// place handler here
+	}
+	return CallNextHookEx(hMouseHook, nCode, wParam, lParam);
 }
 
 LRESULT CALLBACK keyboardHookProc(int nCode, WPARAM wParam,LPARAM lParam) 
 { 
-	int flags;	
-	bool handledHere = false;
-	int virtualKeycode = 0;
-	int scanCode = 0;
-	bool isDown = false;
-	PKBDLLHOOKSTRUCT hs;
-	char buff[10];
-
-	if(nCode >= 0) //No action
+	if(nCode < 0)
 	{
-		hs = (PKBDLLHOOKSTRUCT)lParam;
-		flags = hs->flags;
-		scanCode = hs->scanCode; 
-		virtualKeycode = hs->vkCode;
-		MessageBoxA(NULL, "key", "key", NULL);
+		return CallNextHookEx(hKeyboardHook, nCode, wParam, lParam);
 	}
-	return 0;
+	if (nCode == HC_ACTION)
+	{
+		// place handler here
+	}
+	return CallNextHookEx(hKeyboardHook, nCode, wParam, lParam);
 }
