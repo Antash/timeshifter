@@ -16,6 +16,9 @@ namespace test
 		[DllImport("winhook.dll")]
 		public static extern int getActWindowPID();
 
+		[DllImport("winhook.dll")]
+		public static extern void getActWindowChildren(StringBuilder s);
+
         [DllImport("winhook.dll")]
 		[return: MarshalAs(UnmanagedType.LPWStr)]
 		public static extern string getActWindowProcName();
@@ -39,9 +42,15 @@ namespace test
         {
             label1.Text = getActWindowPID().ToString();
             label3.Text = getActWindowProcName();
-            StringBuilder s = new StringBuilder(500);
-            getActWindowCaption(s);
-            label4.Text = s.ToString();
+
+			StringBuilder s = new StringBuilder(1000);
+			getActWindowCaption(s);
+			label4.Text = s.ToString();
+
+			StringBuilder c = new StringBuilder(1000);
+			getActWindowChildren(c);
+			textBox1.Text = c.ToString();
+        	
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -53,6 +62,11 @@ namespace test
         {
             rmHooks();
         }
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+			timer1_Tick(null, null);
+		}
 
     }
 }

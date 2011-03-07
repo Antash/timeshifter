@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#pragma comment(linker, "/SECTION:.SHARED,RWS")
-
 // instance specific data
 HMODULE hInstance = 0;
 

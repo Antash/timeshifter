@@ -3,6 +3,23 @@
 
 extern HMODULE hInstance;
 
+int childCount = 0;
+char wn[1000][1000];
+
+bool CALLBACK childWindowEnumProc(HWND wnd, LPARAM lParam)
+{
+	char buff[100];
+	if (wnd)
+	{
+		int buffLen = GetWindowTextLength(wnd) + 1;
+		GetWindowTextA(wnd, buff, buffLen);
+		strcpy(wn[childCount], buff);
+		childCount++;
+		return true;
+	}
+	return false;
+}
+
 extern "C"
 {
 	__declspec(dllexport) void initHooks()
@@ -33,16 +50,16 @@ extern "C"
 	__declspec(dllexport) void getActWindowCaption(LPSTR windowText)
 	{
 		HWND wnd = GetForegroundWindow();
-		LPSTR buff;
+		char buff[100] = "no active process";
 		if (wnd)
 		{
 			int buffLen = GetWindowTextLength(wnd) + 1;
-			buff = new char[buffLen];
+			//buff = new char[buffLen];
 			GetWindowTextA(wnd, buff, buffLen);
 		}
 		else
 		{
-			buff = "no active process";
+			//buff = "no active process";
 		}
 		strcpy(windowText, buff);
 	}
@@ -76,5 +93,25 @@ extern "C"
 		}
 		CloseHandle(hSnapshot); // free snapshot
 		return pName;
+	}
+
+	__declspec(dllexport) void getActWindowChildren(LPSTR childWindows)
+	{
+		//TODO AA : find soluthin!
+		//HWND wnd = GetForegroundWindow();
+		//char buff[1000];
+		//strcpy(buff,"");
+		//if (wnd)
+		//{
+		//	childCount = 0;
+		//	bool f = EnumChildWindows(wnd, (WNDENUMPROC)childWindowEnumProc, 1);
+		//	for (int i = 0; i < childCount; i++)
+		//	{
+		//		strcat(buff, wn[i]);
+		//		//MessageBoxA(0,buff,wn[i],0);
+		//	}
+		//	strcpy(childWindows, buff);
+		//	//MessageBoxA(0,buff,"2",0);
+		//}
 	}
 }
