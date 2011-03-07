@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using wincore;
 
 namespace test
 {
@@ -47,9 +48,12 @@ namespace test
 			getActWindowCaption(s);
 			label4.Text = s.ToString();
 
-			StringBuilder c = new StringBuilder(1000);
-			getActWindowChildren(c);
-			textBox1.Text = c.ToString();
+        	richTextBox1.Clear();
+			richTextBox1.Text = WinApiWrapper.getChild();
+
+			//StringBuilder c = new StringBuilder(1000);
+			//getActWindowChildren(c);
+			//textBox1.Text = c.ToString();
         	
         }
 
