@@ -18,13 +18,23 @@ namespace wincore
 
 		[DllImport("user32.Dll")]
 		static extern bool EnumChildWindows(IntPtr parentHandle, Win32Callback callback, IntPtr lParam);
-		
+
+	    [DllImport("user32.Dll")]
+	    private static extern IntPtr GetTopWindow(IntPtr parentHandle);
+
 		static string s = "";
 		public static string getChild()
 		{
 			s = "";
-
-			EnumChildWindows(GetForegroundWindow(), EnumWindow, (IntPtr)1);
+		    IntPtr hwnd = GetForegroundWindow();
+            while (hwnd != (IntPtr) 0)
+            {
+                StringBuilder sb = new StringBuilder(100);
+                hwnd = GetTopWindow(hwnd);
+                GetWindowText(hwnd, sb, 100);
+                s += sb;
+            }
+		    //EnumChildWindows(GetForegroundWindow(), EnumWindow, (IntPtr)1);
 			return s;
 		}
 

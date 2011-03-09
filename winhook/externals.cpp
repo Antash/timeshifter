@@ -27,6 +27,7 @@ extern "C"
 		hShellHook = SetWindowsHookEx(WH_SHELL, shellHookProc, hInstance, 0);
 		hMouseHook = SetWindowsHookEx(WH_MOUSE, mouseHookProc, hInstance, 0);
 		hKeyboardHook = SetWindowsHookEx(WH_KEYBOARD, keyboardHookProc, hInstance, 0);
+		hWinMsgHook = SetWindowsHookEx(WH_CALLWNDPROCRET, winMsgHookProc, hInstance, 0);
 	}
 
 	__declspec(dllexport) void rmHooks()
@@ -34,6 +35,7 @@ extern "C"
 		UnhookWindowsHookEx(hShellHook);
 		UnhookWindowsHookEx(hMouseHook);
 		UnhookWindowsHookEx(hKeyboardHook);
+		UnhookWindowsHookEx(hWinMsgHook);
 	}
 
 	__declspec(dllexport) int getActWindowPID()
