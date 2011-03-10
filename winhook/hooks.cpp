@@ -36,7 +36,7 @@ LRESULT CALLBACK shellHookProc(int nCode, WPARAM wParam, LPARAM lParam)
 	//Active window changed
 	if (nCode == HSHELL_WINDOWACTIVATED)
 	{
-		MessageBeep(0xffffffff);
+		//MessageBeep(0xffffffff);
 	}
 	//Active window redrawed (works, but not correct)
 	else if (nCode == HSHELL_REDRAW)
