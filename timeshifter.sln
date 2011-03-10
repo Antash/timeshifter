@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winhook", "winhook\winhook.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wincore", "wincore\wincore.csproj", "{9A616F9B-AB3D-47C0-AF43-C69CDDB26F63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yura_test", "yura_test\yura_test.csproj", "{57CCA2C5-D59C-49A1-BF3D-A97C2341DBF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{9A616F9B-AB3D-47C0-AF43-C69CDDB26F63}.Release|Mixed Platforms.Build.0 = Release|x86
 		{9A616F9B-AB3D-47C0-AF43-C69CDDB26F63}.Release|Win32.ActiveCfg = Release|Any CPU
 		{9A616F9B-AB3D-47C0-AF43-C69CDDB26F63}.Release|x86.ActiveCfg = Release|Any CPU
+		{57CCA2C5-D59C-49A1-BF3D-A97C2341DBF6}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{57CCA2C5-D59C-49A1-BF3D-A97C2341DBF6}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{57CCA2C5-D59C-49A1-BF3D-A97C2341DBF6}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{57CCA2C5-D59C-49A1-BF3D-A97C2341DBF6}.Debug|Win32.ActiveCfg = Debug|x86
+		{57CCA2C5-D59C-49A1-BF3D-A97C2341DBF6}.Debug|x86.ActiveCfg = Debug|x86
+		{57CCA2C5-D59C-49A1-BF3D-A97C2341DBF6}.Debug|x86.Build.0 = Debug|x86
+		{57CCA2C5-D59C-49A1-BF3D-A97C2341DBF6}.Release|Any CPU.ActiveCfg = Release|x86
+		{57CCA2C5-D59C-49A1-BF3D-A97C2341DBF6}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{57CCA2C5-D59C-49A1-BF3D-A97C2341DBF6}.Release|Mixed Platforms.Build.0 = Release|x86
+		{57CCA2C5-D59C-49A1-BF3D-A97C2341DBF6}.Release|Win32.ActiveCfg = Release|x86
+		{57CCA2C5-D59C-49A1-BF3D-A97C2341DBF6}.Release|x86.ActiveCfg = Release|x86
+		{57CCA2C5-D59C-49A1-BF3D-A97C2341DBF6}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
