@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -13,15 +14,19 @@ namespace WindowsFormsApplication1
     {
         // Code here=)
         //  ))) А по русски можно?
-      // Теперь ты понял, почему нельзя?)
+        // Теперь ты понял, почему нельзя?)
         // fucking russian!  ))) oh eee
-       // а что переключаться лень? )ну тут скорее просто хороший тон - не использовать ничего кроме англ. 
+        // а что переключаться лень? )ну тут скорее просто хороший тон - не использовать ничего кроме англ. 
         // у меня сейчас проект - так там комменты на немецком - не очень приятно.
         //хм.. ну для обучения думаю можно )это до=а
         //п а что это за модуль? модуль формы?
         //да. по сути ты можешь пока тут писать все что угодно, но лучше создать новый файтик и писать в нем.ю
 
         // покеж
+
+        string keyName = "Time Shifter";
+        string assemblyLocation = Assembly.GetExecutingAssembly().Location;  // Or the EXE path.
+
         public Form1()
         {
             InitializeComponent();
@@ -39,16 +44,19 @@ namespace WindowsFormsApplication1
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-            string keyName = "Time Shifter"; 
-            string assemblyLocation = Assembly.GetExecutingAssembly().Location;  // Or the EXE path.
-            // Set Auto-start.
-            
+        {            // Set Auto-start.
+
             // Unset Auto-start.
-            if (AvtoStart.IsAutoStartEnabled(keyName, assemblyLocation)) 
+            if (AvtoStart.IsAutoStartEnabled(keyName, assemblyLocation))
+            {
                 AvtoStart.UnSetAutoStart(keyName);
                 this.button1.Text = "Включить старт при запуске системы";
-            else AvtoStart.SetAutoStart(keyName, assemblyLocation); this.button1.Text = "Отключить старт при запуске системы";
+            }
+            else
+            {
+                AvtoStart.SetAutoStart(keyName, assemblyLocation);
+                this.button1.Text = "Отключить старт при запуске системы";
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
