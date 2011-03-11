@@ -31,11 +31,24 @@ namespace WindowsFormsApplication1
             // а вот это что за модуль?
             TestClass tmp = new TestClass("dsf");
             this.Text = tmp.s;
+
+            if (AvtoStart.IsAutoStartEnabled(keyName, assemblyLocation))
+                this.button1.Text = "Отключить старт при запуске системы";
+            else this.button1.Text = "Включить старт при запуске системы";
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-           //это обработчик событи я надатия дохляка, ак ты его вызвал?а к надав 2 раза понял
+            string keyName = "Time Shifter"; 
+            string assemblyLocation = Assembly.GetExecutingAssembly().Location;  // Or the EXE path.
+            // Set Auto-start.
+            
+            // Unset Auto-start.
+            if (AvtoStart.IsAutoStartEnabled(keyName, assemblyLocation)) 
+                AvtoStart.UnSetAutoStart(keyName);
+                this.button1.Text = "Включить старт при запуске системы";
+            else AvtoStart.SetAutoStart(keyName, assemblyLocation); this.button1.Text = "Отключить старт при запуске системы";
         }
 
         private void Form1_Load(object sender, EventArgs e)
