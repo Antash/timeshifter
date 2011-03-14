@@ -34,16 +34,33 @@ namespace test
         public static extern void rmHooks();
 
         WinApiWrapper w = new WinApiWrapper();
-
+    	private UserActivityHook uah = new UserActivityHook();
         public Form1()
         {
             InitializeComponent();
-            initHooks();
-            
+            //initHooks();
+			uah.Start();
+			uah.OnMouseActivity += new MouseEventHandler(uah_OnMouseActivity);
+			uah.KeyPress += new KeyPressEventHandler(uah_KeyPress);
             w.actWintaoTextChanged += new actWindowTextChangedHandler(w_actWintaoTextChanged);
             w.actPidChanged += new actPidChangedHandler(w_actPidChanged);
             w.actPNameChanged += new actPNameChangedHandler(w_actPNameChanged);
         }
+
+		void uah_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (lKeys.Text.Length > 10)
+			{
+				lKeys.Text = "";
+			}
+			lKeys.Text += e.KeyChar;
+		}
+
+		void uah_OnMouseActivity(object sender, MouseEventArgs e)
+		{
+			lPos.Text = e.Location.ToString();
+			lBnt.Text = e.Button.ToString();
+		}
 
         void w_actPNameChanged(object sender, actPNameChangedHandlerArgs args)
         {
@@ -76,7 +93,7 @@ namespace test
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            button1.Text = w.invokes.ToString();
+            //button1.Text = w.invokes.ToString();
             //label1.Text = getActWindowPID().ToString();
             //label3.Text = getActWindowProcName();
 
@@ -100,7 +117,8 @@ namespace test
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            rmHooks();
+        	uah.Stop();
+        	// rmHooks();
         }
 
 		private void button2_Click(object sender, EventArgs e)
