@@ -7,6 +7,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace WindowsFormsApplication1
 {
@@ -26,10 +28,23 @@ namespace WindowsFormsApplication1
 
         string keyName = "Time Shifter";
         string assemblyLocation = Assembly.GetExecutingAssembly().Location;  // Or the EXE path.
-
+        Logic l = new Logic ();
         public Form1()
         {
+            DataSet ds = new DataSet ();
+            DataTable dt = new DataTable("tasks");
+            dt.Columns.Add("fgf");
+            DataRow dr = dt.NewRow();
+            dr[0] = "dfgdg";
+            dt.Rows.Add(dr);
+            //dt.Columns["fgf"].Unique
+            ds.Tables.Add(dt);
+            //ds.Relations.Add(
+            ds.WriteXmlSchema("sch.txt");
+            ds.WriteXml("out.txt", XmlWriteMode.IgnoreSchema);
+            ds.ReadXmlSchema("sch.txt");
             InitializeComponent();
+            //ds.
             // оч просто  эттыо ф10 ф11 ф5
             // понятно, внутрь через и дальше
             //ща иконку достану
@@ -40,7 +55,6 @@ namespace WindowsFormsApplication1
             if (AvtoStart.IsAutoStartEnabled(keyName, assemblyLocation))
                 this.button1.Text = "Отключить старт при запуске системы";
             else this.button1.Text = "Включить старт при запуске системы";
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -66,6 +80,34 @@ namespace WindowsFormsApplication1
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (Stream stream = File.Open("data.bin", FileMode.Create))
+            {
+                BinaryFormatter bin = new BinaryFormatter();
+                bin.Serialize(stream, l.log);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            using (Stream stream = File.Open("data.bin", FileMode.Open))
+            {
+                BinaryFormatter bin = new BinaryFormatter();
+
+                var tmp = (List<LogStructure >)bin.Deserialize(stream);
+                l.log = tmp;
+                //foreach (LogStructure i in tmp)
+                //{
+                //    Console.WriteLine("{0}, {1}, {2}",
+                //        lizard.Type,
+                //        lizard.Number,
+                //        lizard.Healthy);
+                //}
+            }
 
         }
         //короче такой вот щит
