@@ -31,19 +31,7 @@ namespace WindowsFormsApplication1
         Logic l = new Logic ();
         public Form1()
         {
-            DataSet ds = new DataSet ();
-            DataTable dt = new DataTable("tasks");
-            dt.Columns.Add("fgf");
-            DataRow dr = dt.NewRow();
-            dr[0] = "dfgdg";
-            dt.Rows.Add(dr);
-            //dt.Columns["fgf"].Unique
-            ds.Tables.Add(dt);
-            //ds.Relations.Add(
-            ds.WriteXmlSchema("sch.txt");
-            ds.WriteXml("out.txt", XmlWriteMode.IgnoreSchema);
-            ds.ReadXmlSchema("sch.txt");
-            InitializeComponent();
+           InitializeComponent();
             //ds.
             // оч просто  эттыо ф10 ф11 ф5
             // понятно, внутрь через и дальше
@@ -110,6 +98,14 @@ namespace WindowsFormsApplication1
             }
 
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            DataBaseClass currentDb;
+            currentDb = new DataBaseClass();
+            currentDb.CreateShemaXml(Constants.WrkDirectory);
+        }
+
         //короче такой вот щит
         // хрена се лего
     }
