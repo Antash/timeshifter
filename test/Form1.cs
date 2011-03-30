@@ -33,6 +33,8 @@ namespace test
         [DllImport("winhook.dll")]
         public static extern void rmHooks();
 
+        private Dictionary<Keys, int> keylog = new Dictionary<Keys, int>();
+
         WinApiWrapper w = new WinApiWrapper();
     	private UserActivityHook uah = new UserActivityHook();
         public Form1()
@@ -43,8 +45,19 @@ namespace test
 			uah.OnMouseActivity += new MouseEventHandler(uah_OnMouseActivity);
 			uah.KeyPress += new KeyPressEventHandler(uah_KeyPress);
             w.actWintaoTextChanged += new actWindowTextChangedHandler(w_actWintaoTextChanged);
+            uah.KeyDown += new KeyEventHandler(uah_KeyDown);
             w.actPidChanged += new actPidChangedHandler(w_actPidChanged);
             w.actPNameChanged += new actPNameChangedHandler(w_actPNameChanged);
+
+            timer1.Start();
+        }
+
+        void uah_KeyDown(object sender, KeyEventArgs e)
+        {
+            Keys code = e.KeyCode;
+            if (!keylog.ContainsKey(code))
+                keylog.Add(code, 0);
+            keylog[code]++;
         }
 
 		void uah_KeyPress(object sender, KeyPressEventArgs e)
@@ -70,7 +83,7 @@ namespace test
         void w_actPidChanged(object sender, actPidChangedArgs args)
         {
             chText(label1, args.newPID.ToString());
-           chText( richTextBox1, WinApiWrapper.getChild());
+           chText( richTextBox1, WinApiWrapper.getChild());            
         }
 
         void w_actWintaoTextChanged(object sender, actWindowTextChangedHandlerArgs args)
@@ -94,6 +107,11 @@ namespace test
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            listView1.Items.Clear();
+            foreach (Keys k in keylog.Keys)
+            {
+                listView1.Items.Add(k + " - " + keylog[k]);
+            }
             //button1.Text = w.invokes.ToString();
             //label1.Text = getActWindowPID().ToString();
             //label3.Text = getActWindowProcName();
