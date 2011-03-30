@@ -94,7 +94,7 @@ namespace wincore
                 GetWindowText(hwnd, sb, 100);
                 s += sb;
             }
-		    //EnumChildWindows(GetForegroundWindow(), EnumWindow, (IntPtr)1);
+		    EnumChildWindows(GetForegroundWindow(), EnumWindow, (IntPtr)1);
 			return s;
 		}
 

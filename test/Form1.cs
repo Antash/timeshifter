@@ -70,6 +70,7 @@ namespace test
         void w_actPidChanged(object sender, actPidChangedArgs args)
         {
             chText(label1, args.newPID.ToString());
+           chText( richTextBox1, WinApiWrapper.getChild());
         }
 
         void w_actWintaoTextChanged(object sender, actWindowTextChangedHandlerArgs args)
@@ -77,9 +78,9 @@ namespace test
             chText(label4, args.newText);
         }
 
-        private delegate void stringDelegate(Label l, string s);
+        private delegate void stringDelegate(Control l, string s);
 
-        private void chText(Label l, string text)
+        private void chText(Control l, string text)
         {
             if (l.InvokeRequired)
             {
