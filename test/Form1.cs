@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using tscore;
 using wincore;
 
 namespace test
@@ -48,7 +49,7 @@ namespace test
             uah.KeyDown += new KeyEventHandler(uah_KeyDown);
             w.actPidChanged += new actPidChangedHandler(w_actPidChanged);
             w.actPNameChanged += new actPNameChangedHandler(w_actPNameChanged);
-
+            Text = Class1.p;// Application.ExecutablePath;
             timer1.Start();
         }
 

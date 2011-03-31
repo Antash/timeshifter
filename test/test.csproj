@@ -109,6 +109,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\tscore\tscore.csproj">
+      <Project>{7E1AD7F8-CB45-4379-B38C-6C0512AF34E4}</Project>
+      <Name>tscore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\wincore\wincore.csproj">
       <Project>{9A616F9B-AB3D-47C0-AF43-C69CDDB26F63}</Project>
       <Name>wincore</Name>
