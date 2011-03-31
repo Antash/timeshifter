@@ -36,6 +36,14 @@ namespace test
 
         private Dictionary<Keys, int> keylog = new Dictionary<Keys, int>();
 
+        public class mouselog
+        {
+            public long delta;
+            public double path;
+            public Dictionary<MouseButtons, int> mouseclicks = new Dictionary<MouseButtons, int>();
+        }
+
+        private mouselog mlog = new mouselog();
         WinApiWrapper w = new WinApiWrapper();
     	private UserActivityHook uah = new UserActivityHook();
         public Form1()
@@ -49,7 +57,7 @@ namespace test
             uah.KeyDown += new KeyEventHandler(uah_KeyDown);
             w.actPidChanged += new actPidChangedHandler(w_actPidChanged);
             w.actPNameChanged += new actPNameChangedHandler(w_actPNameChanged);
-            Text = Class1.p;// Application.ExecutablePath;
+            Text = Class1.p;
             timer1.Start();
         }
 
@@ -70,10 +78,27 @@ namespace test
 			lKeys.Text += e.KeyChar;
 		}
 
+        private Point oldlock;
+        private bool f = false;
 		void uah_OnMouseActivity(object sender, MouseEventArgs e)
 		{
 			lPos.Text = e.Location.ToString();
 			lBnt.Text = e.Button.ToString();
+            MouseButtons code = e.Button;
+            
+            if (!mlog.mouseclicks.ContainsKey(code))
+                mlog.mouseclicks.Add(code, 0);
+            mlog.mouseclicks[code] += e.Clicks;
+		    mlog.delta += Math.Abs(e.Delta);
+            
+            if (f == false)
+            {
+                f = true;
+                oldlock = new Point(e.X, e.Y);
+            }
+		    mlog.path += Math.Sqrt((e.Y - oldlock.Y)*(e.Y - oldlock.Y) + (e.X - oldlock.X)*(e.X - oldlock.X));
+		    oldlock.X = e.X;
+		    oldlock.Y = e.Y;
 		}
 
         void w_actPNameChanged(object sender, actPNameChangedHandlerArgs args)
@@ -112,6 +137,13 @@ namespace test
             foreach (Keys k in keylog.Keys)
             {
                 listView1.Items.Add(k + " - " + keylog[k]);
+            }
+            listView2.Items.Clear();
+            listView2.Items.Add("delta: " + mlog.delta);
+            listView2.Items.Add("path: " + mlog.path);
+            foreach (MouseButtons k in mlog.mouseclicks.Keys)
+            {
+                listView2.Items.Add(k + " - " + mlog.mouseclicks[k]);
             }
             //button1.Text = w.invokes.ToString();
             //label1.Text = getActWindowPID().ToString();
