@@ -388,6 +388,10 @@ namespace wincore
         /// </summary>
         private const int WM_MBUTTONDBLCLK  = 0x209;
         /// <summary>
+        /// The WM_XBUTTONDOWN message is posted when the user presses the x mouse button 
+        /// </summary>
+        private const int WM_XBUTTONDOWN = 0x20B;
+        /// <summary>
         /// The WM_MOUSEWHEEL message is posted when the user presses the mouse wheel. 
         /// </summary>
         private const int WM_MOUSEWHEEL     = 0x020A;
@@ -652,6 +656,7 @@ namespace wincore
                 //detect button clicked
                 MouseButtons button = MouseButtons.None;
                 short mouseDelta = 0;
+                short xbtn = 0;
                 switch (wParam)
                 {
                     case WM_LBUTTONDOWN:
@@ -674,6 +679,15 @@ namespace wincore
                         //or WM_NCXBUTTONDBLCLK, the high-order word specifies which X button was pressed or released, 
                         //and the low-order word is reserved. This value can be one or more of the following values. 
                         //Otherwise, mouseData is not used. 
+                        break;
+                    case WM_MBUTTONDOWN:
+                        //case WM_MBUTTONDBLCLK:
+                        //case WM_MBUTTONUP:
+                        button = MouseButtons.Middle;
+                        break;
+                    case WM_XBUTTONDOWN:
+                        xbtn = (short)((mouseHookStruct.mouseData >> 16) & 0xffff);
+                        button = xbtn == 1 ? MouseButtons.XButton1 : MouseButtons.XButton2;
                         break;
                 }
 
