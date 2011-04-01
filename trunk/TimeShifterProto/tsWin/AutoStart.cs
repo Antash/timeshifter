@@ -5,7 +5,7 @@ namespace tsWin
 	public class AutoStart
 	{
 		private const string RunLocation = @"Software\Microsoft\Windows\CurrentVersion\Run";
-		const string KeyName = "TimeShifter";
+		private const string KeyName = "TimeShifter";
 
 		/// <summary>    
 		/// Sets the autostart value for the assembly.   

@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using tsWin;
 
 namespace tsUI.Forms
@@ -8,7 +7,7 @@ namespace tsUI.Forms
 	{
 		private static FrmSettings _instanse;
 
-		string assemblyLocation = Assembly.GetExecutingAssembly().Location;
+	    private readonly string _assemblyLocation = System.Environment.CommandLine;
 
 		private FrmSettings()
 		{
@@ -22,16 +21,21 @@ namespace tsUI.Forms
 
 		private void button1_Click(object sender, System.EventArgs e)
 		{
-			if (AutoStart.IsAutoStartEnabled(assemblyLocation))
+			if (AutoStart.IsAutoStartEnabled(_assemblyLocation))
 			{
 				AutoStart.UnSetAutoStart();
-				this.button1.Text = "Включить старт при запуске системы";
+				bAutostart.Text = "Включить старт при запуске системы";
 			}
 			else
 			{
-				AutoStart.SetAutoStart(assemblyLocation);
-				this.button1.Text = "Отключить старт при запуске системы";
+				AutoStart.SetAutoStart(_assemblyLocation);
+				bAutostart.Text = "Отключить старт при запуске системы";
 			}
 		}
+
+        private void FrmSettings_Load(object sender, System.EventArgs e)
+        {
+            bAutostart.Text = "Включить старт при запуске системы";
+        }
 	}
 }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Reflection;
 using System.Windows.Forms;
-using tsUI;
 using tsUI.Forms;
 
 namespace tsEntry
