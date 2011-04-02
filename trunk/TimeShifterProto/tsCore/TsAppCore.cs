@@ -8,14 +8,23 @@ namespace tsCore
 {
 	public class TsAppCore
 	{
-		private WindowLogger _tsWinlogger;
+		private WindowLogger _tsWinLogger;
+		private UserActLogger _tsUserActLogger;
 
 		private static volatile TsAppCore _instance;
 		private static readonly object SyncRoot = new Object();
 
 		private TsAppCore()
 		{
-			_tsWinlogger = new WindowLogger();
+			_tsWinLogger = new WindowLogger();
+			_tsUserActLogger = new UserActLogger();
+
+			_tsWinLogger.AppChanged += _tsWinLogger_AppChanged;
+		}
+
+		void _tsWinLogger_AppChanged(object sender, EventArgs args)
+		{
+			throw new NotImplementedException();
 		}
 
 		public static TsAppCore Instance
