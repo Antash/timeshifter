@@ -41,14 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IBinaryIO.cs" />
-    <Compile Include="IXMLIo.cs" />
-    <Compile Include="UserActLogStructure.cs" />
-    <Compile Include="UserActLogger.cs" />
-    <Compile Include="WindowLogger.cs" />
-    <Compile Include="WindowLogStructure.cs" />
+    <Compile Include="Interfaces\IBinaryIO.cs" />
+    <Compile Include="Interfaces\IManaged.cs" />
+    <Compile Include="Interfaces\IXMLIo.cs" />
+    <Compile Include="Classes\UserActLogStructure.cs" />
+    <Compile Include="Classes\UserActLogger.cs" />
+    <Compile Include="Classes\WindowLogger.cs" />
+    <Compile Include="Classes\WindowLogStructure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TsAppCore.cs" />
+    <Compile Include="Classes\TsAppCore.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tsWin\tsWin.csproj">

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace tsCore
+namespace tsCore.Classes
 {
 	[Serializable]
 	class UserActLogStructure
@@ -14,6 +14,18 @@ namespace tsCore
 		public UserActLogStructure()
 		{
 			KeyLog = new Dictionary<Keys, int>();
+			MouseLog = new MouseActData();
+		}
+
+		public void Merge(UserActLogStructure additionLog)
+		{
+			MouseLog.Merge(additionLog.MouseLog);
+			foreach (Keys k in additionLog.KeyLog.Keys)
+			{
+				if (!KeyLog.ContainsKey(k))
+					KeyLog.Add(k, 0);
+				KeyLog[k] += additionLog.KeyLog[k];
+			}
 		}
 	}
 
@@ -28,6 +40,19 @@ namespace tsCore
 		public MouseActData()
 		{
 			Clicks = new Dictionary<MouseButtons, int>();
+		}
+
+		public void Merge(MouseActData additionLog)
+		{
+			LastPoint = additionLog.LastPoint;
+			Delta += additionLog.Delta;
+			Path += additionLog.Path;
+			foreach (MouseButtons mb in additionLog.Clicks.Keys)
+			{
+				if (!Clicks.ContainsKey(mb))
+					Clicks.Add(mb, 0);
+				Clicks[mb] += additionLog.Clicks[mb];
+			}
 		}
 	}
 }

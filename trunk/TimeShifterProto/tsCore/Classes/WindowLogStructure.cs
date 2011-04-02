@@ -1,10 +1,19 @@
 ﻿using System;
 
-namespace tsCore
+namespace tsCore.Classes
 {
     [Serializable]
     class WindowLogStructure
     {
+		public WindowLogStructure()
+		{
+			Pid = 0;
+			TaskId = 0;
+			ProcesName = "";
+			WindowTitle = "";
+			Ts = DateTime.MinValue;
+		}
+
     	public WindowLogStructure(int pid, string procesName, string windowTitle, DateTime ts, int taskId)
         {
             Pid = pid;
