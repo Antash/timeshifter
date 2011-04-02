@@ -7,7 +7,7 @@ using tsWin;
 
 namespace tsCore.Classes
 {
-	class WindowLogger : IBinaryIo, IXMLIo, IManaged
+	class WindowLogger : IBinaryIo, IManaged
 	{
 		public event AppChangedHandler AppChanged;
 
@@ -30,7 +30,7 @@ namespace tsCore.Classes
 
 		void WinTrackerActStateChanged(object sender, ActStateChangedHandlerArgs args)
 		{
-			if (args.NewPName != _lastRecord.ProcesName)
+			if (args.NewPName != _lastRecord.ProcesName && !String.IsNullOrEmpty(_lastRecord.ProcesName))
 				InvokeAppChanged(new AppChangedEventArgs(_lastRecord.ProcesName));
 			//TODO : add correct task id
 			_lastRecord = new WindowLogStructure(args.NewPID,
@@ -58,16 +58,6 @@ namespace tsCore.Classes
 				var bin = new BinaryFormatter();
 				bin.Serialize(stream, _windowLog);
 			}
-		}
-
-		public void ReadXml(string filename)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void WriteXml(string filename)
-		{
-			throw new NotImplementedException();
 		}
 
 		public void Enable()

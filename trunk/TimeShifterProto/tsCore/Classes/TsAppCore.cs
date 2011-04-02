@@ -7,8 +7,8 @@ namespace tsCore.Classes
 {
 	public class TsAppCore : IManaged
 	{
-		private WindowLogger _tsWinLogger;
-		private UserActLogger _tsUserActLogger;
+		private readonly WindowLogger _tsWinLogger;
+		private readonly UserActLogger _tsUserActLogger;
 
 		private Dictionary<string, UserActLogStructure> _tsUserActLog;
 
@@ -27,10 +27,12 @@ namespace tsCore.Classes
 		void _tsWinLogger_AppChanged(object sender, AppChangedEventArgs args)
 		{
 			UserActLogStructure snapshot = _tsUserActLogger.UActLog;
-			string code = args.ProcessName;
-			if (!_tsUserActLog.ContainsKey(code))
-				_tsUserActLog.Add(code, snapshot);
-			_tsUserActLog[code].Merge(snapshot);
+			_tsUserActLogger.UActLog = new UserActLogStructure();
+			string pname = args.ProcessName;
+			if (!_tsUserActLog.ContainsKey(pname))
+				_tsUserActLog.Add(pname, snapshot);
+			else
+				_tsUserActLog[pname].Merge(snapshot);
 		}
 
 		public static TsAppCore Instance

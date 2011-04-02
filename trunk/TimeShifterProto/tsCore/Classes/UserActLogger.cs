@@ -1,24 +1,22 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using tsCore.Interfaces;
 using tsWin;
 
 namespace tsCore.Classes
 {
-	class UserActLogger : IBinaryIo, IXMLIo, IManaged
+	class UserActLogger : IBinaryIo, IManaged
 	{
 		private readonly UserActivityHook _uActTracker;
-		private readonly UserActLogStructure _uActLog;
 
-		public UserActLogStructure UActLog
-		{
-			get { return _uActLog; }
-		}
+		public UserActLogStructure UActLog { get; set; }
 
 		public UserActLogger()
 		{
 			_uActTracker = new UserActivityHook();
-			_uActLog = new UserActLogStructure();
+			UActLog = new UserActLogStructure();
 
 			_uActTracker.OnMouseActivity += _uActTracker_OnMouseActivity;
 			_uActTracker.KeyDown += _uActTracker_KeyDown;
@@ -27,46 +25,45 @@ namespace tsCore.Classes
 		private void _uActTracker_KeyDown(object sender, KeyEventArgs e)
 		{
 			Keys code = e.KeyCode;
-			if (!_uActLog.KeyLog.ContainsKey(code))
-				_uActLog.KeyLog.Add(code, 0);
-			_uActLog.KeyLog[code]++;
+			if (!UActLog.KeyLog.ContainsKey(code))
+				UActLog.KeyLog.Add(code, 0);
+			UActLog.KeyLog[code]++;
 		}
 
 		private void _uActTracker_OnMouseActivity(object sender, MouseEventArgs e)
 		{
 			MouseButtons code = e.Button;
-			if (!_uActLog.MouseLog.Clicks.ContainsKey(code))
-				_uActLog.MouseLog.Clicks.Add(code, 0);
-			_uActLog.MouseLog.Clicks[code] += e.Clicks;
+			if (!UActLog.MouseLog.Clicks.ContainsKey(code))
+				UActLog.MouseLog.Clicks.Add(code, 0);
+			UActLog.MouseLog.Clicks[code] += e.Clicks;
 
-			_uActLog.MouseLog.Delta += Math.Abs(e.Delta);
+			UActLog.MouseLog.Delta += Math.Abs(e.Delta);
 
-			if (!_uActLog.MouseLog.LastPoint.IsEmpty)
-				_uActLog.MouseLog.Path += Math.Sqrt(
-					(e.Y - _uActLog.MouseLog.LastPoint.Y) * (e.Y - _uActLog.MouseLog.LastPoint.Y) + 
-					(e.X - _uActLog.MouseLog.LastPoint.X) * (e.X - _uActLog.MouseLog.LastPoint.X));
+			if (!UActLog.MouseLog.LastPoint.IsEmpty)
+				UActLog.MouseLog.Path += Math.Sqrt(
+					(e.Y - UActLog.MouseLog.LastPoint.Y) * (e.Y - UActLog.MouseLog.LastPoint.Y) + 
+					(e.X - UActLog.MouseLog.LastPoint.X) * (e.X - UActLog.MouseLog.LastPoint.X));
 
-			_uActLog.MouseLog.LastPoint = e.Location;
+			UActLog.MouseLog.LastPoint = e.Location;
 		}
 
 		public void ReadBinary(string filename)
 		{
-			throw new NotImplementedException();
+			using (Stream stream = File.Open(filename, FileMode.Open))
+			{
+				var bin = new BinaryFormatter();
+				var tmp = (UserActLogStructure)bin.Deserialize(stream);
+				UActLog = tmp;
+			}
 		}
 
 		public void WriteBinary(string filename)
 		{
-			throw new NotImplementedException();
-		}
-
-		public void ReadXml(string filename)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void WriteXml(string filename)
-		{
-			throw new NotImplementedException();
+			using (Stream stream = File.Open(filename, FileMode.Create))
+			{
+				var bin = new BinaryFormatter();
+				bin.Serialize(stream, UActLog);
+			}
 		}
 
 		public void Enable()
