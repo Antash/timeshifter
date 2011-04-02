@@ -39,8 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WindowLogger.cs" />
+    <Compile Include="WindowLogItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TsAppCore.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\tsWin\tsWin.csproj">
+      <Project>{BC13DDFB-7A51-4CB2-BF90-7C39483269B5}</Project>
+      <Name>tsWin</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

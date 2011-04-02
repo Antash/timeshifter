@@ -4,7 +4,7 @@ using System.Text;
 
 namespace tsWin
 {
-	public class WinApiWrapper
+	class WinApiWrapper
 	{
 		private const int BuffLen = 100;
 
