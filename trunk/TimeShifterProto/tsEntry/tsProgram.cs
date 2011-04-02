@@ -7,7 +7,7 @@ namespace tsEntry
 	static class TsProgram
 	{
 		[STAThread]
-		static void Main()
+		static void Main(string[] args)
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);

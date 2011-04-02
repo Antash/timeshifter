@@ -1,13 +1,11 @@
 ﻿using System.Windows.Forms;
-using tsWin;
+using tsCore;
 
 namespace tsUI.Forms
 {
 	public partial class FrmSettings : Form
 	{
 		private static FrmSettings _instanse;
-
-	    private readonly string _assemblyLocation = System.Environment.CommandLine;
 
 		private FrmSettings()
 		{
@@ -19,23 +17,14 @@ namespace tsUI.Forms
 			get { return _instanse ?? (_instanse = new FrmSettings()); }
 		}
 
-		private void button1_Click(object sender, System.EventArgs e)
-		{
-			if (AutoStart.IsAutoStartEnabled(_assemblyLocation))
-			{
-				AutoStart.UnSetAutoStart();
-				bAutostart.Text = "Включить старт при запуске системы";
-			}
-			else
-			{
-				AutoStart.SetAutoStart(_assemblyLocation);
-				bAutostart.Text = "Отключить старт при запуске системы";
-			}
-		}
-
         private void FrmSettings_Load(object sender, System.EventArgs e)
         {
-            bAutostart.Text = "Включить старт при запуске системы";
+            checkBoxAutostart.Text = "Старт при запуске системы";
         }
+
+		private void checkBoxAutostart_CheckedChanged(object sender, System.EventArgs e)
+		{
+			TsAppCore.Instance.SetAutostart(checkBoxAutostart.Checked);
+		}
 	}
 }

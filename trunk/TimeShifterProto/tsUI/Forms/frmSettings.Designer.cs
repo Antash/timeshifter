@@ -28,34 +28,37 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.bAutostart = new System.Windows.Forms.Button();
+			this.checkBoxAutostart = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
-			// bAutostart
+			// checkBoxAutostart
 			// 
-			this.bAutostart.Location = new System.Drawing.Point(12, 12);
-			this.bAutostart.Name = "bAutostart";
-			this.bAutostart.Size = new System.Drawing.Size(130, 62);
-			this.bAutostart.TabIndex = 0;
-			this.bAutostart.Text = "bAutostart";
-			this.bAutostart.UseVisualStyleBackColor = true;
-			this.bAutostart.Click += new System.EventHandler(this.button1_Click);
+			this.checkBoxAutostart.AutoSize = true;
+			this.checkBoxAutostart.Location = new System.Drawing.Point(12, 12);
+			this.checkBoxAutostart.Name = "checkBoxAutostart";
+			this.checkBoxAutostart.Size = new System.Drawing.Size(147, 21);
+			this.checkBoxAutostart.TabIndex = 0;
+			this.checkBoxAutostart.Text = "checkBoxAutostart";
+			this.checkBoxAutostart.UseVisualStyleBackColor = true;
+			this.checkBoxAutostart.CheckedChanged += new System.EventHandler(this.checkBoxAutostart_CheckedChanged);
 			// 
 			// FrmSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(301, 103);
-			this.Controls.Add(this.bAutostart);
+			this.Controls.Add(this.checkBoxAutostart);
 			this.Name = "FrmSettings";
 			this.Text = "frmSettings";
 			this.Load += new System.EventHandler(this.FrmSettings_Load);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.Button bAutostart;
+		private System.Windows.Forms.CheckBox checkBoxAutostart;
+
 	}
 }

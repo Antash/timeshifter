@@ -2,11 +2,18 @@
 
 namespace tsWin
 {
-	class WindowTracker
+	public class WindowTracker
 	{
 		public event ActPidChangedHandler ActPidChanged;
 		public event ActPNameChangedHandler ActPNameChanged;
 		public event ActWindowTextChangedHandler ActWindowTextChanged;
+		public event ActStateChangedHandler ActStateChanged;
+
+		public void InvokeActStateChanged(ActStateChangedHandlerArgs args)
+		{
+			ActStateChangedHandler handler = ActStateChanged;
+			if (handler != null) handler(this, args);
+		}
 
 		private void InvokeActPidChanged(ActPidChangedArgs args)
 		{
@@ -40,6 +47,7 @@ namespace tsWin
 
 		private void TimerTick(object state)
 		{
+			bool isDirty = false;
 			int newPid = WinApiWrapper.GetActWindowPID();
 			string newWTitle = WinApiWrapper.GetActWindowTitle();
 			string newPName = WinApiWrapper.GetActWindowProcName();
@@ -47,17 +55,40 @@ namespace tsWin
 			{
 				InvokeActPidChanged(new ActPidChangedArgs(newPid));
 				_actPid = newPid;
+				isDirty = true;
 			}
 			if (newPName != _actPname)
 			{
 				InvokeActPNameChanged(new ActPNameChangedHandlerArgs(newPName));
 				_actPname = newPName;
+				isDirty = true;
 			}
 			if (newWTitle != _actWinText)
 			{
 				InvokeActWindowTextChanged(new ActWindowTextChangedHandlerArgs(newWTitle));
 				_actWinText = newWTitle;
+				isDirty = true;
 			}
+			if (isDirty)
+			{
+				InvokeActStateChanged(new ActStateChangedHandlerArgs(_actPid, _actPname, _actWinText));
+			}
+		}
+	}
+
+	public delegate void ActStateChangedHandler(object sender, ActStateChangedHandlerArgs args);
+
+	public class ActStateChangedHandlerArgs
+	{
+		public string NewPName { get; private set; }
+		public string NewWindowText { get; private set; }
+		public int NewPID { get; private set; }
+
+		public ActStateChangedHandlerArgs(int newPID, string newPName, string newWindowText)
+		{
+			NewPID = newPID;
+			NewPName = newPName;
+			NewWindowText = newWindowText;
 		}
 	}
 
@@ -65,16 +96,11 @@ namespace tsWin
 
 	public class ActPNameChangedHandlerArgs
 	{
-		private readonly string _newPName;
+		public string NewPName { get; private set; }
 
-		public string NewPName
+		public ActPNameChangedHandlerArgs(string newPName)
 		{
-			get { return _newPName; }
-		}
-
-		public ActPNameChangedHandlerArgs(string text)
-		{
-			_newPName = text;
+			NewPName = newPName;
 		}
 	}
 
@@ -82,16 +108,11 @@ namespace tsWin
 
 	public class ActWindowTextChangedHandlerArgs
 	{
-		private readonly string _newText;
+		public string NewWindowText { get; private set; }
 
-		public string NewText
+		public ActWindowTextChangedHandlerArgs(string newWindowText)
 		{
-			get { return _newText; }
-		}
-
-		public ActWindowTextChangedHandlerArgs(string text)
-		{
-			_newText = text;
+			NewWindowText = newWindowText;
 		}
 	}
 
@@ -99,16 +120,11 @@ namespace tsWin
 
 	public class ActPidChangedArgs
 	{
-		private readonly int _newPID;
+		public int NewPID { get; private set; }
 
-		public int NewPID
+		public ActPidChangedArgs(int newPID)
 		{
-			get { return _newPID; }
-		}
-
-		public ActPidChangedArgs(int pid)
-		{
-			_newPID = pid;
+			NewPID = newPID;
 		}
 	}
 }
