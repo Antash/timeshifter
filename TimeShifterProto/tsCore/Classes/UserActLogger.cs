@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Windows.Forms;
+using tsCore.Interfaces;
 using tsWin;
 
-namespace tsCore
+namespace tsCore.Classes
 {
-	class UserActLogger : IBinaryIo, IXMLIo
+	class UserActLogger : IBinaryIo, IXMLIo, IManaged
 	{
-		private UserActivityHook _uActTracker;
-		private UserActLogStructure _uActLog;
+		private readonly UserActivityHook _uActTracker;
+		private readonly UserActLogStructure _uActLog;
+
+		public UserActLogStructure UActLog
+		{
+			get { return _uActLog; }
+		}
 
 		public UserActLogger()
 		{
@@ -18,7 +24,7 @@ namespace tsCore
 			_uActTracker.KeyDown += _uActTracker_KeyDown;
 		}
 
-		void _uActTracker_KeyDown(object sender, KeyEventArgs e)
+		private void _uActTracker_KeyDown(object sender, KeyEventArgs e)
 		{
 			Keys code = e.KeyCode;
 			if (!_uActLog.KeyLog.ContainsKey(code))
@@ -26,7 +32,7 @@ namespace tsCore
 			_uActLog.KeyLog[code]++;
 		}
 
-		void _uActTracker_OnMouseActivity(object sender, MouseEventArgs e)
+		private void _uActTracker_OnMouseActivity(object sender, MouseEventArgs e)
 		{
 			MouseButtons code = e.Button;
 			if (!_uActLog.MouseLog.Clicks.ContainsKey(code))
@@ -61,6 +67,24 @@ namespace tsCore
 		public void WriteXml(string filename)
 		{
 			throw new NotImplementedException();
+		}
+
+		public void Enable()
+		{
+			_uActTracker.Start();
+		}
+
+		public void Disable()
+		{
+			_uActTracker.Stop();
+		}
+
+		public void Manage(bool isEnable)
+		{
+			if (isEnable)
+				Enable();
+			else
+				Disable();
 		}
 	}
 }

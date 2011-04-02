@@ -41,6 +41,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\tsCore\tsCore.csproj">
+      <Project>{306822B2-A83E-49CF-9FF9-4CAF6D92BEBC}</Project>
+      <Name>tsCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\tsUI\tsUI.csproj">
       <Project>{22E1BE8B-1AE0-4DF9-A481-CF3658A93B08}</Project>
       <Name>tsUI</Name>

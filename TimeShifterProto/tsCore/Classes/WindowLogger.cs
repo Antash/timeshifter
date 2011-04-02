@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using tsCore.Interfaces;
 using tsWin;
 
-namespace tsCore
+namespace tsCore.Classes
 {
-	class WindowLogger : IBinaryIo, IXMLIo
+	class WindowLogger : IBinaryIo, IXMLIo, IManaged
 	{
 		public event AppChangedHandler AppChanged;
 
-		public void InvokeAppChanged(EventArgs args)
+		public void InvokeAppChanged(AppChangedEventArgs args)
 		{
 			AppChangedHandler handler = AppChanged;
 			if (handler != null) handler(this, args);
@@ -24,12 +25,13 @@ namespace tsCore
 		{
 			_winTracker = new WindowTracker();
 			_windowLog = new List<WindowLogStructure>();
-
-			_winTracker.ActStateChanged += WinTrackerActStateChanged;
+			_lastRecord = new WindowLogStructure();
 		}
 
 		void WinTrackerActStateChanged(object sender, ActStateChangedHandlerArgs args)
 		{
+			if (args.NewPName != _lastRecord.ProcesName)
+				InvokeAppChanged(new AppChangedEventArgs(_lastRecord.ProcesName));
 			//TODO : add correct task id
 			_lastRecord = new WindowLogStructure(args.NewPID,
 			                                args.NewPName,
@@ -37,7 +39,6 @@ namespace tsCore
 			                                DateTime.Now,
 			                                0);
 			_windowLog.Add(_lastRecord);
-			InvokeAppChanged(new EventArgs());
 		}
 
 		public void ReadBinary(string filename)
@@ -68,7 +69,35 @@ namespace tsCore
 		{
 			throw new NotImplementedException();
 		}
+
+		public void Enable()
+		{
+			_winTracker.ActStateChanged += WinTrackerActStateChanged;
+		}
+
+		public void Disable()
+		{
+			_winTracker.ActStateChanged -= WinTrackerActStateChanged;
+		}
+
+		public void Manage(bool isEnable)
+		{
+			if (isEnable)
+				Enable();
+			else
+				Disable();
+		}
 	}
 
-	internal delegate void AppChangedHandler(object sender, EventArgs args);
+	internal delegate void AppChangedHandler(object sender, AppChangedEventArgs args);
+
+	internal class AppChangedEventArgs
+	{
+		public string ProcessName { get; private set; }
+
+		public AppChangedEventArgs(string processName)
+		{
+			ProcessName = processName;
+		}
+	}
 }

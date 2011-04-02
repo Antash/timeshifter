@@ -1,4 +1,4 @@
-﻿namespace tsCore
+﻿namespace tsCore.Interfaces
 {
 	interface IBinaryIo
 	{
