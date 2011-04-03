@@ -7,7 +7,7 @@ namespace WindowsFormsApplication1
 	class DataBaseClass
 	{
 		private string _fileName;
-		private DataSet _ds;
+		public DataSet _ds;
 		private DataTable _dtTasks;
 		private DataTable _dtApplication;
 		private DataTable _stTaskApplication;

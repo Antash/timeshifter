@@ -25,7 +25,7 @@ namespace WindowsFormsApplication1
         //да. по сути ты можешь пока тут писать все что угодно, но лучше создать новый файтик и писать в нем.ю
 
         // покеж
-
+		DataBaseClass currentDb;
         string keyName = "Time Shifter";
         string assemblyLocation = Assembly.GetExecutingAssembly().Location;  // Or the EXE path.
         Logic l = new Logic ();
@@ -43,6 +43,8 @@ namespace WindowsFormsApplication1
             if (AvtoStart.IsAutoStartEnabled(keyName, assemblyLocation))
                 this.button1.Text = "Отключить старт при запуске системы";
             else this.button1.Text = "Включить старт при запуске системы";
+
+        	button6_Click(this, new EventArgs());
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -101,7 +103,7 @@ namespace WindowsFormsApplication1
 
         private void button4_Click(object sender, EventArgs e)
         {
-            DataBaseClass currentDb;
+            //DataBaseClass currentDb;
             currentDb = new DataBaseClass();
             currentDb.CreateSchemaXml(Constants.WrkDirectory);
         }
@@ -109,7 +111,7 @@ namespace WindowsFormsApplication1
         private void button5_Click(object sender, EventArgs e)
         {
 
-            DataBaseClass currentDb;
+            //DataBaseClass currentDb;
             currentDb = new DataBaseClass();
             currentDb.CreateBackUpDataBase(Constants.WrkDirectory);
             
@@ -117,10 +119,15 @@ namespace WindowsFormsApplication1
 
         private void button6_Click(object sender, EventArgs e)
         {
-            DataBaseClass currentDb;
+            //DataBaseClass currentDb;
             currentDb = new DataBaseClass();
             currentDb.LoadDataBase(Constants.WrkDirectory);
         }
+
+		private void button7_Click(object sender, EventArgs e)
+		{
+			new Form2(currentDb._ds).Show();
+		}
 
 
         //короче такой вот щит
