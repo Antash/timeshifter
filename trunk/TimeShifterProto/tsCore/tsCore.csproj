@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\DataBaseStructure.cs" />
+    <Compile Include="Classes\TaskStructure.cs" />
     <Compile Include="Interfaces\IBinaryIO.cs" />
     <Compile Include="Interfaces\IManaged.cs" />
     <Compile Include="Interfaces\IXMLIo.cs" />
