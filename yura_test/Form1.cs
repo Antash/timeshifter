@@ -103,8 +103,25 @@ namespace WindowsFormsApplication1
         {
             DataBaseClass currentDb;
             currentDb = new DataBaseClass();
-            currentDb.CreateShemaXml(Constants.WrkDirectory);
+            currentDb.CreateSchemaXml(Constants.WrkDirectory);
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+            DataBaseClass currentDb;
+            currentDb = new DataBaseClass();
+            currentDb.CreateBackUpDataBase(Constants.WrkDirectory);
+            
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            DataBaseClass currentDb;
+            currentDb = new DataBaseClass();
+            currentDb.LoadDataBase(Constants.WrkDirectory);
+        }
+
 
         //короче такой вот щит
         // хрена се лего

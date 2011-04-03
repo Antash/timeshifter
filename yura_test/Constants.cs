@@ -3,6 +3,6 @@ namespace WindowsFormsApplication1
 {
     abstract class Constants
     {
-        public const string WrkDirectory = "TimeShifter_Data.xml";
+        public const string WrkDirectory = "TimeShifter_Data1.xml";
     }
 }

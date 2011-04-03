@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AvtoStart.cs" />
+    <Compile Include="TaskStructure.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DataBaseClass.cs" />
     <Compile Include="logic.cs" />
