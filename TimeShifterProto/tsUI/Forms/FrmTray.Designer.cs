@@ -34,6 +34,7 @@
 			this.contextMenuStripTsTray = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.taskManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStripTsTray.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -47,24 +48,32 @@
 			// contextMenuStripTsTray
 			// 
 			this.contextMenuStripTsTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.taskManagerToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.exitToolStripMenuItem});
 			this.contextMenuStripTsTray.Name = "contextMenuStripTsTray";
-			this.contextMenuStripTsTray.Size = new System.Drawing.Size(153, 74);
+			this.contextMenuStripTsTray.Size = new System.Drawing.Size(164, 98);
 			// 
 			// settingsToolStripMenuItem
 			// 
 			this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
 			this.settingsToolStripMenuItem.Text = "settings";
 			this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
 			this.exitToolStripMenuItem.Text = "exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+			// 
+			// taskManagerToolStripMenuItem
+			// 
+			this.taskManagerToolStripMenuItem.Name = "taskManagerToolStripMenuItem";
+			this.taskManagerToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+			this.taskManagerToolStripMenuItem.Text = "taskManager";
+			this.taskManagerToolStripMenuItem.Click += new System.EventHandler(this.taskManagerToolStripMenuItem_Click);
 			// 
 			// FrmTray
 			// 
@@ -76,7 +85,7 @@
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.Text = "frmTray";
-			this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+			this.Load += new System.EventHandler(this.FrmTray_Load);
 			this.contextMenuStripTsTray.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -88,5 +97,6 @@
 		private System.Windows.Forms.ContextMenuStrip contextMenuStripTsTray;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem taskManagerToolStripMenuItem;
 	}
 }

@@ -53,6 +53,12 @@
     <Compile Include="Forms\frmTray.Designer.cs">
       <DependentUpon>frmTray.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmTaskManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmTaskManagement.Designer.cs">
+      <DependentUpon>frmTaskManagement.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -64,6 +70,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmTaskManagement.resx">
+      <DependentUpon>frmTaskManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmTray.resx">
       <DependentUpon>frmTray.cs</DependentUpon>
