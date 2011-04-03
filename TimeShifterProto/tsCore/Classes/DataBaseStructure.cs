@@ -117,5 +117,10 @@ namespace tsCore.Classes
 			newLine["ApplicationId"] = applicationId;
 			_dtTaskApplication.Rows.Add(newLine);
 		}
+
+		public bool ApplicationIsAlreadyExist(string ApplicatName)
+		{
+			return true;
+		}
 	}
 }
