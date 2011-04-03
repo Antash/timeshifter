@@ -7,8 +7,10 @@ namespace tsCore.Classes
 {
 	public class TsAppCore : IManaged
 	{
+		private string _filename = "demo.txt";
 		private readonly WindowLogger _tsWinLogger;
 		private readonly UserActLogger _tsUserActLogger;
+		private DataBaseStructure _taskDbs;
 
 		private Dictionary<string, UserActLogStructure> _tsUserActLog;
 
@@ -20,8 +22,19 @@ namespace tsCore.Classes
 			_tsWinLogger = new WindowLogger();
 			_tsUserActLogger = new UserActLogger();
 			_tsUserActLog = new Dictionary<string, UserActLogStructure>();
-
+			_taskDbs = new DataBaseStructure(_filename);
 			_tsWinLogger.AppChanged += _tsWinLogger_AppChanged;
+		}
+
+		~TsAppCore()
+		{
+			_taskDbs.CreateBackUpDataBase(_filename);
+			_tsWinLogger.WriteBinary(_filename+"win.txt");
+		}
+
+		public DataBaseStructure TaskDbs
+		{
+			get { return _taskDbs; }
 		}
 
 		void _tsWinLogger_AppChanged(object sender, AppChangedEventArgs args)

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using tsCore.Classes;
 
 namespace tsUI.Forms
 {
@@ -19,6 +20,12 @@ namespace tsUI.Forms
 		private void FrmTaskManagement_Load(object sender, EventArgs e)
 		{
 
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			TsAppCore.Instance.TaskDbs.NewTask(new TaskStructure("task1", "desk1", DateTime.Now));
+			treeView1.Nodes.Add("gfd", "task1");
 		}
 	}
 }
