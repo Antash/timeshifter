@@ -53,8 +53,9 @@ namespace WindowsFormsApplication1
 
 		public DataBaseClass(string fileName)
 		{
-			_fileName = fileName;
-			_ds.ReadXmlSchema(_fileName);
+			//_fileName = fileName;
+			//_ds.ReadXmlSchema(_fileName);
+			LoadDataBase(fileName);
 		}
 
 		public void CreateSchemaXml(string fileName)
