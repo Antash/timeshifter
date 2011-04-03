@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace tsCore.Classes
 {
-	class DataBaseStructure
+	public class DataBaseStructure
 	{
 		private DataSet _ds;
 		private DataTable _dtTasks;
@@ -15,12 +16,17 @@ namespace tsCore.Classes
 
 		public DataBaseStructure()
 		{
+			_ds = new DataSet();
 			BuildStructure();
+		}
+
+		internal DataSet DS
+		{
+			get { return _ds; }
 		}
 
 		private void BuildStructure()
 		{
-			_ds = new DataSet();
 			_dtTasks = new DataTable("Tasks");
 
 			_dtTasks.Columns.Add("Id", typeof(int));
@@ -50,21 +56,25 @@ namespace tsCore.Classes
 				_dtTaskApplication.Columns["ApplicationId"]},
 				true);
 
-			_ds.Relations.Add("TaskTaskApplicationFK", _dtTasks.Columns["Id"], _dtTaskApplication.Columns["TaskId"]);
-			_ds.Relations.Add("ApplicationTaskApplicationFK", _dtApplication.Columns["Id"], _dtTaskApplication.Columns["ApplicationId"]);
+			_ds.Tables.Add(_dtTaskApplication);
+
+			_ds.Relations.Add("TaskTaskApplicationFK",
+				_ds.Tables["Tasks"].Columns["Id"],
+				_ds.Tables["TaskApplication"].Columns["TaskId"]);
+			_ds.Relations.Add("ApplicationTaskApplicationFK",
+				_ds.Tables["Application"].Columns["Id"],
+				_ds.Tables["TaskApplication"].Columns["ApplicationId"]);
 		}
 
 		public DataBaseStructure(string fileName)
+			: this()
 		{
-			//_fileName = fileName;
-			//_ds.ReadXmlSchema(_fileName);
 			LoadDataBase(fileName);
 		}
 
 		public void CreateSchemaXml(string fileName)
 		{
 			_ds.WriteXmlSchema(fileName);
-
 		}
 
 		public void CreateBackUpDataBase(string fileName)
@@ -74,7 +84,14 @@ namespace tsCore.Classes
 
 		public void LoadDataBase(string fileName)
 		{
-			_ds.ReadXml(fileName);
+			try
+			{
+				_ds.ReadXml(fileName);
+			}
+			catch (Exception)
+			{
+				//	BuildStructure();
+			}
 		}
 
 		public void NewTask(TaskStructure task)

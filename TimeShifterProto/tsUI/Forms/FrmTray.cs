@@ -7,6 +7,7 @@ namespace tsUI.Forms
 		public FrmTray()
 		{
 			InitializeComponent();
+			niTS.Visible = true;
 		}
 
 		private void exitToolStripMenuItem_Click(object sender, System.EventArgs e)

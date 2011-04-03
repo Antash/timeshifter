@@ -32,9 +32,9 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTray));
 			this.niTS = new System.Windows.Forms.NotifyIcon(this.components);
 			this.contextMenuStripTsTray = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.taskManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.taskManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStripTsTray.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -42,8 +42,7 @@
 			// 
 			this.niTS.ContextMenuStrip = this.contextMenuStripTsTray;
 			this.niTS.Icon = ((System.Drawing.Icon)(resources.GetObject("niTS.Icon")));
-			this.niTS.Text = "notifyIcon1";
-			this.niTS.Visible = true;
+			this.niTS.Text = "TimeShifter";
 			// 
 			// contextMenuStripTsTray
 			// 
@@ -53,6 +52,13 @@
             this.exitToolStripMenuItem});
 			this.contextMenuStripTsTray.Name = "contextMenuStripTsTray";
 			this.contextMenuStripTsTray.Size = new System.Drawing.Size(164, 98);
+			// 
+			// taskManagerToolStripMenuItem
+			// 
+			this.taskManagerToolStripMenuItem.Name = "taskManagerToolStripMenuItem";
+			this.taskManagerToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+			this.taskManagerToolStripMenuItem.Text = "taskManager";
+			this.taskManagerToolStripMenuItem.Click += new System.EventHandler(this.taskManagerToolStripMenuItem_Click);
 			// 
 			// settingsToolStripMenuItem
 			// 
@@ -67,13 +73,6 @@
 			this.exitToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
 			this.exitToolStripMenuItem.Text = "exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-			// 
-			// taskManagerToolStripMenuItem
-			// 
-			this.taskManagerToolStripMenuItem.Name = "taskManagerToolStripMenuItem";
-			this.taskManagerToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
-			this.taskManagerToolStripMenuItem.Text = "taskManager";
-			this.taskManagerToolStripMenuItem.Click += new System.EventHandler(this.taskManagerToolStripMenuItem_Click);
 			// 
 			// FrmTray
 			// 
