@@ -35,9 +35,10 @@
 			// checkBoxAutostart
 			// 
 			this.checkBoxAutostart.AutoSize = true;
-			this.checkBoxAutostart.Location = new System.Drawing.Point(12, 12);
+			this.checkBoxAutostart.Location = new System.Drawing.Point(9, 10);
+			this.checkBoxAutostart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.checkBoxAutostart.Name = "checkBoxAutostart";
-			this.checkBoxAutostart.Size = new System.Drawing.Size(147, 21);
+			this.checkBoxAutostart.Size = new System.Drawing.Size(116, 17);
 			this.checkBoxAutostart.TabIndex = 0;
 			this.checkBoxAutostart.Text = "checkBoxAutostart";
 			this.checkBoxAutostart.UseVisualStyleBackColor = true;
@@ -46,9 +47,10 @@
 			// checkBoxEnRoutine
 			// 
 			this.checkBoxEnRoutine.AutoSize = true;
-			this.checkBoxEnRoutine.Location = new System.Drawing.Point(12, 39);
+			this.checkBoxEnRoutine.Location = new System.Drawing.Point(9, 32);
+			this.checkBoxEnRoutine.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.checkBoxEnRoutine.Name = "checkBoxEnRoutine";
-			this.checkBoxEnRoutine.Size = new System.Drawing.Size(156, 21);
+			this.checkBoxEnRoutine.Size = new System.Drawing.Size(124, 17);
 			this.checkBoxEnRoutine.TabIndex = 1;
 			this.checkBoxEnRoutine.Text = "checkBoxEnRoutine";
 			this.checkBoxEnRoutine.UseVisualStyleBackColor = true;
@@ -56,11 +58,12 @@
 			// 
 			// FrmSettings
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(301, 103);
+			this.ClientSize = new System.Drawing.Size(226, 84);
 			this.Controls.Add(this.checkBoxEnRoutine);
 			this.Controls.Add(this.checkBoxAutostart);
+			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.Name = "FrmSettings";
 			this.Text = "frmSettings";
 			this.Load += new System.EventHandler(this.FrmSettings_Load);
