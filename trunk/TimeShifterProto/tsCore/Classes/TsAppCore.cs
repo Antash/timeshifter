@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using tsCore.Interfaces;
 using tsWin;
 using System.Collections.Generic;
@@ -46,6 +47,14 @@ namespace tsCore.Classes
 				_tsUserActLog.Add(pname, snapshot);
 			else
 				_tsUserActLog[pname].Merge(snapshot);
+
+
+			DataRow foundRow = _taskDbs.DS.Tables["_dtApplication"].Rows.Find(pname);
+			if (foundRow == null)
+			{
+				_taskDbs.NewApplication(pname);
+			}
+
 		}
 
 		public static TsAppCore Instance

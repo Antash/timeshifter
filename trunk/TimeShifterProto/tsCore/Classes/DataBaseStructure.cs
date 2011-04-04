@@ -40,17 +40,17 @@ namespace tsCore.Classes
 
 			_dtApplication = new DataTable("Application");
 
-			_dtApplication.Columns.Add("Id", typeof(int));
-			_dtApplication.Columns["Id"].Unique = true;
-			_dtApplication.Columns["Id"].AutoIncrement = true;
+			//_dtApplication.Columns.Add("Id", typeof(int));
+			//_dtApplication.Columns["Id"].Unique = true;
+			//_dtApplication.Columns["Id"].AutoIncrement = true;
 			_dtApplication.Columns.Add("ApplicationName", typeof(string));
-
+			_dtApplication.Constraints.Add("PK", _dtApplication.Columns["ApplicationName"], true);
 			_ds.Tables.Add(_dtApplication);
 
 			_dtTaskApplication = new DataTable("TaskApplication");
 
 			_dtTaskApplication.Columns.Add("TaskId", typeof(int));
-			_dtTaskApplication.Columns.Add("ApplicationId", typeof(int));
+			_dtTaskApplication.Columns.Add("ApplicationId", typeof(string));
 			_dtTaskApplication.Constraints.Add("TaskApplicationPK", new[] {
 				_dtTaskApplication.Columns["TaskId"],
 				_dtTaskApplication.Columns["ApplicationId"]},

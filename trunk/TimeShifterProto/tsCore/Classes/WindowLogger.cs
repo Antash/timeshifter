@@ -19,13 +19,13 @@ namespace tsCore.Classes
 		
 		//+++ Yura: add new event checking for new process
 
-		public event AppNewProcessStarted AppNewProcess;
+		//public event AppNewProcessStarted AppNewProcess;
 
-		public void InvokeNewProcessStarted(AppChangedEventArgs args)
-		{
-			AppNewProcessStarted newProcess = AppNewProcess;
-			if (newProcess != null) newProcess(this, args);
-		}
+		//public void InvokeNewProcessStarted(AppChangedEventArgs args)
+		//{
+		//	AppNewProcessStarted newProcess = AppNewProcess;
+		//	if (newProcess != null) newProcess(this, args);
+		//}
 		//--- Yura: add new event checking for new process
 
 
@@ -102,7 +102,7 @@ namespace tsCore.Classes
 
 	//+++ Yura: add new event checking for new process
 
-	internal delegate void AppNewProcessStarted(object sender, AppChangedEventArgs args);
+	//internal delegate void AppNewProcessStarted(object sender, AppChangedEventArgs args);
 
 	//--- Yura: add new event checking for new process
 
