@@ -49,7 +49,7 @@ namespace tsCore.Classes
 				_tsUserActLog[pname].Merge(snapshot);
 
 
-			DataRow foundRow = _taskDbs.DS.Tables["_dtApplication"].Rows.Find(pname);
+			DataRow foundRow = _taskDbs.DS.Tables["Application"].Rows.Find(pname);
 			if (foundRow == null)
 			{
 				_taskDbs.NewApplication(pname);

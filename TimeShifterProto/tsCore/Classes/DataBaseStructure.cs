@@ -62,7 +62,7 @@ namespace tsCore.Classes
 				_ds.Tables["Tasks"].Columns["Id"],
 				_ds.Tables["TaskApplication"].Columns["TaskId"]);
 			_ds.Relations.Add("ApplicationTaskApplicationFK",
-				_ds.Tables["Application"].Columns["Id"],
+				_ds.Tables["Application"].Columns["ApplicationName"],
 				_ds.Tables["TaskApplication"].Columns["ApplicationId"]);
 		}
 
