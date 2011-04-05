@@ -3,7 +3,7 @@
 namespace tsCore.Classes
 {
     [Serializable]
-    class WindowLogStructure
+    public class WindowLogStructure
     {
 		public WindowLogStructure()
 		{
