@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Drawing;
+using System.Threading;
 
 namespace tsWin
 {
@@ -45,12 +46,19 @@ namespace tsWin
 			_t1 = new Timer(TimerTick, autoEvent, 0, TickPeriod);
 		}
 
+		public static Icon GetApplicationIcon(string appName, bool isLarge)
+		{
+			string path = WinApiWrapper.GetProcExecutablePath(appName);
+			return WinApiWrapper.ExtractIconFromExe(path, isLarge);
+		}
+
 		private void TimerTick(object state)
 		{
 			bool isDirty = false;
 			int newPid = WinApiWrapper.GetActWindowPID();
-			string newWTitle = WinApiWrapper.GetActWindowTitle();
-			string newPName = WinApiWrapper.GetActWindowProcName();
+            string newWTitle = WinApiWrapper.GetWindowTitle(newPid);
+            string newPName = WinApiWrapper.GetWindowProcName(newPid);
+
 			if (newPid != _actPid)
 			{
 				InvokeActPidChanged(new ActPidChangedArgs(newPid));

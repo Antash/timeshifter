@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -44,6 +45,8 @@ namespace tsCore.Classes
 			//_dtApplication.Columns["Id"].Unique = true;
 			//_dtApplication.Columns["Id"].AutoIncrement = true;
 			_dtApplication.Columns.Add("ApplicationName", typeof(string));
+			_dtApplication.Columns.Add("SmallIcon", typeof(Icon));
+			_dtApplication.Columns.Add("LargeIcon", typeof(Icon));
 			_dtApplication.Constraints.Add("PK", _dtApplication.Columns["ApplicationName"], true);
 			_ds.Tables.Add(_dtApplication);
 
@@ -103,10 +106,12 @@ namespace tsCore.Classes
 			_dtTasks.Rows.Add(newLine);
 		}
 
-		public void NewApplication(string applicationName)
+		public void NewApplication(string applicationName, Icon smallIcon, Icon largeIcon)
 		{
 			var newLine = _dtApplication.NewRow();
 			newLine["ApplicationName"] = applicationName;
+			newLine["SmallIcon"] = smallIcon;
+			newLine["LargeIcon"] = largeIcon;
 			_dtApplication.Rows.Add(newLine);
 		}
 
@@ -118,9 +123,9 @@ namespace tsCore.Classes
 			_dtTaskApplication.Rows.Add(newLine);
 		}
 
-		public bool ApplicationIsAlreadyExist(string ApplicatName)
+		public bool ApplicationExist(string applicationName)
 		{
-			return true;
+			return _ds.Tables["Application"].Rows.Find(applicationName) != null;
 		}
 	}
 }

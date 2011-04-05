@@ -48,13 +48,13 @@ namespace tsCore.Classes
 			else
 				_tsUserActLog[pname].Merge(snapshot);
 
-
-			DataRow foundRow = _taskDbs.DS.Tables["Application"].Rows.Find(pname);
-			if (foundRow == null)
+			//NOTE 2 Yura: This is more correct way!
+			if (!_taskDbs.ApplicationExist(pname))
 			{
-				_taskDbs.NewApplication(pname);
+				_taskDbs.NewApplication(pname, 
+					WindowTracker.GetApplicationIcon(pname, false), 
+					WindowTracker.GetApplicationIcon(pname, true));
 			}
-
 		}
 
 		public static TsAppCore Instance
