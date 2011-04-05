@@ -19,13 +19,12 @@ namespace tsUI.Forms
 
 		private void FrmTaskManagement_Load(object sender, EventArgs e)
 		{
-
 		}
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			TsAppCore.Instance.TaskDbs.NewTask(new TaskStructure("task1", "desk1", DateTime.Now));
-			treeView1.Nodes.Add("gfd", "task1");
+			//TsAppCore.Instance.TaskDbs.NewTask(new TaskStructure("task1", "desk1", DateTime.Now));
+			//treeView1.Nodes.Add("gfd", "task1");
 		}
 	}
 }

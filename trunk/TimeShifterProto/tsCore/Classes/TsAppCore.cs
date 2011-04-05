@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using tsCore.Interfaces;
+using tsDAL;
 using tsWin;
 using System.Collections.Generic;
 

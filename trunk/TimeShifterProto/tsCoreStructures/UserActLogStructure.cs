@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace tsCore.Classes
 {
 	[Serializable]
-	class UserActLogStructure
+	public class UserActLogStructure
 	{
 		public Dictionary<Keys, int> KeyLog { get; set; }
 		public MouseActData MouseLog { get; set; }
@@ -33,7 +33,7 @@ namespace tsCore.Classes
 	}
 
 	[Serializable]
-	class MouseActData
+	public class MouseActData
 	{
 		public Point LastPoint { get; set; }
 		public Dictionary<MouseButtons, int> Clicks { get; set; }
