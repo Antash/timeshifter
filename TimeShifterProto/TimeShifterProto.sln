@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsDAL", "tsDAL\tsDAL.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsCoreStructures", "tsCoreStructures\tsCoreStructures.csproj", "{930BD161-424B-45AE-B541-326F70F739C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsUIwpf", "tsUIwpf\tsUIwpf.csproj", "{B4C62FF7-171B-4F56-BC9A-F9DD3754CC90}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -87,6 +89,16 @@ Global
 		{930BD161-424B-45AE-B541-326F70F739C0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{930BD161-424B-45AE-B541-326F70F739C0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{930BD161-424B-45AE-B541-326F70F739C0}.Release|x86.ActiveCfg = Release|Any CPU
+		{B4C62FF7-171B-4F56-BC9A-F9DD3754CC90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4C62FF7-171B-4F56-BC9A-F9DD3754CC90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4C62FF7-171B-4F56-BC9A-F9DD3754CC90}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B4C62FF7-171B-4F56-BC9A-F9DD3754CC90}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B4C62FF7-171B-4F56-BC9A-F9DD3754CC90}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B4C62FF7-171B-4F56-BC9A-F9DD3754CC90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4C62FF7-171B-4F56-BC9A-F9DD3754CC90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4C62FF7-171B-4F56-BC9A-F9DD3754CC90}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B4C62FF7-171B-4F56-BC9A-F9DD3754CC90}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B4C62FF7-171B-4F56-BC9A-F9DD3754CC90}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

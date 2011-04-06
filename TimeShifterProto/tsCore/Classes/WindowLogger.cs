@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using tsCore.Interfaces;
+using tsCoreStructures;
 using tsWin;
 
 namespace tsCore.Classes

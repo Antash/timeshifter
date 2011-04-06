@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Drawing;
-using tsCore.Classes;
+using tsCoreStructures;
 
 namespace tsDAL
 {
