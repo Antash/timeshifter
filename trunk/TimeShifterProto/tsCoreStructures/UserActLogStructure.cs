@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
-namespace tsCore.Classes
+namespace tsCoreStructures
 {
 	[Serializable]
 	public class UserActLogStructure

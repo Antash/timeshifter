@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace tsCore.Classes
+namespace tsCoreStructures
 {
     [Serializable]
     public class WindowLogStructure

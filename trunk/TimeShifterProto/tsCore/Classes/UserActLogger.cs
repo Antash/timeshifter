@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using tsCore.Interfaces;
+using tsCoreStructures;
 using tsWin;
 
 namespace tsCore.Classes
