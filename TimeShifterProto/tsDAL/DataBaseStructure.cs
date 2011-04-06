@@ -109,7 +109,13 @@ namespace tsDAL
 			newLine["ApplicationName"] = applicationName;
 			newLine["SmallIcon"] = smallIcon;
 			newLine["LargeIcon"] = largeIcon;
-			_dtApplication.Rows.Add(newLine);
+			try
+			{
+				_dtApplication.Rows.Add(newLine);
+			}
+			catch (Exception)
+			{
+			}
 		}
 
 		public void NewSettingsRule(int taskId, int applicationId)
