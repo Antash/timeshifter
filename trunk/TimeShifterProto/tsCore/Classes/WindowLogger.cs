@@ -89,14 +89,6 @@ namespace tsCore.Classes
 		{
 			_winTracker.ActStateChanged -= WinTrackerActStateChanged;
 		}
-
-		public void Manage(bool isEnable)
-		{
-			if (isEnable)
-				Enable();
-			else
-				Disable();
-		}
 	}
 
 	internal delegate void AppChangedHandler(object sender, AppChangedEventArgs args);

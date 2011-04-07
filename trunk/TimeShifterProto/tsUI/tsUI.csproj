@@ -86,9 +86,9 @@
     <Folder Include="UserControls\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\tsCore\tsCore.csproj">
-      <Project>{306822B2-A83E-49CF-9FF9-4CAF6D92BEBC}</Project>
-      <Name>tsCore</Name>
+    <ProjectReference Include="..\tsPresenter\tsPresenter.csproj">
+      <Project>{6BD88D8B-AF1D-4703-81F4-AA2AB69B728E}</Project>
+      <Name>tsPresenter</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
