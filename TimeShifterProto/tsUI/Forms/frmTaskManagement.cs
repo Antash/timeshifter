@@ -12,6 +12,9 @@ namespace tsUI.Forms
 {
 	public partial class FrmTaskManagement : Form, ITaskManagementView
 	{
+		private TaskManagementPresenter _presenter;
+		private bool _suppressEvents;
+
 		public FrmTaskManagement()
 		{
 			InitializeComponent();
@@ -19,12 +22,37 @@ namespace tsUI.Forms
 
 		private void FrmTaskManagement_Load(object sender, EventArgs e)
 		{
+			_presenter = new TaskManagementPresenter(this, new TaskManagementModel());
+			_suppressEvents = true;
+			_presenter.Initialize();
+			_suppressEvents = false;
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		public List<ListViewItem> Applications
 		{
-			//TsAppCore.Instance.TaskDbs.NewTask(new TaskStructure("task1", "desk1", DateTime.Now));
-			//treeView1.Nodes.Add("gfd", "task1");
+			set
+			{
+				foreach (ListViewItem item in value)
+					lvApplications.Items.Add(item);
+			}
+		}
+
+		public List<Image> AppIconsSmall
+		{
+			set
+			{
+				foreach (Image item in value)
+					ilAppSmall.Images.Add(item);
+			}
+		}
+
+		public List<Image> AppIconsLarge
+		{
+			set
+			{
+				foreach (Image item in value)
+					ilAppLarge.Images.Add(item);
+			}
 		}
 	}
 }

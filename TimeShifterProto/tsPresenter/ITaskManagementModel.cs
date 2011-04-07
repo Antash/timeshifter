@@ -7,10 +7,10 @@ using System.Windows.Forms;
 
 namespace tsPresenter
 {
-	public interface ITaskManagementView
+	public interface ITaskManagementModel
 	{
-		List<ListViewItem> Applications { set; }
-		List<Image> AppIconsSmall { set; }
-		List<Image> AppIconsLarge { set; }
+		List<ListViewItem> Applications { get; }
+		List<Image> AppIconsSmall { get; }
+		List<Image> AppIconsLarge { get; }
 	}
 }

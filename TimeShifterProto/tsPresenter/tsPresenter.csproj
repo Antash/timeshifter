@@ -33,23 +33,30 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ITaskManagementService.cs" />
+    <Compile Include="ITaskManagementModel.cs" />
     <Compile Include="ITaskManagementView.cs" />
     <Compile Include="SettingsPresenter.cs" />
     <Compile Include="ISettingsView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaskManagementModel.cs" />
     <Compile Include="TaskManagementPresenter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tsCore\tsCore.csproj">
       <Project>{306822B2-A83E-49CF-9FF9-4CAF6D92BEBC}</Project>
       <Name>tsCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\tsDAL\tsDAL.csproj">
+      <Project>{725392D8-D711-46B3-8639-4FB8DCFAB5D9}</Project>
+      <Name>tsDAL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

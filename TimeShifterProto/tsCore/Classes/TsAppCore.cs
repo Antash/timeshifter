@@ -51,7 +51,7 @@ namespace tsCore.Classes
 				_tsUserActLog[pname].Merge(snapshot);
 
 			//NOTE 2 Yura: This is more correct way!
-			if (!_taskDbs.ApplicationExist(pname))
+			if (!_taskDbs.IsApplicationExist(pname))
 			{
 				_taskDbs.NewApplication(pname,
 					WindowTracker.GetApplicationIcon(pname, false),
