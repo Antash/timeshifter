@@ -6,12 +6,18 @@ namespace tsUI.Forms
 {
 	public partial class FrmSettings : Form, ISettingsView
 	{
+		private static FrmSettings _instanse;
 		private SettingsPresenter _presenter;
 		private bool _suppressEvents;
 
-		public FrmSettings()
+		private FrmSettings()
 		{
 			InitializeComponent();
+		}
+
+		public static FrmSettings Instance
+		{
+			get { return _instanse ?? (_instanse = new FrmSettings()); }
 		}
 
         private void FrmSettings_Load(object sender, EventArgs e)
@@ -41,8 +47,9 @@ namespace tsUI.Forms
 
 		#endregion
 
-		private void FrmSettings_FormClosed(object sender, FormClosedEventArgs e)
+		private void FrmSettings_FormClosing(object sender, FormClosingEventArgs e)
 		{
+			e.Cancel = true;
 			if (_suppressEvents)
 				return;
 			_presenter.Save();
