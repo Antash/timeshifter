@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using tsCoreStructures;
 
 namespace tsDAL
@@ -42,8 +43,8 @@ namespace tsDAL
 			//_dtApplication.Columns["Id"].Unique = true;
 			//_dtApplication.Columns["Id"].AutoIncrement = true;
 			_dtApplication.Columns.Add("ApplicationName", typeof(string));
-			_dtApplication.Columns.Add("SmallIcon", typeof(Icon));
-			_dtApplication.Columns.Add("LargeIcon", typeof(Icon));
+			_dtApplication.Columns.Add("SmallIcon", typeof(Byte[]));
+			_dtApplication.Columns.Add("LargeIcon", typeof(Byte[]));
 			_dtApplication.Constraints.Add("PK", _dtApplication.Columns["ApplicationName"], true);
 			_ds.Tables.Add(_dtApplication);
 
@@ -58,12 +59,12 @@ namespace tsDAL
 
 			_ds.Tables.Add(_dtTaskApplication);
 
-			_ds.Relations.Add("TaskTaskApplicationFK",
-				_ds.Tables["Tasks"].Columns["Id"],
-				_ds.Tables["TaskApplication"].Columns["TaskId"]);
-			_ds.Relations.Add("ApplicationTaskApplicationFK",
-				_ds.Tables["Application"].Columns["ApplicationName"],
-				_ds.Tables["TaskApplication"].Columns["ApplicationId"]);
+			//_ds.Relations.Add("TaskTaskApplicationFK",
+			//    _ds.Tables["Tasks"].Columns["Id"],
+			//    _ds.Tables["TaskApplication"].Columns["TaskId"]);
+			//_ds.Relations.Add("ApplicationTaskApplicationFK",
+			//    _ds.Tables["Application"].Columns["ApplicationName"],
+			//    _ds.Tables["TaskApplication"].Columns["ApplicationId"]);
 		}
 
 		public DataBaseStructure(string fileName)
@@ -88,9 +89,9 @@ namespace tsDAL
 			{
 				_ds.ReadXml(fileName);
 			}
-			catch (Exception)
+			catch (FileNotFoundException)
 			{
-				//	BuildStructure();
+			//    //	BuildStructure();
 			}
 		}
 
@@ -105,10 +106,11 @@ namespace tsDAL
 
 		public void NewApplication(string applicationName, Icon smallIcon, Icon largeIcon)
 		{
+			IconConverter ic = new IconConverter();
 			var newLine = _dtApplication.NewRow();
 			newLine["ApplicationName"] = applicationName;
-			newLine["SmallIcon"] = smallIcon;
-			newLine["LargeIcon"] = largeIcon;
+			newLine["SmallIcon"] = ic.ConvertTo(smallIcon, typeof(byte[]));
+			newLine["LargeIcon"] = ic.ConvertTo(largeIcon, typeof(byte[]));
 			try
 			{
 				_dtApplication.Rows.Add(newLine);
@@ -116,6 +118,11 @@ namespace tsDAL
 			catch (Exception)
 			{
 			}
+		}
+
+		public DataTableReader GetApplications()
+		{
+			return _ds.Tables["Application"].CreateDataReader();
 		}
 
 		public void NewSettingsRule(int taskId, int applicationId)
@@ -126,7 +133,7 @@ namespace tsDAL
 			_dtTaskApplication.Rows.Add(newLine);
 		}
 
-		public bool ApplicationExist(string applicationName)
+		public bool IsApplicationExist(string applicationName)
 		{
 			return _ds.Tables["Application"].Rows.Find(applicationName) != null;
 		}
