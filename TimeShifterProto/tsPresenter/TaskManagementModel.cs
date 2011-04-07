@@ -16,7 +16,15 @@ namespace tsPresenter
 		private List<ListViewItem> _applications;
 		private List<Image> _appIconSmall;
 		private List<Image> _appIconLarge;
+		public event newapp rebing;
 
+		public void InvokeRebing(EventArgs args)
+		{
+			newapp handler = rebing;
+			if (handler != null) handler(this, args);
+		}
+
+		int i = 0;
 		public TaskManagementModel()
 		{
 			_applications = new List<ListViewItem>();
@@ -26,7 +34,7 @@ namespace tsPresenter
 			ImageConverter ic = new ImageConverter();
 
 			DataTableReader dr = TsAppCore.Instance.TaskDbs.GetApplications();
-			int i = 0;
+			
 			while (dr.Read())
 			{
 				MemoryStream ms = new MemoryStream((byte[]) dr.GetValue(1));
@@ -40,6 +48,16 @@ namespace tsPresenter
 				_applications.Add(new ListViewItem(dr.GetValue(0).ToString(), i-1));
 			}
 			dr.Close();
+			TsAppCore.Instance.newApp += new AppAdd(Instance_newApp);
+		}
+
+		void Instance_newApp(object sender, AppAddArgs args)
+		{
+				_appIconLarge.Add(args.Image.ToBitmap());
+				_appIconSmall.Add(args.Image.ToBitmap());
+				i++;
+			_applications.Add(new ListViewItem(args.Name, i - 1));
+			InvokeRebing(new EventArgs());
 		}
 
 		public List<ListViewItem> Applications
@@ -57,4 +75,6 @@ namespace tsPresenter
 			get { return _appIconLarge; }
 		}
 	}
+
+	public delegate void newapp(object sender, EventArgs args);
 }

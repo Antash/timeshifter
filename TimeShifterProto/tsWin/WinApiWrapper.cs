@@ -48,6 +48,11 @@ namespace tsWin
 			return pid != 0 ? Process.GetProcessById(pid).MainModule.FileName : string.Empty;
 		}
 
+		internal static Icon GetProcIcon(string path)
+		{
+			return Icon.ExtractAssociatedIcon(path);
+		}
+
 		internal static string GetWindowTitle(int pid)
 		{
 			return pid != 0 ? Process.GetProcessById(pid).MainWindowTitle : string.Empty;

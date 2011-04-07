@@ -27,7 +27,7 @@ namespace tsUI.Forms
 		{
 			BeginInvoke(new MethodInvoker(Hide));
 
-			new FrmTaskManagement().Show();
+		//	new FrmTaskManagement().Show();
 		}
 
 		private void taskManagerToolStripMenuItem_Click(object sender, System.EventArgs e)

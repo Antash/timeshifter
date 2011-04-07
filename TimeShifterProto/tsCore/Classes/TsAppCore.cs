@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Drawing;
 using tsCore.Interfaces;
 using tsCoreStructures;
 using tsDAL;
@@ -19,6 +20,14 @@ namespace tsCore.Classes
 
 		private static volatile TsAppCore _instance;
 		private static readonly object SyncRoot = new Object();
+
+		public event AppAdd newApp;
+
+		public void InvokeNewApp(AppAddArgs args)
+		{
+			AppAdd handler = newApp;
+			if (handler != null) handler(this, args);
+		}
 
 		private TsAppCore()
 		{
@@ -56,6 +65,7 @@ namespace tsCore.Classes
 				_taskDbs.NewApplication(pname,
 					WindowTracker.GetApplicationIcon(pname, false),
 					WindowTracker.GetApplicationIcon(pname, true));
+				InvokeNewApp(new AppAddArgs(pname, WindowTracker.GetApplicationIcon(pname, false)));
 			}
 		}
 
@@ -99,4 +109,17 @@ namespace tsCore.Classes
 			IsCoreRunning = false;
 		}
 	}
+
+	public class AppAddArgs
+	{
+		public string Name { get; set; }
+		public Icon Image { get; set; }
+		public AppAddArgs(string name, Icon image)
+		{
+			Name = name;
+			Image = image;
+		}
+	}
+
+	public delegate void AppAdd(object sender, AppAddArgs args);
 }

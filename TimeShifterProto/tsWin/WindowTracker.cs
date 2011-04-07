@@ -49,7 +49,9 @@ namespace tsWin
 		public static Icon GetApplicationIcon(string appName, bool isLarge)
 		{
 			string path = WinApiWrapper.GetProcExecutablePath(appName);
-			return WinApiWrapper.ExtractIconFromExe(path, isLarge);
+			//return WinApiWrapper.ExtractIconFromExe(path, isLarge);
+			//return WinApiWrapper.GetProcIcon(path);
+			return IconExtractor.GetFileIcon(path, isLarge);
 		}
 
 		private void TimerTick(object state)

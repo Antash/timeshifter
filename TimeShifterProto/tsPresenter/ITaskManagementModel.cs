@@ -12,5 +12,6 @@ namespace tsPresenter
 		List<ListViewItem> Applications { get; }
 		List<Image> AppIconsSmall { get; }
 		List<Image> AppIconsLarge { get; }
+		event newapp rebing;
 	}
 }
