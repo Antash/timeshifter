@@ -18,7 +18,14 @@ namespace tsPresenter
 		public void Initialize()
 		{
 			_view.IsAutostartEnabled = TsAppCore.Instance.IsAutostartEnabled;
-			_view.IsCoreRunning = TsAppCore.Instance.IsEnabled;
+			_view.IsCoreRunning = TsAppCore.Instance.IsCoreRunning;
+		}
+
+
+		public void Save()
+		{
+			TsAppCore.Instance.IsAutostartEnabled = _view.IsAutostartEnabled;
+			TsAppCore.Instance.IsCoreRunning = _view.IsCoreRunning;
 		}
 	}
 }

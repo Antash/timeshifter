@@ -80,29 +80,23 @@ namespace tsCore.Classes
 		public bool IsAutostartEnabled
 		{
 			get { return AutoStart.IsAutoStartEnabled(_assemblyLocation); }
-			set
-			{
-				if (value)
-					AutoStart.SetAutoStart(_assemblyLocation);
-				else
-					AutoStart.UnSetAutoStart();
-			}
+			set { AutoStart.SetAutoStart(_assemblyLocation, value); }
 		}
 
-		public bool IsEnabled { get; set; }
+		public bool IsCoreRunning { get; set; }
 
 		public void Enable()
 		{
 			_tsWinLogger.Enable();
 			_tsUserActLogger.Enable();
-			IsEnabled = true;
+			IsCoreRunning = true;
 		}
 
 		public void Disable()
 		{
 			_tsWinLogger.Disable();
 			_tsUserActLogger.Disable();
-			IsEnabled = false;
+			IsCoreRunning = false;
 		}
 	}
 }
