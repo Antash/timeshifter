@@ -39,9 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ITaskManagementService.cs" />
+    <Compile Include="ITaskManagementView.cs" />
     <Compile Include="SettingsPresenter.cs" />
     <Compile Include="ISettingsView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaskManagementPresenter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tsCore\tsCore.csproj">

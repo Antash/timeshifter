@@ -21,7 +21,6 @@ namespace tsPresenter
 			_view.IsCoreRunning = TsAppCore.Instance.IsCoreRunning;
 		}
 
-
 		public void Save()
 		{
 			TsAppCore.Instance.IsAutostartEnabled = _view.IsAutostartEnabled;
