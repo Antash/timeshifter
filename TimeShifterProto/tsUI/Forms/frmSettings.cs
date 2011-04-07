@@ -1,11 +1,14 @@
-﻿using System.Windows.Forms;
-using tsCore;
-using tsCore.Classes;
+﻿using System;
+using System.Windows.Forms;
+using tsPresenter;
 
 namespace tsUI.Forms
 {
-	public partial class FrmSettings : Form
+	public partial class FrmSettings : Form, ISettingsView
 	{
+		private SettingsPresenter _presenter;
+		private bool _suppressEvents;
+
 		private static FrmSettings _instanse;
 
 		private FrmSettings()
@@ -18,20 +21,31 @@ namespace tsUI.Forms
 			get { return _instanse ?? (_instanse = new FrmSettings()); }
 		}
 
-        private void FrmSettings_Load(object sender, System.EventArgs e)
+        private void FrmSettings_Load(object sender, EventArgs e)
         {
+        	_presenter = new SettingsPresenter(this);
+        	_suppressEvents = true;
+        	_presenter.Initialize();
+        	_suppressEvents = false;
+
             checkBoxAutostart.Text = "Старт при запуске системы";
         	checkBoxEnRoutine.Text = "Вкл/Выкл";
         }
 
-		private void checkBoxAutostart_CheckedChanged(object sender, System.EventArgs e)
+		#region Implementation of ISettingsView
+
+		public bool IsAutostartEnabled
 		{
-			TsAppCore.Instance.SetAutostart(checkBoxAutostart.Checked);
+			get { return checkBoxAutostart.Checked; }
+			set { checkBoxAutostart.Checked = value; }
 		}
 
-		private void checkBoxEnRoutine_CheckedChanged(object sender, System.EventArgs e)
+		public bool IsCoreRunning
 		{
-			TsAppCore.Instance.Manage(checkBoxEnRoutine.Checked);
+			get { return checkBoxEnRoutine.Checked; }
+			set { checkBoxEnRoutine.Checked = value; }
 		}
+
+		#endregion
 	}
 }

@@ -32,7 +32,7 @@ namespace tsCore.Classes
 		~TsAppCore()
 		{
 			_taskDbs.CreateBackUpDataBase(_filename);
-			_tsWinLogger.WriteBinary(_filename+"win.txt");
+			_tsWinLogger.WriteBinary(_filename + "win.txt");
 		}
 
 		public DataBaseStructure TaskDbs
@@ -53,8 +53,8 @@ namespace tsCore.Classes
 			//NOTE 2 Yura: This is more correct way!
 			if (!_taskDbs.ApplicationExist(pname))
 			{
-				_taskDbs.NewApplication(pname, 
-					WindowTracker.GetApplicationIcon(pname, false), 
+				_taskDbs.NewApplication(pname,
+					WindowTracker.GetApplicationIcon(pname, false),
 					WindowTracker.GetApplicationIcon(pname, true));
 			}
 		}
@@ -77,32 +77,32 @@ namespace tsCore.Classes
 
 		private readonly string _assemblyLocation = Environment.CommandLine;
 
-		public void SetAutostart(bool @checked)
+		public bool IsAutostartEnabled
 		{
-			if (@checked)
-				AutoStart.SetAutoStart(_assemblyLocation);
-			else
-				AutoStart.UnSetAutoStart();
+			get { return AutoStart.IsAutoStartEnabled(_assemblyLocation); }
+			set
+			{
+				if (value)
+					AutoStart.SetAutoStart(_assemblyLocation);
+				else
+					AutoStart.UnSetAutoStart();
+			}
 		}
+
+		public bool IsEnabled { get; set; }
 
 		public void Enable()
 		{
 			_tsWinLogger.Enable();
 			_tsUserActLogger.Enable();
+			IsEnabled = true;
 		}
 
 		public void Disable()
 		{
 			_tsWinLogger.Disable();
 			_tsUserActLogger.Disable();
-		}
-
-		public void Manage(bool isEnable)
-		{
-			if (isEnable) 
-				Enable();
-			else
-				Disable();
+			IsEnabled = false;
 		}
 	}
 }

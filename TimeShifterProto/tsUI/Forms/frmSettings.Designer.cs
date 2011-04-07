@@ -42,7 +42,6 @@
 			this.checkBoxAutostart.TabIndex = 0;
 			this.checkBoxAutostart.Text = "checkBoxAutostart";
 			this.checkBoxAutostart.UseVisualStyleBackColor = true;
-			this.checkBoxAutostart.CheckedChanged += new System.EventHandler(this.checkBoxAutostart_CheckedChanged);
 			// 
 			// checkBoxEnRoutine
 			// 
@@ -54,7 +53,6 @@
 			this.checkBoxEnRoutine.TabIndex = 1;
 			this.checkBoxEnRoutine.Text = "checkBoxEnRoutine";
 			this.checkBoxEnRoutine.UseVisualStyleBackColor = true;
-			this.checkBoxEnRoutine.CheckedChanged += new System.EventHandler(this.checkBoxEnRoutine_CheckedChanged);
 			// 
 			// FrmSettings
 			// 

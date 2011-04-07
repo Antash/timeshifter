@@ -76,13 +76,5 @@ namespace tsCore.Classes
 		{
 			_uActTracker.Stop();
 		}
-
-		public void Manage(bool isEnable)
-		{
-			if (isEnable)
-				Enable();
-			else
-				Disable();
-		}
 	}
 }
