@@ -10,11 +10,17 @@ namespace tsWin
 		/// <summary>    
 		/// Sets the autostart value for the assembly.   
 		/// </summary>    
-		/// <param name="assemblyLocation">Assembly location (e.g. Assembly.GetExecutingAssembly().Location)</param>    
-		public static void SetAutoStart(string assemblyLocation)
+		/// <param name="assemblyLocation">Assembly location (e.g. Assembly.GetExecutingAssembly().Location)</param>
+		/// <param name="isEnable">Indicates action to perfome (ser or unset)</param>    
+		public static void SetAutoStart(string assemblyLocation, bool isEnable)
 		{
 			RegistryKey key = Registry.CurrentUser.CreateSubKey(RunLocation);
-			if (key != null) key.SetValue(KeyName, assemblyLocation);
+			if (key != null)
+				if (isEnable ^ IsAutoStartEnabled(assemblyLocation))
+					if (isEnable)
+						key.SetValue(KeyName, assemblyLocation);
+					else
+						key.DeleteValue(KeyName);
 		}
 
 		/// <summary>    
@@ -30,15 +36,6 @@ namespace tsWin
 			if (value == null)
 				return false;
 			return (value == assemblyLocation);
-		}
-
-		/// <summary>    
-		/// Unsets the autostart value for the assembly.    
-		/// </summary>    
-		public static void UnSetAutoStart()
-		{
-			RegistryKey key = Registry.CurrentUser.CreateSubKey(RunLocation);
-			if (key != null) key.DeleteValue(KeyName);
 		}
 	}
 }

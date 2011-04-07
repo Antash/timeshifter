@@ -18,14 +18,15 @@ namespace tsUI.Forms
 		private void settingsToolStripMenuItem_Click(object sender, System.EventArgs e)
 		{
 			//TODO : fix bug with opening singletone form
-			if (FrmSettings.Instance.Visible != true)
-			{
-				FrmSettings.Instance.Show();
-			}
-			else
-			{
-				FrmSettings.Instance.BringToFront();
-			}
+			//if (FrmSettings.Instance.Visible != true)
+			//{
+			//    FrmSettings.Instance.Show();
+			//}
+			//else
+			//{
+			//    FrmSettings.Instance.BringToFront();
+			//}
+			new FrmSettings().Show();
 		}
 
 		private void FrmTray_Load(object sender, System.EventArgs e)

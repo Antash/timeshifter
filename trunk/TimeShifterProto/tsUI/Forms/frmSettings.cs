@@ -9,16 +9,9 @@ namespace tsUI.Forms
 		private SettingsPresenter _presenter;
 		private bool _suppressEvents;
 
-		private static FrmSettings _instanse;
-
-		private FrmSettings()
+		public FrmSettings()
 		{
 			InitializeComponent();
-		}
-
-		public static FrmSettings Instance
-		{
-			get { return _instanse ?? (_instanse = new FrmSettings()); }
 		}
 
         private void FrmSettings_Load(object sender, EventArgs e)
@@ -47,5 +40,13 @@ namespace tsUI.Forms
 		}
 
 		#endregion
+
+		private void FrmSettings_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			if (_suppressEvents)
+				return;
+			_presenter.Save();
+			Hide();
+		}
 	}
 }
