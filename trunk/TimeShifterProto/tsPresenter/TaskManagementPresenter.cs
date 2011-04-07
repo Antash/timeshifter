@@ -20,6 +20,12 @@ namespace tsPresenter
 
 		private void WireUpViewEvents()
 		{
+			_model.rebing += new newapp(_model_rebing);
+		}
+
+		void _model_rebing(object sender, EventArgs args)
+		{
+			//SetViewPropertiesFromModel();
 		}
 
 		private void SetModelPropertiesFromView()

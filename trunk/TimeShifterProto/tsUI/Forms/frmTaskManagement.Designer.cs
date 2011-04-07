@@ -88,7 +88,7 @@
 			// 
 			// ilAppSmall
 			// 
-			this.ilAppSmall.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+			this.ilAppSmall.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
 			this.ilAppSmall.ImageSize = new System.Drawing.Size(20, 20);
 			this.ilAppSmall.TransparentColor = System.Drawing.Color.Transparent;
 			// 
@@ -112,7 +112,7 @@
 			// 
 			// ilAppLarge
 			// 
-			this.ilAppLarge.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+			this.ilAppLarge.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
 			this.ilAppLarge.ImageSize = new System.Drawing.Size(40, 40);
 			this.ilAppLarge.TransparentColor = System.Drawing.Color.Transparent;
 			// 

@@ -51,7 +51,11 @@ namespace tsUI.Forms
 			set
 			{
 				foreach (Image item in value)
+				{
 					ilAppLarge.Images.Add(item);
+					Bitmap img = new Bitmap( item) ;
+					img.Save(item.GetHashCode()+".bmp");
+				}
 			}
 		}
 	}
