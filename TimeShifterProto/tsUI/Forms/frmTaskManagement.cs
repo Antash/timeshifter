@@ -6,10 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using tsPresenter;
 
 namespace tsUI.Forms
 {
-	public partial class FrmTaskManagement : Form
+	public partial class FrmTaskManagement : Form, ITaskManagementView
 	{
 		public FrmTaskManagement()
 		{
