@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Threading;
 
 namespace tsWin
@@ -48,8 +49,22 @@ namespace tsWin
 
 		public static Icon GetApplicationIcon(string appName, bool isLarge)
 		{
-			var extractor = new IconExtractor(WinApiWrapper.GetProcExecutablePath(appName));
-			return extractor.GetIcon(0);
+			IconExtractor extractor;
+			try
+			{
+				extractor = new IconExtractor(WinApiWrapper.GetProcExecutablePath(appName));
+			}
+			catch
+			{
+				return null;
+			}
+			List<Icon> il = new List<Icon>();
+			for (int i = 0; i < extractor.IconCount; i++)
+			{
+				foreach (Icon ic in IconExtractor.SplitIcon(extractor.GetIcon(i)))
+					il.Add(ic);
+			}
+			return il[0];
 		}
 
 		private void TimerTick(object state)
