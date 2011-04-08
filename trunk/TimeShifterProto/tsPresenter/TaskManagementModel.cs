@@ -53,9 +53,17 @@ namespace tsPresenter
 
 		void Instance_newApp(object sender, AppAddArgs args)
 		{
+			if (args.Image != null)
+			{
 				_appIconLarge.Add(args.Image.ToBitmap());
 				_appIconSmall.Add(args.Image.ToBitmap());
-				i++;
+			}
+			else
+			{
+				_appIconLarge.Add(_appIconLarge[i - 1]);
+				_appIconSmall.Add(_appIconSmall[i - 1]);
+			}
+			i++;
 			_applications.Add(new ListViewItem(args.Name, i - 1));
 			InvokeRebing(new EventArgs());
 		}

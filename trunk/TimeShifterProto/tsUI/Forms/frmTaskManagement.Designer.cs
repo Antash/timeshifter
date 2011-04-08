@@ -33,10 +33,10 @@
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.treeView1 = new System.Windows.Forms.TreeView();
 			this.lvApplications = new System.Windows.Forms.ListView();
+			this.ilAppLarge = new System.Windows.Forms.ImageList(this.components);
 			this.ilAppSmall = new System.Windows.Forms.ImageList(this.components);
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.button1 = new System.Windows.Forms.Button();
-			this.ilAppLarge = new System.Windows.Forms.ImageList(this.components);
 			this.tableLayoutPanel1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
@@ -86,10 +86,16 @@
 			this.lvApplications.TabIndex = 1;
 			this.lvApplications.UseCompatibleStateImageBehavior = false;
 			// 
+			// ilAppLarge
+			// 
+			this.ilAppLarge.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+			this.ilAppLarge.ImageSize = new System.Drawing.Size(48, 48);
+			this.ilAppLarge.TransparentColor = System.Drawing.Color.Transparent;
+			// 
 			// ilAppSmall
 			// 
 			this.ilAppSmall.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-			this.ilAppSmall.ImageSize = new System.Drawing.Size(20, 20);
+			this.ilAppSmall.ImageSize = new System.Drawing.Size(24, 24);
 			this.ilAppSmall.TransparentColor = System.Drawing.Color.Transparent;
 			// 
 			// panel1
@@ -109,12 +115,6 @@
 			this.button1.TabIndex = 1;
 			this.button1.Text = "button1";
 			this.button1.UseVisualStyleBackColor = true;
-			// 
-			// ilAppLarge
-			// 
-			this.ilAppLarge.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-			this.ilAppLarge.ImageSize = new System.Drawing.Size(40, 40);
-			this.ilAppLarge.TransparentColor = System.Drawing.Color.Transparent;
 			// 
 			// FrmTaskManagement
 			// 
