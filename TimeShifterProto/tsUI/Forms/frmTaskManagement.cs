@@ -60,8 +60,9 @@ namespace tsUI.Forms
 
 		public void AddNewApplication(TsApplication app)
 		{
-			AddAppDelegate sd = AddApp;
-			lvApplications.Invoke(sd, app);
+			if (lvApplications.InvokeRequired)
+				lvApplications.Invoke(new AddAppDelegate(AddApp), app);
+			else AddApp(app);
 		}
 
 		private void AddApp(TsApplication app)
