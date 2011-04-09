@@ -51,12 +51,18 @@ namespace tsUI.Forms
 			set
 			{
 				foreach (Image item in value)
-				{
 					ilAppLarge.Images.Add(item);
-					Bitmap img = new Bitmap( item) ;
-					img.Save(item.GetHashCode()+".bmp");
-				}
 			}
+		}
+
+		private void toLargeIcons_Click(object sender, EventArgs e)
+		{
+			lvApplications.View = View.LargeIcon;
+		}
+
+		private void toSmallIcons_Click(object sender, EventArgs e)
+		{
+			lvApplications.View = View.SmallIcon;
 		}
 	}
 }
