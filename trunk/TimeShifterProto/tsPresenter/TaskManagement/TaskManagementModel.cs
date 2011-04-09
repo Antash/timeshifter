@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using tsCore;
 using tsCore.Classes;
 using tsCoreStructures;
 using tsDAL;
 
-namespace tsPresenter
+namespace tsPresenter.TaskManagement
 {
 	public class TaskManagementModel : ITaskManagementModel
 	{
 		private List<ListViewItem> _applications;
 		private List<Image> _appIconSmall;
 		private List<Image> _appIconLarge;
-
+		
+		//TODO : needs to be refactored
 		int i = 0;
 		public TaskManagementModel()
 		{
@@ -60,16 +57,19 @@ namespace tsPresenter
 		public List<ListViewItem> Applications
 		{
 			get { return _applications; }
+			set { _applications = value; }
 		}
 
 		public List<Image> AppIconsSmall
 		{
 			get { return _appIconSmall; }
+			set { _appIconSmall = value; }
 		}
 
 		public List<Image> AppIconsLarge
 		{
 			get { return _appIconLarge; }
+			set { _appIconSmall = value; }
 		}
 
 		public event NewApplicationHandler NewApplication;

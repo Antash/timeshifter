@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using tsCoreStructures;
+using tsPresenter.Base;
 
-namespace tsPresenter
+namespace tsPresenter.TaskManagement
 {
-	public interface ITaskManagementModel
+	public interface ITaskManagementModel : IModel
 	{
-		List<ListViewItem> Applications { get; }
-		List<Image> AppIconsSmall { get; }
-		List<Image> AppIconsLarge { get; }
+		List<ListViewItem> Applications { get; set; }
+		List<Image> AppIconsSmall { get; set; }
+		List<Image> AppIconsLarge { get; set; }
 		event NewApplicationHandler NewApplication;
 	}
 

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
 using tsPresenter;
+using tsPresenter.Settings;
 
 namespace tsUI.Forms
 {
 	public partial class FrmSettings : Form, ISettingsView
 	{
 		private static FrmSettings _instanse;
-		private SettingsPresenter _presenter;
-		private bool _suppressEvents;
 
 		protected FrmSettings()
 		{
@@ -22,11 +21,6 @@ namespace tsUI.Forms
 
         private void FrmSettings_Load(object sender, EventArgs e)
         {
-        	_presenter = new SettingsPresenter(this);
-        	_suppressEvents = true;
-        	_presenter.Initialize();
-        	_suppressEvents = false;
-
             checkBoxAutostart.Text = "Старт при запуске системы";
         	checkBoxEnRoutine.Text = "Вкл/Выкл";
         }
@@ -45,15 +39,30 @@ namespace tsUI.Forms
 			set { checkBoxEnRoutine.Checked = value; }
 		}
 
+		public event EventHandler DataChanged;
+
+		public void InvokeDataChanged(EventArgs e)
+		{
+			EventHandler handler = DataChanged;
+			if (handler != null) handler(this, e);
+		}
+
 		#endregion
 
 		private void FrmSettings_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			e.Cancel = true;
-			if (_suppressEvents)
-				return;
-			_presenter.Save();
 			Hide();
+		}
+
+		private void checkBoxAutostart_CheckedChanged(object sender, EventArgs e)
+		{
+			InvokeDataChanged(new EventArgs());
+		}
+
+		private void checkBoxEnRoutine_CheckedChanged(object sender, EventArgs e)
+		{
+			InvokeDataChanged(new EventArgs());
 		}
 	}
 }
