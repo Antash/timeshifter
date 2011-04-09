@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsCoreStructures", "tsCoreS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsPresenter", "tsPresenter\tsPresenter.csproj", "{6BD88D8B-AF1D-4703-81F4-AA2AB69B728E}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "tsSetup", "tsSetup\tsSetup.vdproj", "{CFFDB18C-97BD-429C-A8C2-CF80349B7937}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -99,6 +101,12 @@ Global
 		{6BD88D8B-AF1D-4703-81F4-AA2AB69B728E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6BD88D8B-AF1D-4703-81F4-AA2AB69B728E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6BD88D8B-AF1D-4703-81F4-AA2AB69B728E}.Release|x86.ActiveCfg = Release|Any CPU
+		{CFFDB18C-97BD-429C-A8C2-CF80349B7937}.Debug|Any CPU.ActiveCfg = Debug
+		{CFFDB18C-97BD-429C-A8C2-CF80349B7937}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{CFFDB18C-97BD-429C-A8C2-CF80349B7937}.Debug|x86.ActiveCfg = Debug
+		{CFFDB18C-97BD-429C-A8C2-CF80349B7937}.Release|Any CPU.ActiveCfg = Release
+		{CFFDB18C-97BD-429C-A8C2-CF80349B7937}.Release|Mixed Platforms.ActiveCfg = Release
+		{CFFDB18C-97BD-429C-A8C2-CF80349B7937}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
