@@ -16,14 +16,12 @@ namespace tsPresenter.TaskManagement
 		private List<Image> _appIconLarge;
 		
 		//TODO : needs to be refactored
-		int i = 0;
+		readonly int _i;
 		public TaskManagementModel()
 		{
 			_applications = new List<ListViewItem>();
 			_appIconSmall = new List<Image>();
 			_appIconLarge = new List<Image>();
-
-			ImageConverter ic = new ImageConverter();
 
 			DataTableReader dr = TsAppCore.Instance.TaskDbs.GetApplications();
 
@@ -35,22 +33,25 @@ namespace tsPresenter.TaskManagement
 				{
 					_appIconLarge.Add(Image.FromStream(ms2));
 					_appIconSmall.Add(Image.FromStream(ms));
-					i++;
+					_i++;
 				}
 				else
 				{
 					_appIconLarge.Add(null);
 					_appIconSmall.Add(null);
-					i++;
+					_i++;
 				}
-				_applications.Add(new ListViewItem(dr.GetValue(0).ToString(), i - 1));
+				_applications.Add(new ListViewItem(dr.GetValue(0).ToString(), _i - 1));
 			}
 			dr.Close();
-			DataBaseStructure.Instance.Newapp += new Newapphandler(DataBaseStructure_Newapp);
+			DataBaseStructure.Instance.Newapp += DataBaseStructure_Newapp;
 		}
 
 		void DataBaseStructure_Newapp(object sender, NewapphandlerArgs args)
 		{
+			_applications.Add(new ListViewItem(args.App.Name, _i - 1));
+			_appIconLarge.Add(args.App.LargeIcon.ToBitmap());
+			_appIconSmall.Add(args.App.SmallIcon.ToBitmap());
 			InvokeNewApplication(new NewApplicationHandlerArgs(new TsApplication(args.App)));
 		}
 
@@ -69,7 +70,7 @@ namespace tsPresenter.TaskManagement
 		public List<Image> AppIconsLarge
 		{
 			get { return _appIconLarge; }
-			set { _appIconSmall = value; }
+			set { _appIconLarge = value; }
 		}
 
 		public event NewApplicationHandler NewApplication;
