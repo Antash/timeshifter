@@ -1,16 +1,28 @@
-﻿using System.Drawing;
-using System.Threading;
+﻿using System.Threading;
 
 namespace tsWin
 {
+	/// <summary>
+	/// This class 
+	/// </summary>
 	public class WindowTracker
 	{
+		#region public events
+
 		public event ActPidChangedHandler ActPidChanged;
 		public event ActPNameChangedHandler ActPNameChanged;
 		public event ActWindowTextChangedHandler ActWindowTextChanged;
+
+		/// <summary>
+		/// Indicates that current state of active user application fully changed
+		/// </summary>
 		public event ActStateChangedHandler ActStateChanged;
 
-		public void InvokeActStateChanged(ActStateChangedHandlerArgs args)
+		#endregion
+
+		#region event invocators
+
+		private void InvokeActStateChanged(ActStateChangedHandlerArgs args)
 		{
 			ActStateChangedHandler handler = ActStateChanged;
 			if (handler != null) handler(this, args);
@@ -34,15 +46,21 @@ namespace tsWin
 			if (handler != null) handler(this, args);
 		}
 
+		#endregion
+
 		private readonly Timer _t1;
 		private int _actPid;
 		private string _actPname;
 		private string _actWinText;
 		private const long TickPeriod = 500;
 
+		/// <summary>
+		/// Initialize a new instance of WindowTracker class
+		/// </summary>
 		public WindowTracker()
 		{
 			var autoEvent = new AutoResetEvent(false);
+			// Start timer ticks
 			_t1 = new Timer(TimerTick, autoEvent, 0, TickPeriod);
 		}
 
@@ -51,17 +69,16 @@ namespace tsWin
 			_t1.Dispose();
 		}
 
-		public static Icon GetApplicationIcon(string appName, bool isLarge)
-		{
-			return IconHelper.GetApplicationIcon(appName, isLarge);
-		}
-
+		/// <summary>
+		/// Procedure handles timer ticks 
+		/// </summary>
+		/// <param name="state">Service parmeter</param>
 		private void TimerTick(object state)
 		{
 			bool isDirty = false;
 			int newPid = WinApiWrapper.GetActWindowPID();
-            string newWTitle = WinApiWrapper.GetWindowTitle(newPid);
-            string newPName = WinApiWrapper.GetWindowProcName(newPid);
+			string newWTitle = WinApiWrapper.GetWindowTitle(newPid);
+			string newPName = WinApiWrapper.GetWindowProcName(newPid);
 
 			if (newPid != _actPid)
 			{
@@ -88,14 +105,33 @@ namespace tsWin
 		}
 	}
 
+	#region delegates and event args
+
 	public delegate void ActStateChangedHandler(object sender, ActStateChangedHandlerArgs args);
 
 	public class ActStateChangedHandlerArgs
 	{
+		/// <summary>
+		/// Process name
+		/// </summary>
 		public string NewPName { get; private set; }
+
+		/// <summary>
+		/// Window text
+		/// </summary>
 		public string NewWindowText { get; private set; }
+
+		/// <summary>
+		/// Process pid
+		/// </summary>
 		public int NewPID { get; private set; }
 
+		/// <summary>
+		/// Initialize a new instance of ActStateChangedHandlerArgs
+		/// </summary>
+		/// <param name="newPID">Process id</param>
+		/// <param name="newPName">Process name</param>
+		/// <param name="newWindowText">Window text</param>
 		public ActStateChangedHandlerArgs(int newPID, string newPName, string newWindowText)
 		{
 			NewPID = newPID;
@@ -108,8 +144,15 @@ namespace tsWin
 
 	public class ActPNameChangedHandlerArgs
 	{
+		/// <summary>
+		/// Process name
+		/// </summary>
 		public string NewPName { get; private set; }
 
+		/// <summary>
+		/// Initialize a new instance of ActPNameChangedHandlerArgs
+		/// </summary>
+		/// <param name="newPName">Process name</param>
 		public ActPNameChangedHandlerArgs(string newPName)
 		{
 			NewPName = newPName;
@@ -120,8 +163,15 @@ namespace tsWin
 
 	public class ActWindowTextChangedHandlerArgs
 	{
+		/// <summary>
+		/// Window text
+		/// </summary>
 		public string NewWindowText { get; private set; }
 
+		/// <summary>
+		/// Initialize a new instance of ActWindowTextChangedHandlerArgs
+		/// </summary>
+		/// <param name="newWindowText">Window text</param>
 		public ActWindowTextChangedHandlerArgs(string newWindowText)
 		{
 			NewWindowText = newWindowText;
@@ -132,11 +182,20 @@ namespace tsWin
 
 	public class ActPidChangedArgs
 	{
+		/// <summary>
+		/// Process id
+		/// </summary>
 		public int NewPID { get; private set; }
 
+		/// <summary>
+		/// Initialize a new instance of ActPidChangedArgs
+		/// </summary>
+		/// <param name="newPID">Process id</param>
 		public ActPidChangedArgs(int newPID)
 		{
 			NewPID = newPID;
 		}
 	}
+
+	#endregion
 }

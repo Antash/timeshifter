@@ -63,8 +63,8 @@ namespace tsCore.Classes
 			if (!_taskDbs.IsApplicationExist(pname))
 			{
 				_taskDbs.NewApplication(pname,
-					WindowTracker.GetApplicationIcon(pname, false),
-					WindowTracker.GetApplicationIcon(pname, true));
+					IconHelper.GetApplicationIcon(pname, false),
+					IconHelper.GetApplicationIcon(pname, true));
 				//InvokeNewApp(new AppAddArgs(pname, WindowTracker.GetApplicationIcon(pname, false)));
 			}
 		}
