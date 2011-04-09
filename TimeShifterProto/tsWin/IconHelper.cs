@@ -84,7 +84,18 @@ namespace tsWin
 
 			var il = new List<Icon>();
 			for (int i = 0; i < extractor.IconCount; i++)
-				il.AddRange(IconExtractor.SplitIcon(extractor.GetIcon(i)));
+			{
+				//TODO : not all files contains icons. needs another solution
+				try
+				{
+					il.AddRange(IconExtractor.SplitIcon(extractor.GetIcon(i)));
+				}
+				catch (Exception)
+				{
+					return GetProcIcon(WinApiWrapper.GetProcExecutablePath(appName));
+				}
+			}
+			
 
 			var resIconInfo = new IconInfo();
 
@@ -110,15 +121,25 @@ namespace tsWin
 		}
 
 		/// <summary>
-		/// 
+		/// Matches icon parameters with defaults
 		/// </summary>
-		/// <param name="iconInfo"></param>
-		/// <param name="isLarge"></param>
-		/// <returns></returns>
+		/// <param name="iconInfo">Information about tested icon</param>
+		/// <param name="isLarge">True matchs the large icon</param>
+		/// <returns>Returns true if icon clearly matches the requiments</returns>
 		private static bool IsIconFit(IconInfo iconInfo, bool isLarge)
 		{
 			return iconInfo.Depth == DefaultColorDepth && 
 				iconInfo.Size.Height == (isLarge ? LargeIconSize : SmallIconSize);
+		}
+
+		/// <summary>
+		/// Common grab icon method
+		/// </summary>
+		/// <param name="path">Full Path to file contains icon</param>
+		/// <returns>Grabbed icon</returns>
+		private static Icon GetProcIcon(string path)
+		{
+			return Icon.ExtractAssociatedIcon(path);
 		}
 	}
 }
