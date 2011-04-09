@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using tsCoreStructures;
 using tsPresenter;
 
 namespace tsUI.Forms
@@ -42,7 +43,7 @@ namespace tsUI.Forms
 			set
 			{
 				foreach (Image item in value)
-					ilAppSmall.Images.Add(item);
+					ilAppSmall.Images.Add(item ?? Properties.Resources.defAppS);
 			}
 		}
 
@@ -51,8 +52,23 @@ namespace tsUI.Forms
 			set
 			{
 				foreach (Image item in value)
-					ilAppLarge.Images.Add(item);
+					ilAppLarge.Images.Add(item ?? Properties.Resources.defAppL);
 			}
+		}
+
+		private delegate void AddAppDelegate(TsApplication app);
+
+		public void AddNewApplication(TsApplication app)
+		{
+			AddAppDelegate sd = AddApp;
+			lvApplications.Invoke(sd, app);
+		}
+
+		private void AddApp(TsApplication app)
+		{
+			ilAppLarge.Images.Add(app.LargeIcon != null ? app.LargeIcon.ToBitmap() : Properties.Resources.defAppL);
+			ilAppSmall.Images.Add(app.SmallIcon != null ? app.SmallIcon.ToBitmap() : Properties.Resources.defAppS);
+			lvApplications.Items.Add(new ListViewItem(app.Name, ilAppSmall.Images.Count - 1));
 		}
 
 		private void toLargeIcons_Click(object sender, EventArgs e)

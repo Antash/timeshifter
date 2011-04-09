@@ -50,6 +50,10 @@
     <Compile Include="TaskManagementPresenter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\tsCoreStructures\tsCoreStructures.csproj">
+      <Project>{930BD161-424B-45AE-B541-326F70F739C0}</Project>
+      <Name>tsCoreStructures</Name>
+    </ProjectReference>
     <ProjectReference Include="..\tsCore\tsCore.csproj">
       <Project>{306822B2-A83E-49CF-9FF9-4CAF6D92BEBC}</Project>
       <Name>tsCore</Name>

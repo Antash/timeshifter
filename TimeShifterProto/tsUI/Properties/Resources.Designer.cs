@@ -59,5 +59,19 @@ namespace tsUI.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Bitmap defAppL {
+            get {
+                object obj = ResourceManager.GetObject("defAppL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap defAppS {
+            get {
+                object obj = ResourceManager.GetObject("defAppS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

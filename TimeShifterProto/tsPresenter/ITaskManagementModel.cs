@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using tsCoreStructures;
 
 namespace tsPresenter
 {
@@ -12,6 +13,18 @@ namespace tsPresenter
 		List<ListViewItem> Applications { get; }
 		List<Image> AppIconsSmall { get; }
 		List<Image> AppIconsLarge { get; }
-		event newapp rebing;
+		event NewApplicationHandler NewApplication;
+	}
+
+	public delegate void NewApplicationHandler(object sender, NewApplicationHandlerArgs args);
+
+	public class NewApplicationHandlerArgs
+	{
+		public TsApplication App { get; private set; }
+
+		public NewApplicationHandlerArgs(TsApplication app)
+		{
+			App = app;
+		}
 	}
 }
