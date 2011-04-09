@@ -100,7 +100,7 @@ namespace tsWin
 			}
 			if (isDirty)
 			{
-				InvokeActStateChanged(new ActStateChangedHandlerArgs(_actPid, _actPname, _actWinText));
+				InvokeActStateChanged(new ActStateChangedHandlerArgs(newPid, newPName, newWTitle));
 			}
 		}
 	}

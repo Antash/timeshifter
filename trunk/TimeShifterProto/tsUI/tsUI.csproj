@@ -80,10 +80,20 @@
     <Folder Include="UserControls\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\tsCoreStructures\tsCoreStructures.csproj">
+      <Project>{930BD161-424B-45AE-B541-326F70F739C0}</Project>
+      <Name>tsCoreStructures</Name>
+    </ProjectReference>
     <ProjectReference Include="..\tsPresenter\tsPresenter.csproj">
       <Project>{6BD88D8B-AF1D-4703-81F4-AA2AB69B728E}</Project>
       <Name>tsPresenter</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\defL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\defS.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

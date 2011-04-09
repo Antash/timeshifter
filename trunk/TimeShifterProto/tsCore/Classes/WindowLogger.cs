@@ -44,9 +44,9 @@ namespace tsCore.Classes
 
 		void WinTrackerActStateChanged(object sender, ActStateChangedHandlerArgs args)
 		{
-			if (args.NewPName != _lastRecord.ProcesName && !String.IsNullOrEmpty(_lastRecord.ProcesName))
+			if (args.NewPName != _lastRecord.ProcesName && !String.IsNullOrEmpty(args.NewPName))
 			{
-				InvokeAppChanged(new AppChangedEventArgs(_lastRecord.ProcesName));
+				InvokeAppChanged(new AppChangedEventArgs(args.NewPName));
 				//+++ Yura: add new event checking for new process
 				// Тоха в каком месте будет храниться созданный в начале работы проги класс DataBaseStructure?
 				// Мне нужен тут доступ к созданному экземпляру, для проверки на наличие подобного процесса

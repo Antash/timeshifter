@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Drawing;
 using tsCore.Interfaces;
 using tsCoreStructures;
@@ -11,37 +10,30 @@ namespace tsCore.Classes
 {
 	public class TsAppCore : IManaged
 	{
-		private string _filename = "demo.txt";
+		private const string Filename = "demo.txt";
 		private readonly WindowLogger _tsWinLogger;
 		private readonly UserActLogger _tsUserActLogger;
-		private DataBaseStructure _taskDbs;
+		private readonly DataBaseStructure _taskDbs;
 
-		private Dictionary<string, UserActLogStructure> _tsUserActLog;
+		private readonly Dictionary<string, UserActLogStructure> _tsUserActLog;
 
 		private static volatile TsAppCore _instance;
 		private static readonly object SyncRoot = new Object();
 
-		public event AppAdd newApp;
-
-		public void InvokeNewApp(AppAddArgs args)
-		{
-			AppAdd handler = newApp;
-			if (handler != null) handler(this, args);
-		}
-
-		private TsAppCore()
+		protected TsAppCore()
 		{
 			_tsWinLogger = new WindowLogger();
 			_tsUserActLogger = new UserActLogger();
 			_tsUserActLog = new Dictionary<string, UserActLogStructure>();
-			_taskDbs = new DataBaseStructure(_filename);
+			_taskDbs = DataBaseStructure.Instance;
+			_taskDbs.Initialize(Filename);
 			_tsWinLogger.AppChanged += _tsWinLogger_AppChanged;
 		}
 
 		~TsAppCore()
 		{
-			_taskDbs.CreateBackUpDataBase(_filename);
-			_tsWinLogger.WriteBinary(_filename + "win.txt");
+			_taskDbs.CreateBackUpDataBase(Filename);
+			_tsWinLogger.WriteBinary(Filename + "win.txt");
 		}
 
 		public DataBaseStructure TaskDbs
@@ -65,7 +57,6 @@ namespace tsCore.Classes
 				_taskDbs.NewApplication(pname,
 					IconHelper.GetApplicationIcon(pname, false),
 					IconHelper.GetApplicationIcon(pname, true));
-				//InvokeNewApp(new AppAddArgs(pname, WindowTracker.GetApplicationIcon(pname, false)));
 			}
 		}
 
@@ -120,6 +111,4 @@ namespace tsCore.Classes
 			Image = image;
 		}
 	}
-
-	public delegate void AppAdd(object sender, AppAddArgs args);
 }

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using tsCoreStructures;
 
 namespace tsPresenter
 {
@@ -12,5 +13,6 @@ namespace tsPresenter
 		List<ListViewItem> Applications { set; }
 		List<Image> AppIconsSmall { set; }
 		List<Image> AppIconsLarge { set; }
+		void AddNewApplication(TsApplication app);
 	}
 }

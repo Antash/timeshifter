@@ -2,24 +2,52 @@
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using tsCoreStructures;
 
 namespace tsDAL
 {
 	public class DataBaseStructure
 	{
-		private DataSet _ds;
+		public event Newapphandler Newapp;
+
+		public void InvokeNewapp(NewapphandlerArgs args)
+		{
+			Newapphandler handler = Newapp;
+			if (handler != null) handler(this, args);
+		}
+
+		private readonly DataSet _ds;
 		private DataTable _dtTasks;
 		private DataTable _dtApplication;
 		private DataTable _dtTaskApplication;
 
-		public DataBaseStructure()
+		private static volatile DataBaseStructure _instance;
+		private static readonly object SyncRoot = new Object();
+
+		public static DataBaseStructure Instance
+		{
+			get
+			{
+				if (_instance == null)
+				{
+					lock (SyncRoot)
+					{
+						if (_instance == null)
+							_instance = new DataBaseStructure();
+					}
+				}
+				return _instance;
+			}
+		}
+
+		protected DataBaseStructure()
 		{
 			_ds = new DataSet();
 			BuildStructure();
 		}
 
-		internal DataSet DS
+		internal DataSet Ds
 		{
 			get { return _ds; }
 		}
@@ -46,6 +74,7 @@ namespace tsDAL
 			_dtApplication.Columns.Add("SmallIcon", typeof(Byte[]));
 			_dtApplication.Columns.Add("LargeIcon", typeof(Byte[]));
 			_dtApplication.Constraints.Add("PK", _dtApplication.Columns["ApplicationName"], true);
+
 			_ds.Tables.Add(_dtApplication);
 
 			_dtTaskApplication = new DataTable("TaskApplication");
@@ -53,8 +82,8 @@ namespace tsDAL
 			_dtTaskApplication.Columns.Add("TaskId", typeof(int));
 			_dtTaskApplication.Columns.Add("ApplicationId", typeof(string));
 			_dtTaskApplication.Constraints.Add("TaskApplicationPK", new[] {
-				_dtTaskApplication.Columns["TaskId"],
-				_dtTaskApplication.Columns["ApplicationId"]},
+			    _dtTaskApplication.Columns["TaskId"],
+			    _dtTaskApplication.Columns["ApplicationId"]},
 				true);
 
 			_ds.Tables.Add(_dtTaskApplication);
@@ -65,12 +94,6 @@ namespace tsDAL
 			//_ds.Relations.Add("ApplicationTaskApplicationFK",
 			//    _ds.Tables["Application"].Columns["ApplicationName"],
 			//    _ds.Tables["TaskApplication"].Columns["ApplicationId"]);
-		}
-
-		public DataBaseStructure(string fileName)
-			: this()
-		{
-			LoadDataBase(fileName);
 		}
 
 		public void CreateSchemaXml(string fileName)
@@ -107,11 +130,19 @@ namespace tsDAL
 		public void NewApplication(string applicationName, Icon smallIcon, Icon largeIcon)
 		{
 			var ic = new IconConverter();
-			var newLine = _dtApplication.NewRow();
+			var newLine = _ds.Tables["Application"].NewRow();
 			newLine["ApplicationName"] = applicationName;
 			newLine["SmallIcon"] = ic.ConvertTo(smallIcon, typeof (byte[]));
 			newLine["LargeIcon"] = ic.ConvertTo(largeIcon, typeof (byte[]));
-			_ds.Tables["Application"].Rows.Add(newLine);
+			//TODO : review reasons of failure here
+			try
+			{
+				_ds.Tables["Application"].Rows.Add(newLine);
+				InvokeNewapp(new NewapphandlerArgs(new TsApplication(applicationName, smallIcon, largeIcon)));
+			}
+			catch
+			{
+			}
 		}
 
 		public DataTableReader GetApplications()
@@ -129,7 +160,26 @@ namespace tsDAL
 
 		public bool IsApplicationExist(string applicationName)
 		{
-			return _ds.Tables["Application"].Rows.Find(applicationName) != null;
+			int q = _ds.Tables["Application"].AsEnumerable().Count(
+				r => r.Field<string>("ApplicationName") == applicationName);
+			return q > 0;
+		}
+
+		public void Initialize(string demoTxt)
+		{
+			LoadDataBase(demoTxt);
+		}
+	}
+
+	public delegate void Newapphandler(object sender, NewapphandlerArgs args);
+
+	public class NewapphandlerArgs
+	{
+		public TsApplication App { get; private set; }
+
+		public NewapphandlerArgs(TsApplication app)
+		{
+			App = app;
 		}
 	}
 }

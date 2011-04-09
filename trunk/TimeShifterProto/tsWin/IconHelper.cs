@@ -103,8 +103,22 @@ namespace tsWin
 					resIconInfo.Depth = depth;
 					resIconInfo.Size = ic.Size;
 				}
+				if (IsIconFit(resIconInfo, isLarge))
+					break;
 			}
 			return resIconInfo.Ico;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="iconInfo"></param>
+		/// <param name="isLarge"></param>
+		/// <returns></returns>
+		private static bool IsIconFit(IconInfo iconInfo, bool isLarge)
+		{
+			return iconInfo.Depth == DefaultColorDepth && 
+				iconInfo.Size.Height == (isLarge ? LargeIconSize : SmallIconSize);
 		}
 	}
 }

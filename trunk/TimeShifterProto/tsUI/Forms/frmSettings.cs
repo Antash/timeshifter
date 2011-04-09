@@ -10,7 +10,7 @@ namespace tsUI.Forms
 		private SettingsPresenter _presenter;
 		private bool _suppressEvents;
 
-		private FrmSettings()
+		protected FrmSettings()
 		{
 			InitializeComponent();
 		}
