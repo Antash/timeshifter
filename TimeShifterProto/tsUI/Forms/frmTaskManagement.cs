@@ -8,25 +8,15 @@ using System.Text;
 using System.Windows.Forms;
 using tsCoreStructures;
 using tsPresenter;
+using tsPresenter.TaskManagement;
 
 namespace tsUI.Forms
 {
 	public partial class FrmTaskManagement : Form, ITaskManagementView
 	{
-		private TaskManagementPresenter _presenter;
-		private bool _suppressEvents;
-
 		public FrmTaskManagement()
 		{
 			InitializeComponent();
-		}
-
-		private void FrmTaskManagement_Load(object sender, EventArgs e)
-		{
-			_presenter = new TaskManagementPresenter(this, new TaskManagementModel());
-			_suppressEvents = true;
-			_presenter.Initialize();
-			_suppressEvents = false;
 		}
 
 		public List<ListViewItem> Applications
@@ -35,6 +25,12 @@ namespace tsUI.Forms
 			{
 				foreach (ListViewItem item in value)
 					lvApplications.Items.Add(item);
+			}
+			get
+			{
+				var res = new List<ListViewItem>();
+				res.AddRange(lvApplications.Items.OfType<ListViewItem>());
+				return res;
 			}
 		}
 
@@ -45,6 +41,12 @@ namespace tsUI.Forms
 				foreach (Image item in value)
 					ilAppSmall.Images.Add(item ?? Properties.Resources.defAppS);
 			}
+			get
+			{
+				var res = new List<Image>();
+				res.AddRange(ilAppSmall.Images.OfType<Image>());
+				return res;
+			}
 		}
 
 		public List<Image> AppIconsLarge
@@ -53,6 +55,12 @@ namespace tsUI.Forms
 			{
 				foreach (Image item in value)
 					ilAppLarge.Images.Add(item ?? Properties.Resources.defAppL);
+			}
+			get 
+			{
+				var res = new List<Image>();
+				res.AddRange(ilAppLarge.Images.OfType<Image>());
+				return res;
 			}
 		}
 
@@ -63,6 +71,14 @@ namespace tsUI.Forms
 			if (lvApplications.InvokeRequired)
 				lvApplications.Invoke(new AddAppDelegate(AddApp), app);
 			else AddApp(app);
+		}
+
+		public event EventHandler Save;
+
+		public void InvokeSave(EventArgs e)
+		{
+			EventHandler handler = Save;
+			if (handler != null) handler(this, e);
 		}
 
 		private void AddApp(TsApplication app)
@@ -80,6 +96,11 @@ namespace tsUI.Forms
 		private void toSmallIcons_Click(object sender, EventArgs e)
 		{
 			lvApplications.View = View.SmallIcon;
+		}
+
+		private void FrmTaskManagement_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			InvokeSave(new EventArgs());
 		}
 	}
 }

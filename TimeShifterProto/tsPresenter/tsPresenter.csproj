@@ -41,13 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ITaskManagementModel.cs" />
-    <Compile Include="ITaskManagementView.cs" />
-    <Compile Include="SettingsPresenter.cs" />
-    <Compile Include="ISettingsView.cs" />
+    <Compile Include="Base\IModel.cs" />
+    <Compile Include="Base\IView.cs" />
+    <Compile Include="Base\Presenter.cs" />
+    <Compile Include="Settings\ISettingsModel.cs" />
+    <Compile Include="Settings\SettingsModel.cs" />
+    <Compile Include="TaskManagement\ITaskManagementModel.cs" />
+    <Compile Include="TaskManagement\ITaskManagementView.cs" />
+    <Compile Include="Settings\SettingsPresenter.cs" />
+    <Compile Include="Settings\ISettingsView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskManagementModel.cs" />
-    <Compile Include="TaskManagementPresenter.cs" />
+    <Compile Include="TaskManagement\TaskManagementModel.cs" />
+    <Compile Include="TaskManagement\TaskManagementPresenter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tsCoreStructures\tsCoreStructures.csproj">
