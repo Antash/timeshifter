@@ -106,18 +106,12 @@ namespace tsDAL
 
 		public void NewApplication(string applicationName, Icon smallIcon, Icon largeIcon)
 		{
-			IconConverter ic = new IconConverter();
+			var ic = new IconConverter();
 			var newLine = _dtApplication.NewRow();
 			newLine["ApplicationName"] = applicationName;
-			newLine["SmallIcon"] = ic.ConvertTo(smallIcon, typeof(byte[]));
-			newLine["LargeIcon"] = ic.ConvertTo(largeIcon, typeof(byte[]));
-			try
-			{
-				_dtApplication.Rows.Add(newLine);
-			}
-			catch (Exception)
-			{
-			}
+			newLine["SmallIcon"] = ic.ConvertTo(smallIcon, typeof (byte[]));
+			newLine["LargeIcon"] = ic.ConvertTo(largeIcon, typeof (byte[]));
+			_ds.Tables["Application"].Rows.Add(newLine);
 		}
 
 		public DataTableReader GetApplications()

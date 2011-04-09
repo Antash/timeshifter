@@ -34,9 +34,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmTray.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTray.Designer.cs">
+      <DependentUpon>FrmTray.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="tsProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -45,10 +57,26 @@
       <Project>{306822B2-A83E-49CF-9FF9-4CAF6D92BEBC}</Project>
       <Name>tsCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\tsPresenter\tsPresenter.csproj">
+      <Project>{6BD88D8B-AF1D-4703-81F4-AA2AB69B728E}</Project>
+      <Name>tsPresenter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\tsUI\tsUI.csproj">
       <Project>{22E1BE8B-1AE0-4DF9-A481-CF3658A93B08}</Project>
       <Name>tsUI</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FrmTray.resx">
+      <DependentUpon>FrmTray.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TrayIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
