@@ -595,7 +595,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:tsSetup"
         "ProductCode" = "8:{8BEC56C2-30ED-4A79-A363-57EA184DEB54}"
-        "PackageCode" = "8:{5F59C4BC-6C18-45B6-8588-8A399271EF2A}"
+        "PackageCode" = "8:{F6C3BC24-155B-4DBD-95BA-E300668D4006}"
         "UpgradeCode" = "8:{2469EE32-FA53-4E66-A83A-8FBA2439B5F4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
