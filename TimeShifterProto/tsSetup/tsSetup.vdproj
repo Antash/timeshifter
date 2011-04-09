@@ -356,7 +356,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:tsUI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:tsUI, Version=0.1.4116.20628, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_3388A1A41B4BA592F086064596BD92F5"
@@ -387,7 +387,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:tsWin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:tsWin, Version=0.1.4116.20627, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_4FB472ADFBC2CA4F296B903E40E419BF"
@@ -418,7 +418,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:tsCoreStructures, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:tsCoreStructures, Version=0.1.4116.20627, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_5AC4DA7FC6E951621A5B4E1540E69734"
@@ -449,7 +449,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:tsPresenter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:tsPresenter, Version=0.1.4116.20628, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_837466607003F05B1CEED57AA64EF611"
@@ -480,7 +480,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:tsCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:tsCore, Version=0.1.4116.20627, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_D34C5672DB01DD99B913159F2B1CFAAC"
@@ -511,7 +511,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:tsDAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:tsDAL, Version=0.1.4116.20627, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_EA03BB9127BE280909D40FA2A0786F0C"
@@ -595,7 +595,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:tsSetup"
         "ProductCode" = "8:{8BEC56C2-30ED-4A79-A363-57EA184DEB54}"
-        "PackageCode" = "8:{F6C3BC24-155B-4DBD-95BA-E300668D4006}"
+        "PackageCode" = "8:{8F0CF82B-CF48-4DB2-A8C2-124F8320913A}"
         "UpgradeCode" = "8:{2469EE32-FA53-4E66-A83A-8FBA2439B5F4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
