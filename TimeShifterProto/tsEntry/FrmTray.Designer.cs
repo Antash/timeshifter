@@ -29,7 +29,6 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTray));
 			this.niTS = new System.Windows.Forms.NotifyIcon(this.components);
 			this.contextMenuStripTsTray = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.taskManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,6 +41,7 @@
 			// 
 			this.niTS.ContextMenuStrip = this.contextMenuStripTsTray;
 			this.niTS.Text = "TimeShifter";
+			this.niTS.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.niTS_MouseDoubleClick);
 			// 
 			// contextMenuStripTsTray
 			// 
@@ -77,12 +77,10 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(175, 66);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.ClientSize = new System.Drawing.Size(227, 211);
 			this.Name = "FrmTray";
-			this.ShowIcon = false;
-			this.ShowInTaskbar = false;
 			this.Text = "frmTray";
+			this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
 			this.Load += new System.EventHandler(this.FrmTray_Load);
 			this.contextMenuStripTsTray.ResumeLayout(false);
 			this.ResumeLayout(false);
