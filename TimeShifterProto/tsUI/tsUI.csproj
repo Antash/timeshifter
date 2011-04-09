@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\any\Debug\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -50,12 +50,6 @@
     <Compile Include="Forms\frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmTray.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\frmTray.Designer.cs">
-      <DependentUpon>frmTray.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\frmTaskManagement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,9 +70,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmTaskManagement.resx">
       <DependentUpon>frmTaskManagement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmTray.resx">
-      <DependentUpon>frmTray.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

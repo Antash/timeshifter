@@ -65,7 +65,7 @@ namespace tsCore.Classes
 				_taskDbs.NewApplication(pname,
 					WindowTracker.GetApplicationIcon(pname, false),
 					WindowTracker.GetApplicationIcon(pname, true));
-				InvokeNewApp(new AppAddArgs(pname, WindowTracker.GetApplicationIcon(pname, false)));
+				//InvokeNewApp(new AppAddArgs(pname, WindowTracker.GetApplicationIcon(pname, false)));
 			}
 		}
 

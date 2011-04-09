@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Threading;
 
 namespace tsWin
@@ -35,7 +34,7 @@ namespace tsWin
 			if (handler != null) handler(this, args);
 		}
 
-		private Timer _t1;
+		private readonly Timer _t1;
 		private int _actPid;
 		private string _actPname;
 		private string _actWinText;
@@ -47,24 +46,14 @@ namespace tsWin
 			_t1 = new Timer(TimerTick, autoEvent, 0, TickPeriod);
 		}
 
+		~WindowTracker()
+		{
+			_t1.Dispose();
+		}
+
 		public static Icon GetApplicationIcon(string appName, bool isLarge)
 		{
-			IconExtractor extractor;
-			try
-			{
-				extractor = new IconExtractor(WinApiWrapper.GetProcExecutablePath(appName));
-			}
-			catch
-			{
-				return null;
-			}
-			List<Icon> il = new List<Icon>();
-			for (int i = 0; i < extractor.IconCount; i++)
-			{
-				foreach (Icon ic in IconExtractor.SplitIcon(extractor.GetIcon(i)))
-					il.Add(ic);
-			}
-			return il[0];
+			return IconHelper.GetApplicationIcon(appName, isLarge);
 		}
 
 		private void TimerTick(object state)
