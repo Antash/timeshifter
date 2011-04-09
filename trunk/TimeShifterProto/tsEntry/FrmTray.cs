@@ -8,7 +8,7 @@ namespace tsEntry
 		public FrmTray()
 		{
 			InitializeComponent();
-			niTS.Icon = Properties.Resources.TrayIcon;
+			Icon = niTS.Icon = Properties.Resources.TrayIcon;
 			niTS.Visible = true;
 		}
 
@@ -28,11 +28,14 @@ namespace tsEntry
 		private void FrmTray_Load(object sender, System.EventArgs e)
 		{
 			BeginInvoke(new MethodInvoker(Hide));
-
-		//	new FrmTaskManagement().Show();
 		}
 
 		private void taskManagerToolStripMenuItem_Click(object sender, System.EventArgs e)
+		{
+			new FrmTaskManagement().Show();
+		}
+
+		private void niTS_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
 			new FrmTaskManagement().Show();
 		}
