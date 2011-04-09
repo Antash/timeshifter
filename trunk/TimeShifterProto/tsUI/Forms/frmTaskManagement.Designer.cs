@@ -37,8 +37,12 @@
 			this.ilAppSmall = new System.Windows.Forms.ImageList(this.components);
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.button1 = new System.Windows.Forms.Button();
+			this.cmsAppList = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.toLargeIcons = new System.Windows.Forms.ToolStripMenuItem();
+			this.toSmallIcons = new System.Windows.Forms.ToolStripMenuItem();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.panel1.SuspendLayout();
+			this.cmsAppList.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tableLayoutPanel1
@@ -77,6 +81,7 @@
 			// 
 			// lvApplications
 			// 
+			this.lvApplications.ContextMenuStrip = this.cmsAppList;
 			this.lvApplications.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lvApplications.LargeImageList = this.ilAppLarge;
 			this.lvApplications.Location = new System.Drawing.Point(298, 42);
@@ -116,6 +121,28 @@
 			this.button1.Text = "button1";
 			this.button1.UseVisualStyleBackColor = true;
 			// 
+			// cmsAppList
+			// 
+			this.cmsAppList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toLargeIcons,
+            this.toSmallIcons});
+			this.cmsAppList.Name = "cmsAppList";
+			this.cmsAppList.Size = new System.Drawing.Size(164, 52);
+			// 
+			// toLargeIcons
+			// 
+			this.toLargeIcons.Name = "toLargeIcons";
+			this.toLargeIcons.Size = new System.Drawing.Size(163, 24);
+			this.toLargeIcons.Text = "toLargeIcons";
+			this.toLargeIcons.Click += new System.EventHandler(this.toLargeIcons_Click);
+			// 
+			// toSmallIcons
+			// 
+			this.toSmallIcons.Name = "toSmallIcons";
+			this.toSmallIcons.Size = new System.Drawing.Size(163, 24);
+			this.toSmallIcons.Text = "toSmallIcons";
+			this.toSmallIcons.Click += new System.EventHandler(this.toSmallIcons_Click);
+			// 
 			// FrmTaskManagement
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -127,6 +154,7 @@
 			this.Load += new System.EventHandler(this.FrmTaskManagement_Load);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
+			this.cmsAppList.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -141,5 +169,8 @@
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.ImageList ilAppSmall;
 		private System.Windows.Forms.ImageList ilAppLarge;
+		private System.Windows.Forms.ContextMenuStrip cmsAppList;
+		private System.Windows.Forms.ToolStripMenuItem toLargeIcons;
+		private System.Windows.Forms.ToolStripMenuItem toSmallIcons;
 	}
 }
