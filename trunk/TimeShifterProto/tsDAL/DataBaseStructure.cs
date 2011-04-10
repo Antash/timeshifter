@@ -2,7 +2,6 @@
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using tsCoreStructures;
 
 namespace tsDAL
@@ -134,15 +133,8 @@ namespace tsDAL
 			newLine["ApplicationName"] = applicationName;
 			newLine["SmallIcon"] = ic.ConvertTo(smallIcon, typeof (byte[]));
 			newLine["LargeIcon"] = ic.ConvertTo(largeIcon, typeof (byte[]));
-			//TODO : review reasons of failure here
-			try
-			{
-				_ds.Tables["Application"].Rows.Add(newLine);
-				InvokeNewapp(new NewapphandlerArgs(new TsApplication(applicationName, smallIcon, largeIcon)));
-			}
-			catch
-			{
-			}
+			_ds.Tables["Application"].Rows.Add(newLine);
+			InvokeNewapp(new NewapphandlerArgs(new TsApplication(applicationName, smallIcon, largeIcon)));
 		}
 
 		public DataTableReader GetApplications()
@@ -160,9 +152,7 @@ namespace tsDAL
 
 		public bool IsApplicationExist(string applicationName)
 		{
-			int q = _ds.Tables["Application"].AsEnumerable().Count(
-				r => r.Field<string>("ApplicationName") == applicationName);
-			return q > 0;
+			return _ds.Tables["Application"].Rows.Find(applicationName) != null;
 		}
 
 		public void Initialize(string demoTxt)
