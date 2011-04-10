@@ -49,7 +49,7 @@ namespace tsPresenter.TaskManagement
 
 		void DataBaseStructure_Newapp(object sender, NewapphandlerArgs args)
 		{
-			_applications.Add(new ListViewItem(args.App.Name, _i - 1));
+			_applications.Add(new ListViewItem(args.App.Name, _appIconLarge.Count));
 			_appIconLarge.Add(args.App.LargeIcon.ToBitmap());
 			_appIconSmall.Add(args.App.SmallIcon.ToBitmap());
 			InvokeNewApplication(new NewApplicationHandlerArgs(new TsApplication(args.App)));
