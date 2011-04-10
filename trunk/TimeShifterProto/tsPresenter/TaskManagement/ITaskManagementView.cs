@@ -14,6 +14,5 @@ namespace tsPresenter.TaskManagement
 		List<Image> AppIconsLarge { get; set; }
 		void AddNewApplication(TsApplication app);
 		event EventHandler Save;
-		void Show();
 	}
 }

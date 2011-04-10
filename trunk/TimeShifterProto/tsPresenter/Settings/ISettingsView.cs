@@ -7,9 +7,6 @@ namespace tsPresenter.Settings
 	{
 		bool IsAutostartEnabled { get; set; }
 		bool IsCoreRunning { get; set; }
-		bool Visible { get; set; }
 		event EventHandler DataChanged;
-		void Show();
-		void BringToFront();
 	}
 }
