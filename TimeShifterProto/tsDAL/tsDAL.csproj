@@ -44,6 +44,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\tsCoreFW\tsCoreFW.csproj">
+      <Project>{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}</Project>
+      <Name>tsCoreFW</Name>
+    </ProjectReference>
     <ProjectReference Include="..\tsCoreStructures\tsCoreStructures.csproj">
       <Project>{930BD161-424B-45AE-B541-326F70F739C0}</Project>
       <Name>tsCoreStructures</Name>

@@ -9,10 +9,10 @@ namespace tsEntry
 		[STAThread]
 		static void Main(string[] args)
 		{
-			TsAppCore.Instance.Enable();
-
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+
+			TsAppCore.Instance.Enable();
 
 			Application.Run(new FrmTray());
 		}

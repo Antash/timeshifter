@@ -44,6 +44,12 @@
     <Compile Include="WinApiWrapper.cs" />
     <Compile Include="WindowTracker.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\tsCoreFW\tsCoreFW.csproj">
+      <Project>{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}</Project>
+      <Name>tsCoreFW</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

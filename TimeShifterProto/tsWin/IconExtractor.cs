@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Runtime.InteropServices;
+using tsCoreFW;
 
 namespace tsWin
 {
@@ -118,7 +119,10 @@ namespace tsWin
                 if (this._bufPtr != IntPtr.Zero)
                 {
                     try { Marshal.FreeHGlobal(this._bufPtr); }
-                    catch { }
+                    catch(Exception e)
+                    {
+						ErrorManager.Instance.RiseError("IconHandler", e.Message);
+                    }
 
                     this._bufPtr = IntPtr.Zero;
                 }
@@ -225,7 +229,10 @@ namespace tsWin
             if (this._hModule != IntPtr.Zero)
             {
                 try { FreeLibrary(this._hModule); }
-                catch { }
+				catch (Exception e)
+				{
+					ErrorManager.Instance.RiseError("IconHandler", e.Message);
+				}
 
                 this._hModule = IntPtr.Zero;
             }
@@ -237,7 +244,10 @@ namespace tsWin
                     if (i != null)
                     {
                         try { i.Dispose(); }
-                        catch { }
+						catch (Exception e)
+						{
+							ErrorManager.Instance.RiseError("IconHandler", e.Message);
+						}
                     }
                 }
 
