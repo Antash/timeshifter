@@ -96,7 +96,6 @@ namespace tsWin
 				}
 			}
 			
-
 			var resIconInfo = new IconInfo();
 
 			foreach (Icon ic in il)

@@ -2,6 +2,7 @@
 using System.Data;
 using System.Drawing;
 using System.IO;
+using tsCoreFW;
 using tsCoreStructures;
 
 namespace tsDAL
@@ -113,7 +114,11 @@ namespace tsDAL
 			}
 			catch (FileNotFoundException)
 			{
-			//    //	BuildStructure();
+				//	BuildStructure();
+			}
+			catch (Exception e)
+			{
+				ErrorManager.Instance.RiseError("DAL", e.Message);
 			}
 		}
 
