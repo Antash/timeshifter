@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using tsCoreFW;
 
 namespace tsWin
 {
@@ -77,8 +78,9 @@ namespace tsWin
 			{
 				extractor = new IconExtractor(WinApiWrapper.GetProcExecutablePath(appName));
 			}
-			catch
+			catch (Exception e)
 			{
+				ErrorManager.Instance.RiseError("could not create extractor", e.Message);
 				return null;
 			}
 
@@ -90,8 +92,9 @@ namespace tsWin
 				{
 					il.AddRange(IconExtractor.SplitIcon(extractor.GetIcon(i)));
 				}
-				catch (Exception)
+				catch (Exception e)
 				{
+					ErrorManager.Instance.RiseError("wrong resource", e.Message);
 					return GetProcIcon(WinApiWrapper.GetProcExecutablePath(appName));
 				}
 			}

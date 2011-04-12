@@ -138,8 +138,15 @@ namespace tsDAL
 			newLine["ApplicationName"] = applicationName;
 			newLine["SmallIcon"] = ic.ConvertTo(smallIcon, typeof (byte[]));
 			newLine["LargeIcon"] = ic.ConvertTo(largeIcon, typeof (byte[]));
-			_ds.Tables["Application"].Rows.Add(newLine);
-			InvokeNewapp(new NewapphandlerArgs(new TsApplication(applicationName, smallIcon, largeIcon)));
+			try
+			{
+				_ds.Tables["Application"].Rows.Add(newLine);
+				InvokeNewapp(new NewapphandlerArgs(new TsApplication(applicationName, smallIcon, largeIcon)));
+			}
+			catch (Exception e)
+			{
+				ErrorManager.Instance.RiseError("DAL", e.Message);
+			}
 		}
 
 		public DataTableReader GetApplications()
