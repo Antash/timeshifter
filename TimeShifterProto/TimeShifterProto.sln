@@ -19,6 +19,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "tsSetup", "tsSetup\tsSetup.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsOptions", "isOptions\tsOptions.csproj", "{47E378B2-5E19-42AD-999D-F4AB5D519914}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsCoreFW", "tsCoreFW\tsCoreFW.csproj", "{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -119,6 +121,16 @@ Global
 		{47E378B2-5E19-42AD-999D-F4AB5D519914}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{47E378B2-5E19-42AD-999D-F4AB5D519914}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{47E378B2-5E19-42AD-999D-F4AB5D519914}.Release|x86.ActiveCfg = Release|Any CPU
+		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
