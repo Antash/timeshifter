@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace tsCoreFW
 {
@@ -36,14 +37,16 @@ namespace tsCoreFW
 		{
 			_errForm = new FrmErr();
 			_errForm.Init(errMsg);
-			_errForm.Show();
+			Application.Run(_errForm);
+			//_errForm.Show();
 		}
 
 		public void RiseError(string errModule, string errMsg)
 		{
 			_errForm = new FrmErr();
 			_errForm.Init(errModule, errMsg);
-			_errForm.Show();
+			Application.Run(_errForm);
+			//_errForm.Show();
 		}
 	}
 }
