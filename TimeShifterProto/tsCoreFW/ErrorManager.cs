@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
+using System.Threading;
 
 namespace tsCoreFW
 {
@@ -29,24 +29,32 @@ namespace tsCoreFW
 
 		protected ErrorManager()
 		{
+			ShowErrors = true;
 		}
 
 		private FrmErr _errForm;
+		public bool ShowErrors { get; set; }
 
 		public void RiseError(string errMsg)
 		{
 			_errForm = new FrmErr();
 			_errForm.Init(errMsg);
-			Application.Run(_errForm);
-			//_errForm.Show();
+			
+			if (ShowErrors)
+			{
+				new Thread(() => _errForm.ShowDialog()).Start();
+			}
 		}
 
 		public void RiseError(string errModule, string errMsg)
 		{
 			_errForm = new FrmErr();
 			_errForm.Init(errModule, errMsg);
-			Application.Run(_errForm);
-			//_errForm.Show();
+
+			if (ShowErrors)
+			{
+				new Thread(() => _errForm.ShowDialog()).Start();
+			}
 		}
 	}
 }
