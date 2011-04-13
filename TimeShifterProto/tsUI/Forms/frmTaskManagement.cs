@@ -110,10 +110,20 @@ namespace tsUI.Forms
 
 		private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
 		{
-			if (e.KeyChar == (int)Keys.Enter)
+			//if (e.KeyChar == (int)Keys.Enter)
+			//{
+			//    AddTask(textBox1.Text);
+			//    textBox1.Text = "";
+			//}
+		}
+
+		private void textBox1_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
 			{
-				AddTask(textBox1.Text);
-				textBox1.Text = "";
+				if (textBox1.Text != String.Empty) 
+					AddTask(textBox1.Text);
+				textBox1.Text = String.Empty;
 			}
 		}
 
