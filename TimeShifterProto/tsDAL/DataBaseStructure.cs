@@ -154,6 +154,11 @@ namespace tsDAL
 			return _ds.Tables["Application"].CreateDataReader();
 		}
 
+		public DataTableReader GetTasks()
+		{
+			return _ds.Tables["Tasks"].CreateDataReader();
+		}
+
 		public void NewSettingsRule(int taskId, int applicationId)
 		{
 			var newLine = _dtTaskApplication.NewRow();
