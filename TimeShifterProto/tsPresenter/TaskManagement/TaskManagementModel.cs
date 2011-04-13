@@ -14,6 +14,7 @@ namespace tsPresenter.TaskManagement
 		private List<ListViewItem> _applications;
 		private List<Image> _appIconSmall;
 		private List<Image> _appIconLarge;
+		private TreeNodeCollection _tasks;
 		
 		//TODO : needs to be refactored
 		readonly int _i;
@@ -22,6 +23,8 @@ namespace tsPresenter.TaskManagement
 			_applications = new List<ListViewItem>();
 			_appIconSmall = new List<Image>();
 			_appIconLarge = new List<Image>();
+
+			_tasks = new TreeNodeCollection();
 
 			DataTableReader dr = TsAppCore.Instance.TaskDbs.GetApplications();
 
@@ -71,6 +74,12 @@ namespace tsPresenter.TaskManagement
 		{
 			get { return _appIconLarge; }
 			set { _appIconLarge = value; }
+		}
+
+		public TreeNodeCollection Tasks
+		{
+			get { return _tasks; }
+			set { _tasks = value; }
 		}
 
 		public event NewApplicationHandler NewApplication;
