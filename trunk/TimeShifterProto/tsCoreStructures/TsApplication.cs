@@ -8,9 +8,13 @@ namespace tsCoreStructures
 {
 	public class TsApplication
 	{
+		public bool IsRunning { get; set; }
 		public string Name { get; set; }
+		public string AlternateName { get; set; }
 		public Icon SmallIcon { get; set; }
 		public Icon LargeIcon { get; set; }
+		public List<TsWindow> RunningWindows { get; set; }
+		public List<TsWindow> AllWindows { get; set; }
 
 		public TsApplication(TsApplication app)
 		{
@@ -30,7 +34,5 @@ namespace tsCoreStructures
 			SmallIcon = smallIcon;
 			LargeIcon = largeIcon;
 		}
-
-
 	}
 }
