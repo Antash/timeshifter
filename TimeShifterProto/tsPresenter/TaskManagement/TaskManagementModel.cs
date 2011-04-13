@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -96,6 +97,10 @@ namespace tsPresenter.TaskManagement
 		}
 
 		public event NewApplicationHandler NewApplication;
+		public void AddNewTask(TsTask task)
+		{
+			throw new NotImplementedException();
+		}
 
 		public void InvokeNewApplication(NewApplicationHandlerArgs args)
 		{

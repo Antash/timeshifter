@@ -64,7 +64,23 @@ namespace tsUI.Forms
 			}
 		}
 
+		public List<TreeNode> Tasks
+		{
+			get
+			{
+				var res = new List<TreeNode>();
+				res.AddRange(treeView1.Nodes.OfType<TreeNode>());
+				return res;
+			}
+			set
+			{
+				foreach (TreeNode item in value)
+					treeView1.Nodes.Add(item);
+			}
+		}
+
 		private delegate void AddAppDelegate(TsApplication app);
+		private delegate void AddTaskDelegate(TsTask task);
 
 		public void AddNewApplication(TsApplication app)
 		{
@@ -73,11 +89,26 @@ namespace tsUI.Forms
 			else AddApp(app);
 		}
 
+		public void AddNewTask(TsTask task)
+		{
+			if (treeView1.InvokeRequired)
+				treeView1.Invoke(new AddTaskDelegate(AddTask), task);
+			else AddTask(task);
+			;
+		}
+
 		public event EventHandler Save;
+		public event NewTaskHandler NewTask;
 
 		public void InvokeSave(EventArgs e)
 		{
 			EventHandler handler = Save;
+			if (handler != null) handler(this, e);
+		}
+
+		public void InvokeNewTask(NewTaskHandlerArgs e)
+		{
+			NewTaskHandler handler = NewTask;
 			if (handler != null) handler(this, e);
 		}
 
@@ -103,9 +134,9 @@ namespace tsUI.Forms
 			InvokeSave(new EventArgs());
 		}
 
-		private void AddTask(string taskName)
+		private void AddTask(TsTask task)
 		{
-			treeView1.Nodes.Add(taskName);
+			treeView1.Nodes.Add(task.TaskName);
 		}
 
 		private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -121,8 +152,12 @@ namespace tsUI.Forms
 		{
 			if (e.KeyCode == Keys.Enter)
 			{
-				if (textBox1.Text != String.Empty) 
-					AddTask(textBox1.Text);
+				if (textBox1.Text != String.Empty)
+				{
+					TsTask _task = new TsTask(textBox1.Text,textBox1.Text, DateTime.Now);
+					AddTask(_task);
+				}
+					
 				textBox1.Text = String.Empty;
 			}
 		}
