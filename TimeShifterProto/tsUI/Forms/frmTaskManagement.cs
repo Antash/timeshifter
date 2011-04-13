@@ -102,5 +102,20 @@ namespace tsUI.Forms
 		{
 			InvokeSave(new EventArgs());
 		}
+
+		private void AddTask(string taskName)
+		{
+			treeView1.Nodes.Add(taskName);
+		}
+
+		private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == (int)Keys.Enter)
+			{
+				AddTask(textBox1.Text);
+				textBox1.Text = "";
+			}
+		}
+
 	}
 }
