@@ -12,7 +12,9 @@ namespace tsPresenter.TaskManagement
 		List<ListViewItem> Applications { get;  set; }
 		List<Image> AppIconsSmall { get; set; }
 		List<Image> AppIconsLarge { get; set; }
+		TreeNodeCollection Tasks { get; set; }
 		void AddNewApplication(TsApplication app);
+		void AddNewTask(TsTask task);
 		event EventHandler Save;
 	}
 }
