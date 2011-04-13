@@ -17,6 +17,7 @@ namespace tsPresenter.TaskManagement
 		{
 			((ITaskManagementModel) Model).NewApplication += ModelNewApplication;
 			((ITaskManagementView) View).Save += ViewSave;
+			//((ITaskManagementView)View).NewTask += ViewSave;
 		}
 
 		protected override sealed void Initialize()
