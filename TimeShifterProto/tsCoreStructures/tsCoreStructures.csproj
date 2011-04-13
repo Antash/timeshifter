@@ -42,8 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskStructure.cs" />
+    <Compile Include="TsTask.cs" />
     <Compile Include="TsApplication.cs" />
+    <Compile Include="TsWindow.cs" />
     <Compile Include="UserActLogStructure.cs" />
     <Compile Include="WindowLogStructure.cs" />
   </ItemGroup>
