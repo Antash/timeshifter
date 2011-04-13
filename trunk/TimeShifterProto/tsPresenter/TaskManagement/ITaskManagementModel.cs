@@ -14,6 +14,7 @@ namespace tsPresenter.TaskManagement
 		List<TreeNode> Tasks { get; set; }
 
 		event NewApplicationHandler NewApplication;
+		void AddNewTask(TsTask task);
 	}
 
 	public delegate void NewApplicationHandler(object sender, NewApplicationHandlerArgs args);
