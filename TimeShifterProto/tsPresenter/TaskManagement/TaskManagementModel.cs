@@ -14,7 +14,7 @@ namespace tsPresenter.TaskManagement
 		private List<ListViewItem> _applications;
 		private List<Image> _appIconSmall;
 		private List<Image> _appIconLarge;
-		private TreeNodeCollection _tasks;
+		private List<TreeNode> _tasks;
 		
 		//TODO : needs to be refactored
 		readonly int _i;
@@ -24,7 +24,7 @@ namespace tsPresenter.TaskManagement
 			_appIconSmall = new List<Image>();
 			_appIconLarge = new List<Image>();
 
-			_tasks = new TreeNodeCollection();
+			
 
 			DataTableReader dr = TsAppCore.Instance.TaskDbs.GetApplications();
 
@@ -48,6 +48,19 @@ namespace tsPresenter.TaskManagement
 			}
 			dr.Close();
 			DataBaseStructure.Instance.Newapp += DataBaseStructure_Newapp;
+
+			_tasks = new List<TreeNode>();
+
+			DataTableReader dr_task = TsAppCore.Instance.TaskDbs.GetTasks();
+
+			while (dr_task.Read())
+			{
+
+				_tasks.Add(new TreeNode(dr_task.GetValue(0).ToString()));
+			}
+			dr_task.Close();
+			//DataBaseStructure.Instance.Newapp += DataBaseStructure_Newapp;
+
 		}
 
 		void DataBaseStructure_Newapp(object sender, NewapphandlerArgs args)
@@ -76,7 +89,7 @@ namespace tsPresenter.TaskManagement
 			set { _appIconLarge = value; }
 		}
 
-		public TreeNodeCollection Tasks
+		public List<TreeNode> Tasks
 		{
 			get { return _tasks; }
 			set { _tasks = value; }
