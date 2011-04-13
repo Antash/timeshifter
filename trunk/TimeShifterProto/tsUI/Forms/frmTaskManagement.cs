@@ -156,6 +156,7 @@ namespace tsUI.Forms
 				{
 					TsTask _task = new TsTask(textBox1.Text,textBox1.Text, DateTime.Now);
 					AddTask(_task);
+					InvokeNewTask(new NewTaskHandlerArgs(_task));
 				}
 					
 				textBox1.Text = String.Empty;
