@@ -122,11 +122,11 @@ namespace tsDAL
 			}
 		}
 
-		public void NewTask(TaskStructure task)
+		public void NewTask(TsTask task)
 		{
 			var newLine = _dtTasks.NewRow();
 			newLine["TaskName"] = task.TaskName;
-			newLine["PlanTime"] = task.PlanTime;
+			newLine["PlanTime"] = task.BeginTime;
 			newLine["Discription"] = task.Discription;
 			_dtTasks.Rows.Add(newLine);
 		}
