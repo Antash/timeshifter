@@ -57,7 +57,7 @@ namespace tsPresenter.TaskManagement
 			while (dr_task.Read())
 			{
 
-				_tasks.Add(new TreeNode(dr_task.GetValue(0).ToString()));
+				_tasks.Add(new TreeNode(dr_task.GetValue(1).ToString()));
 			}
 			dr_task.Close();
 			//DataBaseStructure.Instance.Newapp += DataBaseStructure_Newapp;
@@ -99,7 +99,7 @@ namespace tsPresenter.TaskManagement
 		public event NewApplicationHandler NewApplication;
 		public void AddNewTask(TsTask task)
 		{
-			throw new NotImplementedException();
+			TsAppCore.Instance.TaskDbs.NewTask(task);
 		}
 
 		public void InvokeNewApplication(NewApplicationHandlerArgs args)
