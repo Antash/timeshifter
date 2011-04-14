@@ -24,7 +24,7 @@ namespace tsUI.Forms
 			set
 			{
 				foreach (ListViewItem item in value)
-					lvApplications.Items.Add(item);
+					lvApplications.Items.Add((ListViewItem)item.Clone());
 			}
 			get
 			{
@@ -74,8 +74,9 @@ namespace tsUI.Forms
 			}
 			set
 			{
+				//NOTE 2yura: You have to clone the node before insertion
 				foreach (TreeNode item in value)
-					treeView1.Nodes.Add(item);
+					treeView1.Nodes.Add((TreeNode)item.Clone());
 			}
 		}
 
