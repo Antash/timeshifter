@@ -40,6 +40,7 @@ namespace tsCore.Classes
 			_winTracker = new WindowTracker(false);
 			_windowLog = new List<WindowLogStructure>();
 			_lastRecord = new WindowLogStructure();
+			_winTracker.ActStateChanged += WinTrackerActStateChanged; 
 		}
 
 		void WinTrackerActStateChanged(object sender, ActStateChangedHandlerArgs args)
