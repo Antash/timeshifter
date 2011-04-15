@@ -37,7 +37,7 @@ namespace tsCore.Classes
 
 		public WindowLogger()
 		{
-			_winTracker = new WindowTracker();
+			_winTracker = new WindowTracker(false);
 			_windowLog = new List<WindowLogStructure>();
 			_lastRecord = new WindowLogStructure();
 		}
@@ -82,12 +82,12 @@ namespace tsCore.Classes
 
 		public void Enable()
 		{
-			_winTracker.ActStateChanged += WinTrackerActStateChanged;
+			_winTracker.Start();
 		}
 
 		public void Disable()
 		{
-			_winTracker.ActStateChanged -= WinTrackerActStateChanged;
+			_winTracker.Stop();
 		}
 	}
 

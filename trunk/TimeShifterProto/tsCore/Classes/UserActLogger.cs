@@ -16,7 +16,7 @@ namespace tsCore.Classes
 
 		public UserActLogger()
 		{
-			_uActTracker = new UserActivityHook();
+			_uActTracker = new UserActivityHook(false, false);
 			UActLog = new UserActLogStructure();
 
 			_uActTracker.OnMouseActivity += _uActTracker_OnMouseActivity;
