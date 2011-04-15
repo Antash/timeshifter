@@ -67,16 +67,17 @@ namespace tsWin
 		/// Gets icon from executable file of the process
 		/// </summary>
 		/// <param name="appName">Application process name (like in task manager)</param>
+		/// <param name="appDesc">Application process description (like in task manager)</param>
 		/// <param name="isLarge">Set it true to grab large icon, else - false</param>
 		/// <returns>
 		/// Returns icon of the application or null if application does not contains any icon
 		/// </returns>
-		public static Icon GetApplicationIcon(string appName, bool isLarge)
+		public static Icon GetApplicationIcon(string appName, string appDesc, bool isLarge)
 		{
 			IconExtractor extractor;
 			try
 			{
-				extractor = new IconExtractor(WinApiWrapper.GetProcExecutablePath(appName));
+				extractor = new IconExtractor(WinApiWrapper.GetProcExecutablePath(appName, appDesc));
 			}
 			catch (Exception e)
 			{
@@ -95,7 +96,7 @@ namespace tsWin
 				catch (Exception e)
 				{
 					ErrorManager.Instance.RiseError("wrong resource", e.Message);
-					return GetProcIcon(WinApiWrapper.GetProcExecutablePath(appName));
+					return GetProcIcon(WinApiWrapper.GetProcExecutablePath(appName, appDesc));
 				}
 			}
 			

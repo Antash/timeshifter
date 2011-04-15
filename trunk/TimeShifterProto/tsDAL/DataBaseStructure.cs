@@ -141,7 +141,7 @@ namespace tsDAL
 			try
 			{
 				_ds.Tables["Application"].Rows.Add(newLine);
-				InvokeNewapp(new NewapphandlerArgs(new TsApplication(applicationName, smallIcon, largeIcon)));
+				InvokeNewapp(new NewapphandlerArgs(new TsApplication(applicationName, applicationName, smallIcon, largeIcon)));
 			}
 			catch (Exception e)
 			{

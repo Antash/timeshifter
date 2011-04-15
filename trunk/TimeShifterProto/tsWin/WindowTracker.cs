@@ -11,6 +11,7 @@ namespace tsWin
 
 		public event ActPidChangedHandler ActPidChanged;
 		public event ActPNameChangedHandler ActPNameChanged;
+		public event ActPDescChangedHandler ActPDescChanged;
 		public event ActWindowTextChangedHandler ActWindowTextChanged;
 
 		/// <summary>
@@ -21,6 +22,12 @@ namespace tsWin
 		#endregion
 
 		#region event invocators
+
+		public void InvokeActPDescChanged(ActPDescChangedHandlerArgs args)
+		{
+			ActPDescChangedHandler handler = ActPDescChanged;
+			if (handler != null) handler(this, args);
+		}
 
 		private void InvokeActStateChanged(ActStateChangedHandlerArgs args)
 		{
@@ -51,33 +58,43 @@ namespace tsWin
 		private Timer _t1;
 		private int _actPid;
 		private string _actPname;
+		private string _actPdesc;
 		private string _actWinText;
 		private const long TickPeriod = 500;
 
 		/// <summary>
 		/// Initialize a new instance of WindowTracker class
 		/// </summary>
-		public WindowTracker (bool StartListening)
+		public WindowTracker (bool startListening)
 		{
-			if (StartListening)
+			if (startListening)
 				Start();
 		}
 
-		public void Start ()
+		/// <summary>
+		/// Starts listen timer
+		/// </summary>
+		public void Start()
 		{
 			var autoEvent = new AutoResetEvent (false);
 			// Start timer ticks
 			_t1 = new Timer (TimerTick, autoEvent, 0, TickPeriod);
 		}
 		
-		public void Stop ()
+		/// <summary>
+		/// Stops listen timer
+		/// </summary>
+		public void Stop()
 		{
 			_t1.Dispose();
 		}
 		
+		/// <summary>
+		/// Stops listen Timer while disposing object
+		/// </summary>
 		~WindowTracker()
 		{
-			Stop ();
+			Stop();
 		}
 
 		/// <summary>
@@ -90,6 +107,7 @@ namespace tsWin
 			int newPid = WinApiWrapper.GetActWindowPID();
 			string newWTitle = WinApiWrapper.GetWindowTitle(newPid);
 			string newPName = WinApiWrapper.GetWindowProcName(newPid);
+			string newPdesc = WinApiWrapper.GetProcDescription(newPid);
 
 			if (newPid != _actPid)
 			{
@@ -103,6 +121,12 @@ namespace tsWin
 				_actPname = newPName;
 				isDirty = true;
 			}
+			if (newPdesc != _actPdesc)
+			{
+				InvokeActPDescChanged(new ActPDescChangedHandlerArgs(newPdesc));
+				_actPdesc = newPdesc;
+				isDirty = true;
+			}
 			if (newWTitle != _actWinText)
 			{
 				InvokeActWindowTextChanged(new ActWindowTextChangedHandlerArgs(newWTitle));
@@ -111,12 +135,31 @@ namespace tsWin
 			}
 			if (isDirty)
 			{
-				InvokeActStateChanged(new ActStateChangedHandlerArgs(newPid, newPName, newWTitle));
+				InvokeActStateChanged(new ActStateChangedHandlerArgs(newPid, newPName, newPdesc, newWTitle));
 			}
 		}
 	}
 
 	#region delegates and event args
+
+	public delegate void ActPDescChangedHandler(object sender, ActPDescChangedHandlerArgs args);
+
+	public class ActPDescChangedHandlerArgs
+	{
+		/// <summary>
+		/// Process description
+		/// </summary>
+		public string NewPdesc { get; private set; }
+
+		/// <summary>
+		/// Initialize a new instance of ActPDescChangedHandlerArgs
+		/// </summary>
+		/// <param name="newPdesc">Process description</param>
+		public ActPDescChangedHandlerArgs(string newPdesc)
+		{
+			NewPdesc = newPdesc;
+		}
+	}
 
 	public delegate void ActStateChangedHandler(object sender, ActStateChangedHandlerArgs args);
 
@@ -126,6 +169,11 @@ namespace tsWin
 		/// Process name
 		/// </summary>
 		public string NewPName { get; private set; }
+
+		/// <summary>
+		/// Process description
+		/// </summary>
+		public string NewPdesc { get; private set; }
 
 		/// <summary>
 		/// Window text
@@ -142,11 +190,13 @@ namespace tsWin
 		/// </summary>
 		/// <param name="newPID">Process id</param>
 		/// <param name="newPName">Process name</param>
+		/// <param name="newPdesc">Process description</param>
 		/// <param name="newWindowText">Window text</param>
-		public ActStateChangedHandlerArgs(int newPID, string newPName, string newWindowText)
+		public ActStateChangedHandlerArgs(int newPID, string newPName, string newPdesc, string newWindowText)
 		{
 			NewPID = newPID;
 			NewPName = newPName;
+			NewPdesc = newPdesc;
 			NewWindowText = newWindowText;
 		}
 	}
