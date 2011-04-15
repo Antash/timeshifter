@@ -48,7 +48,7 @@ namespace tsWin
 
 		#endregion
 
-		private readonly Timer _t1;
+		private Timer _t1;
 		private int _actPid;
 		private string _actPname;
 		private string _actWinText;
@@ -57,16 +57,27 @@ namespace tsWin
 		/// <summary>
 		/// Initialize a new instance of WindowTracker class
 		/// </summary>
-		public WindowTracker()
+		public WindowTracker (bool StartListening)
 		{
-			var autoEvent = new AutoResetEvent(false);
-			// Start timer ticks
-			_t1 = new Timer(TimerTick, autoEvent, 0, TickPeriod);
+			if (StartListening)
+				Start();
 		}
 
-		~WindowTracker()
+		public void Start ()
+		{
+			var autoEvent = new AutoResetEvent (false);
+			// Start timer ticks
+			_t1 = new Timer (TimerTick, autoEvent, 0, TickPeriod);
+		}
+		
+		public void Stop ()
 		{
 			_t1.Dispose();
+		}
+		
+		~WindowTracker()
+		{
+			Stop ();
 		}
 
 		/// <summary>
