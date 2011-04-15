@@ -6,7 +6,7 @@ using System.Text;
 
 namespace tsCoreStructures
 {
-	public class TsApplication
+	public class TsApplication : IEquatable<TsApplication>
 	{
 		public bool IsRunning { get; set; }
 		public string Name { get; set; }
@@ -16,24 +16,27 @@ namespace tsCoreStructures
 		public List<TsWindow> RunningWindows { get; set; }
 		public List<TsWindow> AllWindows { get; set; }
 
-		public TsApplication(TsApplication app)
-		{
-			Name = app.Name;
-			SmallIcon = app.SmallIcon;
-			LargeIcon = app.LargeIcon;
-		}
-
 		public TsApplication(string name)
 		{
 			Name = name;
 		}
 
-		public TsApplication(string name, string description, Icon smallIcon, Icon largeIcon)
+		public TsApplication(string name, Icon smallIcon, Icon largeIcon)
 			: this(name)
 		{
-			Description = description;
 			SmallIcon = smallIcon;
 			LargeIcon = largeIcon;
+		}
+
+		public TsApplication(string name, string description, Icon smallIcon, Icon largeIcon)
+			: this(name, smallIcon, largeIcon)
+		{
+			Description = description;
+		}
+
+		public bool Equals(TsApplication other)
+		{
+			return Name == other.Name && Description == other.Description;
 		}
 	}
 }
