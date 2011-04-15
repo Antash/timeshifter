@@ -8,17 +8,22 @@ namespace tsCoreStructures
 	[Serializable]
 	public class UserActLogStructure
 	{
+		public DateTime StartTime { get; set; }
+		public TimeSpan Duration { get; set; }
 		public Dictionary<Keys, int> KeyLog { get; set; }
 		public MouseActData MouseLog { get; set; }
 
 		public UserActLogStructure()
 		{
+			StartTime = DateTime.Now;
+			Duration = TimeSpan.Zero;
 			KeyLog = new Dictionary<Keys, int>();
 			MouseLog = new MouseActData();
 		}
 
 		public void Merge(UserActLogStructure additionLog)
 		{
+			Duration += additionLog.Duration;
 			MouseLog.Merge(additionLog.MouseLog);
 			foreach (Keys k in additionLog.KeyLog.Keys)
 			{

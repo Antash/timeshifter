@@ -10,7 +10,7 @@ namespace tsCoreStructures
 	{
 		public bool IsRunning { get; set; }
 		public string Name { get; set; }
-		public string AlternateName { get; set; }
+		public string Description { get; set; }
 		public Icon SmallIcon { get; set; }
 		public Icon LargeIcon { get; set; }
 		public List<TsWindow> RunningWindows { get; set; }
@@ -28,9 +28,10 @@ namespace tsCoreStructures
 			Name = name;
 		}
 
-		public TsApplication(string name, Icon smallIcon, Icon largeIcon)
+		public TsApplication(string name, string description, Icon smallIcon, Icon largeIcon)
 			: this(name)
 		{
+			Description = description;
 			SmallIcon = smallIcon;
 			LargeIcon = largeIcon;
 		}

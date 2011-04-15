@@ -14,7 +14,8 @@ namespace tsCore.Classes
 		private readonly WindowLogger _tsWinLogger;
 		private readonly UserActLogger _tsUserActLogger;
 		private readonly DataBaseStructure _taskDbs;
-
+		private readonly List<TsTask> _taskList;
+		private readonly Dictionary<string, TsApplication> _applicationList;
 		private readonly Dictionary<string, UserActLogStructure> _tsUserActLog;
 
 		private static volatile TsAppCore _instance;
@@ -27,6 +28,8 @@ namespace tsCore.Classes
 			_tsUserActLog = new Dictionary<string, UserActLogStructure>();
 			_taskDbs = DataBaseStructure.Instance;
 			_taskDbs.Initialize(Filename);
+			_taskList = new List<TsTask>();
+			_applicationList = new Dictionary<string, TsApplication>();
 			_tsWinLogger.AppChanged += _tsWinLogger_AppChanged;
 		}
 
@@ -46,17 +49,24 @@ namespace tsCore.Classes
 			UserActLogStructure snapshot = _tsUserActLogger.UActLog;
 			_tsUserActLogger.UActLog = new UserActLogStructure();
 			string pname = args.ProcessName;
-			if (!_tsUserActLog.ContainsKey(pname))
-				_tsUserActLog.Add(pname, snapshot);
+			string pdesc = args.ProcessDesc;
+			if (!_tsUserActLog.ContainsKey(pdesc))
+				_tsUserActLog.Add(pdesc, snapshot);
 			else
-				_tsUserActLog[pname].Merge(snapshot);
+				_tsUserActLog[pdesc].Merge(snapshot);
 
-			//NOTE 2 Yura: This is more correct way!
+			if (!_applicationList.ContainsKey(pdesc))
+				_applicationList.Add(pdesc, new TsApplication(
+					pname,
+					pdesc,
+					IconHelper.GetApplicationIcon(pname, pdesc, false),
+					IconHelper.GetApplicationIcon(pname, pdesc, true)));
+			//NOTE 2 Yura: This is more correct way!)))
 			if (!_taskDbs.IsApplicationExist(pname))
 			{
-				_taskDbs.NewApplication(pname,
-					IconHelper.GetApplicationIcon(pname, false),
-					IconHelper.GetApplicationIcon(pname, true));
+				_taskDbs.NewApplication(pdesc,
+					IconHelper.GetApplicationIcon(pname, pdesc, false),
+					IconHelper.GetApplicationIcon(pname, pdesc, true));
 			}
 		}
 

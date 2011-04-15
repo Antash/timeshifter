@@ -36,6 +36,16 @@ namespace tsWin
 		}
 
 		/// <summary>
+		/// Gets Description of the process by pid
+		/// </summary>
+		/// <param name="pid">Process id</param>
+		/// <returns>Process description String</returns>
+		internal static string GetProcDescription(int pid)
+		{
+			return pid != 0 ? FileVersionInfo.GetVersionInfo(GetProcExecutablePath(pid)).FileDescription : string.Empty;
+		}
+
+		/// <summary>
 		/// Gets executable path of specified process
 		/// </summary>
 		/// <param name="pName">Process name (like in task manager)</param>
@@ -46,6 +56,22 @@ namespace tsWin
 			string path = string.Empty;
 			if (p.Length > 0)
 				path = p[0].MainModule.FileName;
+			return path;
+		}
+
+		/// <summary>
+		/// Gets executable path of specified process
+		/// </summary>
+		/// <param name="pName">Process name (like in task manager)</param>
+		/// <param name="pDesc">Process description (like in task manager)</param>
+		/// <returns>Path string</returns>
+		internal static string GetProcExecutablePath(string pName, string pDesc)
+		{
+			Process[] ps = Process.GetProcessesByName(pName);
+			string path = string.Empty;
+			foreach (Process p in ps)
+				if (FileVersionInfo.GetVersionInfo(p.MainModule.FileName).FileDescription == pDesc)
+					path = p.MainModule.FileName;
 			return path;
 		}
 
