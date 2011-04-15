@@ -42,7 +42,7 @@ namespace tsWin
 		/// <returns>Process description String</returns>
 		internal static string GetProcDescription(int pid)
 		{
-			return pid != 0 ? FileVersionInfo.GetVersionInfo(GetProcExecutablePath(pid)).FileDescription : string.Empty;
+			return pid != 0 ? FileVersionInfo.GetVersionInfo(GetProcExecutablePath(pid)).FileDescription.Trim() : string.Empty;
 		}
 
 		/// <summary>

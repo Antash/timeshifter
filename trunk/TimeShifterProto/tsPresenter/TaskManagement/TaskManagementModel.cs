@@ -69,7 +69,7 @@ namespace tsPresenter.TaskManagement
 			_applications.Add(new ListViewItem(args.App.Name, _appIconLarge.Count));
 			_appIconLarge.Add(args.App.LargeIcon == null ? null : args.App.LargeIcon.ToBitmap());
 			_appIconSmall.Add(args.App.SmallIcon == null ? null : args.App.SmallIcon.ToBitmap());
-			InvokeNewApplication(new NewApplicationHandlerArgs(new TsApplication(args.App)));
+			InvokeNewApplication(new NewApplicationHandlerArgs(args.App));
 		}
 
 		public List<ListViewItem> Applications

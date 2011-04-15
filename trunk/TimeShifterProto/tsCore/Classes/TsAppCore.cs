@@ -15,7 +15,7 @@ namespace tsCore.Classes
 		private readonly UserActLogger _tsUserActLogger;
 		private readonly DataBaseStructure _taskDbs;
 		private readonly List<TsTask> _taskList;
-		private readonly Dictionary<string, TsApplication> _applicationList;
+		private readonly List<TsApplication> _applicationList;
 		private readonly Dictionary<string, UserActLogStructure> _tsUserActLog;
 
 		private static volatile TsAppCore _instance;
@@ -29,7 +29,7 @@ namespace tsCore.Classes
 			_taskDbs = DataBaseStructure.Instance;
 			_taskDbs.Initialize(Filename);
 			_taskList = new List<TsTask>();
-			_applicationList = new Dictionary<string, TsApplication>();
+			_applicationList = new List<TsApplication>();
 			_tsWinLogger.AppChanged += _tsWinLogger_AppChanged;
 		}
 
@@ -55,12 +55,13 @@ namespace tsCore.Classes
 			else
 				_tsUserActLog[pdesc].Merge(snapshot);
 
-			if (!_applicationList.ContainsKey(pdesc))
-				_applicationList.Add(pdesc, new TsApplication(
-					pname,
-					pdesc,
-					IconHelper.GetApplicationIcon(pname, pdesc, false),
-					IconHelper.GetApplicationIcon(pname, pdesc, true)));
+			TsApplication app = new TsApplication(
+				pname,
+				pdesc,
+				IconHelper.GetApplicationIcon(pname, pdesc, false),
+				IconHelper.GetApplicationIcon(pname, pdesc, true));
+			if (!_applicationList.Contains(app))
+				_applicationList.Add(app);
 			//NOTE 2 Yura: This is more correct way!)))
 			if (!_taskDbs.IsApplicationExist(pname))
 			{

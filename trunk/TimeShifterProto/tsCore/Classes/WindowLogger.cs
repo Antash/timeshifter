@@ -18,19 +18,6 @@ namespace tsCore.Classes
 			if (handler != null) handler(this, args);
 		}		
 		
-		//+++ Yura: add new event checking for new process
-
-		//public event AppNewProcessStarted AppNewProcess;
-
-		//public void InvokeNewProcessStarted(AppChangedEventArgs args)
-		//{
-		//	AppNewProcessStarted newProcess = AppNewProcess;
-		//	if (newProcess != null) newProcess(this, args);
-		//}
-		//--- Yura: add new event checking for new process
-
-
-
 		private readonly WindowTracker _winTracker;
 		private List<WindowLogStructure> _windowLog;
 		private WindowLogStructure _lastRecord;
@@ -48,10 +35,6 @@ namespace tsCore.Classes
 			if (args.NewPdesc != _lastRecord.ProcesDesc && !String.IsNullOrEmpty(args.NewPdesc))
 			{
 				InvokeAppChanged(new AppChangedEventArgs(args.NewPName, args.NewPdesc));
-				//+++ Yura: add new event checking for new process
-				// Тоха в каком месте будет храниться созданный в начале работы проги класс DataBaseStructure?
-				// Мне нужен тут доступ к созданному экземпляру, для проверки на наличие подобного процесса
-				//--- Yura: add new event checking for new process
 			}
 			//TODO : add correct task id
 			_lastRecord = new WindowLogStructure(args.NewPID,
@@ -94,12 +77,6 @@ namespace tsCore.Classes
 	}
 
 	internal delegate void AppChangedHandler(object sender, AppChangedEventArgs args);
-
-	//+++ Yura: add new event checking for new process
-
-	//internal delegate void AppNewProcessStarted(object sender, AppChangedEventArgs args);
-
-	//--- Yura: add new event checking for new process
 
 	internal class AppChangedEventArgs
 	{
