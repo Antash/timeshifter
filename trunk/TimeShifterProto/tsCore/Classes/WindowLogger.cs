@@ -16,7 +16,7 @@ namespace tsCore.Classes
 		{
 			AppChangedHandler handler = AppChanged;
 			if (handler != null) handler(this, args);
-		}		
+		}
 		
 		private readonly WindowTracker _winTracker;
 		private List<WindowLogStructure> _windowLog;
@@ -27,15 +27,17 @@ namespace tsCore.Classes
 			_winTracker = new WindowTracker(false);
 			_windowLog = new List<WindowLogStructure>();
 			_lastRecord = new WindowLogStructure();
+			_winTracker.ActApplicationChanged += WinTrackerActApplicationChanged;
 			_winTracker.ActStateChanged += WinTrackerActStateChanged; 
+		}
+
+		void WinTrackerActApplicationChanged(object sender, ActApplicationChangedHandlerArgs args)
+		{
+			InvokeAppChanged(new AppChangedEventArgs(args.NewPname, args.NewPdesc));
 		}
 
 		void WinTrackerActStateChanged(object sender, ActStateChangedHandlerArgs args)
 		{
-			if (args.NewPdesc != _lastRecord.ProcesDesc && !String.IsNullOrEmpty(args.NewPdesc))
-			{
-				InvokeAppChanged(new AppChangedEventArgs(args.NewPName, args.NewPdesc));
-			}
 			//TODO : add correct task id
 			_lastRecord = new WindowLogStructure(args.NewPID,
 			                                args.NewPName,

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 using tsCore.Classes;
 using tsCoreStructures;
-using tsDAL;
 
 namespace tsPresenter.TaskManagement
 {
@@ -17,58 +13,33 @@ namespace tsPresenter.TaskManagement
 		private List<Image> _appIconLarge;
 		private List<TreeNode> _tasks;
 		
-		//TODO : needs to be refactored
-		readonly int _i;
 		public TaskManagementModel()
 		{
 			_applications = new List<ListViewItem>();
 			_appIconSmall = new List<Image>();
 			_appIconLarge = new List<Image>();
-
-			
-
-			DataTableReader dr = TsAppCore.Instance.TaskDbs.GetApplications();
-
-			while (dr.Read())
-			{
-				MemoryStream ms = new MemoryStream((byte[])dr.GetValue(1));
-				MemoryStream ms2 = new MemoryStream((byte[])dr.GetValue(2));
-				if (ms.Capacity > 0)
-				{
-					_appIconLarge.Add(Image.FromStream(ms2));
-					_appIconSmall.Add(Image.FromStream(ms));
-					_i++;
-				}
-				else
-				{
-					_appIconLarge.Add(null);
-					_appIconSmall.Add(null);
-					_i++;
-				}
-				_applications.Add(new ListViewItem(dr.GetValue(0).ToString(), _i - 1));
-			}
-			dr.Close();
-			DataBaseStructure.Instance.Newapp += DataBaseStructure_Newapp;
-
 			_tasks = new List<TreeNode>();
 
-			DataTableReader dr_task = TsAppCore.Instance.TaskDbs.GetTasks();
-
-			while (dr_task.Read())
+			foreach (TsApplication app in TsAppCore.Instance.Applications)
 			{
-
-				_tasks.Add(new TreeNode(dr_task.GetValue(1).ToString()));
+				_applications.Add(new ListViewItem(app.Description, _appIconSmall.Count));
+				_appIconLarge.Add(app.LargeIcon);
+				_appIconSmall.Add(app.LargeIcon);
 			}
-			dr_task.Close();
-			//DataBaseStructure.Instance.Newapp += DataBaseStructure_Newapp;
 
+			TsAppCore.Instance.NewApplication += InstanceNewApplication;
+
+			foreach (TsTask task in TsAppCore.Instance.Tasks)
+			{
+				_tasks.Add(new TreeNode(task.TaskName));
+			}
 		}
 
-		void DataBaseStructure_Newapp(object sender, NewapphandlerArgs args)
+		void InstanceNewApplication(object sender, NewApplicationHandlerArgs args)
 		{
-			_applications.Add(new ListViewItem(args.App.Name, _appIconLarge.Count));
-			_appIconLarge.Add(args.App.LargeIcon == null ? null : args.App.LargeIcon.ToBitmap());
-			_appIconSmall.Add(args.App.SmallIcon == null ? null : args.App.SmallIcon.ToBitmap());
+			_applications.Add(new ListViewItem(args.App.Description, _appIconLarge.Count));
+			_appIconLarge.Add(args.App.LargeIcon);
+			_appIconSmall.Add(args.App.SmallIcon);
 			InvokeNewApplication(new NewApplicationHandlerArgs(args.App));
 		}
 
@@ -97,9 +68,10 @@ namespace tsPresenter.TaskManagement
 		}
 
 		public event NewApplicationHandler NewApplication;
+
 		public void AddNewTask(TsTask task)
 		{
-			TsAppCore.Instance.TaskDbs.NewTask(task);
+			TsAppCore.Instance.NewTask(task);
 		}
 
 		public void InvokeNewApplication(NewApplicationHandlerArgs args)

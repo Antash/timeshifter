@@ -21,6 +21,14 @@ namespace tsCore.Classes
 		private static volatile TsAppCore _instance;
 		private static readonly object SyncRoot = new Object();
 
+		public event NewApplicationHandler NewApplication;
+
+		public void InvokeNewApplication(NewApplicationHandlerArgs args)
+		{
+			NewApplicationHandler handler = NewApplication;
+			if (handler != null) handler(this, args);
+		}
+
 		protected TsAppCore()
 		{
 			_tsWinLogger = new WindowLogger();
@@ -30,7 +38,27 @@ namespace tsCore.Classes
 			_taskDbs.Initialize(Filename);
 			_taskList = new List<TsTask>();
 			_applicationList = new List<TsApplication>();
-			_tsWinLogger.AppChanged += _tsWinLogger_AppChanged;
+
+			ReadDataBase();
+
+			_tsWinLogger.AppChanged += TsWinLoggerAppChanged;
+		}
+
+		private void ReadDataBase()
+		{
+			var dr = _taskDbs.GetApplications();
+			while (dr.Read())
+			{
+				_applicationList.Add((TsApplication) new TsApplication().FromDataReader(dr));
+			}
+			dr.Close();
+
+			dr = _taskDbs.GetTasks();
+			while (dr.Read())
+			{
+				_taskList.Add((TsTask) new TsTask().FromDataReader(dr));
+			}
+			dr.Close();
 		}
 
 		~TsAppCore()
@@ -39,12 +67,7 @@ namespace tsCore.Classes
 			_tsWinLogger.WriteBinary(Filename + "win.txt");
 		}
 
-		public DataBaseStructure TaskDbs
-		{
-			get { return _taskDbs; }
-		}
-
-		void _tsWinLogger_AppChanged(object sender, AppChangedEventArgs args)
+		void TsWinLoggerAppChanged(object sender, AppChangedEventArgs args)
 		{
 			UserActLogStructure snapshot = _tsUserActLogger.UActLog;
 			_tsUserActLogger.UActLog = new UserActLogStructure();
@@ -55,19 +78,15 @@ namespace tsCore.Classes
 			else
 				_tsUserActLog[pdesc].Merge(snapshot);
 
-			TsApplication app = new TsApplication(
-				pname,
-				pdesc,
-				IconHelper.GetApplicationIcon(pname, pdesc, false),
-				IconHelper.GetApplicationIcon(pname, pdesc, true));
+			var app = new TsApplication(pname, pdesc);
+
 			if (!_applicationList.Contains(app))
-				_applicationList.Add(app);
-			//NOTE 2 Yura: This is more correct way!)))
-			if (!_taskDbs.IsApplicationExist(pname))
 			{
-				_taskDbs.NewApplication(pdesc,
-					IconHelper.GetApplicationIcon(pname, pdesc, false),
-					IconHelper.GetApplicationIcon(pname, pdesc, true));
+				app.SmallIcon = IconHelper.GetApplicationIcon(pname, pdesc, false).ToBitmap();
+				app.LargeIcon = IconHelper.GetApplicationIcon(pname, pdesc, true).ToBitmap();
+				_applicationList.Add(app);
+				_taskDbs.NewApplication(app.ToDataRow());
+				InvokeNewApplication(new NewApplicationHandlerArgs(app));
 			}
 		}
 
@@ -109,6 +128,25 @@ namespace tsCore.Classes
 			_tsWinLogger.Disable();
 			_tsUserActLogger.Disable();
 			IsCoreRunning = false;
+		}
+
+		public IEnumerable<TsApplication> Applications
+		{
+			get { return _applicationList; }
+		}
+
+		public IEnumerable<TsTask> Tasks
+		{
+			get { return _taskList; }
+		}
+
+		public void NewTask(TsTask task)
+		{
+			if (!_taskList.Contains(task))
+			{
+				_taskList.Add(task);
+				_taskDbs.NewTask(task.ToDataRow());
+			}
 		}
 	}
 
