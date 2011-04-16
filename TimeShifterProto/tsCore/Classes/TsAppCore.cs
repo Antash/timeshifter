@@ -34,8 +34,7 @@ namespace tsCore.Classes
 			_tsWinLogger = new WindowLogger();
 			_tsUserActLogger = new UserActLogger();
 			_tsUserActLog = new Dictionary<string, UserActLogStructure>();
-			_taskDbs = DataBaseStructure.Instance;
-			_taskDbs.Initialize(Filename);
+			_taskDbs = new DataBaseStructure(Filename);
 			_taskList = new List<TsTask>();
 			_applicationList = new List<TsApplication>();
 

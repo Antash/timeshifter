@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using tsCoreStructures.Base;
 
 namespace tsCoreStructures
 {
@@ -61,7 +62,7 @@ namespace tsCoreStructures
 			return ToDataRow(StructTable);
 		}
 
-		public new DataTable BuildDataStructure()
+		public override DataTable BuildDataStructure()
 		{
 			return StructTable = base.BuildDataStructure();
 		}
