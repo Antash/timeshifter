@@ -59,10 +59,6 @@
       <Project>{306822B2-A83E-49CF-9FF9-4CAF6D92BEBC}</Project>
       <Name>tsCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\tsDAL\tsDAL.csproj">
-      <Project>{725392D8-D711-46B3-8639-4FB8DCFAB5D9}</Project>
-      <Name>tsDAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

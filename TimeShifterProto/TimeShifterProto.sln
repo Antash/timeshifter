@@ -16,6 +16,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsPresenter", "tsPresenter\tsPresenter.csproj", "{6BD88D8B-AF1D-4703-81F4-AA2AB69B728E}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "tsSetup", "tsSetup\tsSetup.vdproj", "{CFFDB18C-97BD-429C-A8C2-CF80349B7937}"
+	ProjectSection(ProjectDependencies) = postProject
+		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A} = {490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}
+		{47E378B2-5E19-42AD-999D-F4AB5D519914} = {47E378B2-5E19-42AD-999D-F4AB5D519914}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsOptions", "isOptions\tsOptions.csproj", "{47E378B2-5E19-42AD-999D-F4AB5D519914}"
 EndProject
