@@ -23,7 +23,7 @@ namespace tsCoreStructures.Base
 				if (attr.Length > 0)
 				{
 					var val = prop.GetValue(this, null);
-					if (structTable.Columns[prop.Name].DataType.Equals(val.GetType()))
+					if (val == null || structTable.Columns[prop.Name].DataType.Equals(val.GetType()))
 						dr[prop.Name] = val;
 					else
 						dr[prop.Name] = ConvertHelper.Convert(val, val.GetType(), structTable.Columns[prop.Name].DataType);

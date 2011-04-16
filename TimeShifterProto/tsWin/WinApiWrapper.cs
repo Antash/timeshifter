@@ -42,7 +42,7 @@ namespace tsWin
 		/// <returns>Process description String</returns>
 		internal static string GetProcDescription(int pid)
 		{
-			return pid != 0 ? FileVersionInfo.GetVersionInfo(GetProcExecutablePath(pid)).FileDescription.Trim() : string.Empty;
+			return pid != 0 ? FileVersionInfo.GetVersionInfo(GetProcExecutablePath(pid)).FileDescription : string.Empty;
 		}
 
 		/// <summary>
@@ -70,7 +70,7 @@ namespace tsWin
 			foreach (Process p in ps)
 				try
 				{
-					if (FileVersionInfo.GetVersionInfo(p.MainModule.FileName).FileDescription.Trim() == pDesc)
+					if (FileVersionInfo.GetVersionInfo(p.MainModule.FileName).FileDescription == pDesc)
 						path = p.MainModule.FileName;
 				}
 				catch (Exception)
