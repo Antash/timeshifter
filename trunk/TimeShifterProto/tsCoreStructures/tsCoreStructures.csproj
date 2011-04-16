@@ -41,10 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConvertHelper.cs" />
+    <Compile Include="Base\ConvertHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Attributes.cs" />
-    <Compile Include="TsBaseStruct.cs" />
+    <Compile Include="Base\Attributes.cs" />
+    <Compile Include="Base\TsBaseStruct.cs" />
     <Compile Include="TsTask.cs" />
     <Compile Include="TsApplication.cs" />
     <Compile Include="TsWindow.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using tsCoreStructures.Base;
 
 namespace tsCoreStructures
 {
@@ -30,10 +31,6 @@ namespace tsCoreStructures
 
 		public TsTask()
 		{
-			Id = 0;
-			TaskName = "";
-			Discription = "";
-			BeginTime = DateTime.MinValue;
 		}
 
 		public TsTask(string taskName, string taskDiscription, DateTime ts)
@@ -61,7 +58,7 @@ namespace tsCoreStructures
 			return ToDataRow(StructTable);
 		}
 
-		public new DataTable BuildDataStructure()
+		public override DataTable BuildDataStructure()
 		{
 			return StructTable = base.BuildDataStructure();
 		}

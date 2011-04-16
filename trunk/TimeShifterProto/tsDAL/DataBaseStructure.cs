@@ -13,34 +13,11 @@ namespace tsDAL
 		private DataTable _dtApplication;
 		private DataTable _dtTaskApplication;
 
-		private static volatile DataBaseStructure _instance;
-		private static readonly object SyncRoot = new Object();
-
-		public static DataBaseStructure Instance
-		{
-			get
-			{
-				if (_instance == null)
-				{
-					lock (SyncRoot)
-					{
-						if (_instance == null)
-							_instance = new DataBaseStructure();
-					}
-				}
-				return _instance;
-			}
-		}
-
-		protected DataBaseStructure()
+		public DataBaseStructure(string fileName)
 		{
 			_ds = new DataSet();
 			BuildStructure();
-		}
-
-		internal DataSet Ds
-		{
-			get { return _ds; }
+			LoadDataBase(fileName);
 		}
 
 		private void BuildStructure()
@@ -77,18 +54,15 @@ namespace tsDAL
 
 		public void CreateBackUpDataBase(string fileName)
 		{
-			_ds.WriteXml(fileName, XmlWriteMode.WriteSchema);
+			_ds.WriteXml(fileName);
 		}
 
 		public void LoadDataBase(string fileName)
 		{
 			try
 			{
-				_ds.ReadXml(fileName);
-			}
-			catch (FileNotFoundException)
-			{
-				//	BuildStructure();
+				if (File.Exists(fileName))
+					_ds.ReadXml(fileName);
 			}
 			catch (Exception e)
 			{
@@ -104,11 +78,6 @@ namespace tsDAL
 		public DataTableReader GetTasks()
 		{
 			return _dtTasks.CreateDataReader();
-		}
-
-		public void Initialize(string demoTxt)
-		{
-			LoadDataBase(demoTxt);
 		}
 
 		public void NewApplication(DataRow toDataRow)

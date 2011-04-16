@@ -1,8 +1,11 @@
 ﻿using System;
 
-namespace tsCoreStructures
+namespace tsCoreStructures.Base
 {
 	//TODO Refactor attribute
+	/// <summary>
+	/// Using this atribute with class property provides you to make data base shema of this cless
+	/// </summary>
 	[AttributeUsage(AttributeTargets.Property)]
 	public class DataBaseColumnAttribute : Attribute
 	{
