@@ -82,7 +82,7 @@ namespace tsWin
 			catch (Exception e)
 			{
 				ErrorManager.Instance.RiseError("could not create extractor", e.Message);
-				return null;
+				return GetProcIcon(WinApiWrapper.GetProcExecutablePath(appName, appDesc));
 			}
 
 			var il = new List<Icon>();

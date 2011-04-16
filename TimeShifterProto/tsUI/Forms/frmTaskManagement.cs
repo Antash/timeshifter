@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using tsCoreStructures;
-using tsPresenter;
 using tsPresenter.TaskManagement;
 
 namespace tsUI.Forms
@@ -74,28 +70,18 @@ namespace tsUI.Forms
 			}
 			set
 			{
-				//NOTE 2yura: You have to clone the node before insertion
 				foreach (TreeNode item in value)
 					treeView1.Nodes.Add((TreeNode)item.Clone());
 			}
 		}
 
 		private delegate void AddAppDelegate(TsApplication app);
-		private delegate void AddTaskDelegate(TsTask task);
 
 		public void AddNewApplication(TsApplication app)
 		{
 			if (lvApplications.InvokeRequired)
 				lvApplications.Invoke(new AddAppDelegate(AddApp), app);
 			else AddApp(app);
-		}
-
-		public void AddNewTask(TsTask task)
-		{
-			if (treeView1.InvokeRequired)
-				treeView1.Invoke(new AddTaskDelegate(AddTask), task);
-			else AddTask(task);
-			;
 		}
 
 		public event EventHandler Save;
@@ -115,9 +101,9 @@ namespace tsUI.Forms
 
 		private void AddApp(TsApplication app)
 		{
-			ilAppLarge.Images.Add(app.LargeIcon != null ? app.LargeIcon.ToBitmap() : Properties.Resources.defAppL);
-			ilAppSmall.Images.Add(app.SmallIcon != null ? app.SmallIcon.ToBitmap() : Properties.Resources.defAppS);
-			lvApplications.Items.Add(new ListViewItem(app.Name, ilAppSmall.Images.Count - 1));
+			ilAppLarge.Images.Add(app.LargeIcon ?? Properties.Resources.defAppL);
+			ilAppSmall.Images.Add(app.SmallIcon ?? Properties.Resources.defAppS);
+			lvApplications.Items.Add(new ListViewItem(app.Description, ilAppSmall.Images.Count - 1) {Tag = app});
 		}
 
 		private void toLargeIcons_Click(object sender, EventArgs e)
@@ -137,16 +123,9 @@ namespace tsUI.Forms
 
 		private void AddTask(TsTask task)
 		{
-			treeView1.Nodes.Add(task.TaskName);
-		}
-
-		private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
-		{
-			//if (e.KeyChar == (int)Keys.Enter)
-			//{
-			//    AddTask(textBox1.Text);
-			//    textBox1.Text = "";
-			//}
+			TreeNode tn = new TreeNode(task.TaskName);
+			if (!treeView1.Nodes.ContainsKey(task.TaskName))
+				treeView1.Nodes.Add(tn);
 		}
 
 		private void textBox1_KeyDown(object sender, KeyEventArgs e)

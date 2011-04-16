@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using tsCoreFW;
 using tsCoreStructures;
@@ -9,14 +8,6 @@ namespace tsDAL
 {
 	public class DataBaseStructure
 	{
-		public event Newapphandler Newapp;
-
-		public void InvokeNewapp(NewapphandlerArgs args)
-		{
-			Newapphandler handler = Newapp;
-			if (handler != null) handler(this, args);
-		}
-
 		private readonly DataSet _ds;
 		private DataTable _dtTasks;
 		private DataTable _dtApplication;
@@ -54,39 +45,22 @@ namespace tsDAL
 
 		private void BuildStructure()
 		{
-			_dtTasks = new DataTable("Tasks");
-
-			_dtTasks.Columns.Add("Id", typeof(int));
-			_dtTasks.Columns["Id"].Unique = true;
-			_dtTasks.Columns["Id"].AutoIncrement = true;
-			_dtTasks.Columns.Add("TaskName", typeof(string));
-			_dtTasks.Columns.Add("Discription", typeof(string));
-			_dtTasks.Columns.Add("PlanTime", typeof(DateTime));
-
+			_dtTasks = new TsTask().BuildDataStructure();
 			_ds.Tables.Add(_dtTasks);
 
-			_dtApplication = new DataTable("Application");
-
-			//_dtApplication.Columns.Add("Id", typeof(int));
-			//_dtApplication.Columns["Id"].Unique = true;
-			//_dtApplication.Columns["Id"].AutoIncrement = true;
-			_dtApplication.Columns.Add("ApplicationName", typeof(string));
-			_dtApplication.Columns.Add("SmallIcon", typeof(Byte[]));
-			_dtApplication.Columns.Add("LargeIcon", typeof(Byte[]));
-			_dtApplication.Constraints.Add("PK", _dtApplication.Columns["ApplicationName"], true);
-
+			_dtApplication = new TsApplication().BuildDataStructure();
 			_ds.Tables.Add(_dtApplication);
 
-			_dtTaskApplication = new DataTable("TaskApplication");
+			//_dtTaskApplication = new DataTable("TaskApplication");
 
-			_dtTaskApplication.Columns.Add("TaskId", typeof(int));
-			_dtTaskApplication.Columns.Add("ApplicationId", typeof(string));
-			_dtTaskApplication.Constraints.Add("TaskApplicationPK", new[] {
-			    _dtTaskApplication.Columns["TaskId"],
-			    _dtTaskApplication.Columns["ApplicationId"]},
-				true);
+			//_dtTaskApplication.Columns.Add("TaskId", typeof(int));
+			//_dtTaskApplication.Columns.Add("ApplicationId", typeof(string));
+			//_dtTaskApplication.Constraints.Add("TaskApplicationPK", new[] {
+			//    _dtTaskApplication.Columns["TaskId"],
+			//    _dtTaskApplication.Columns["ApplicationId"]},
+			//    true);
 
-			_ds.Tables.Add(_dtTaskApplication);
+			//_ds.Tables.Add(_dtTaskApplication);
 
 			//_ds.Relations.Add("TaskTaskApplicationFK",
 			//    _ds.Tables["Tasks"].Columns["Id"],
@@ -122,71 +96,29 @@ namespace tsDAL
 			}
 		}
 
-		public void NewTask(TsTask task)
-		{
-			var newLine = _dtTasks.NewRow();
-			newLine["TaskName"] = task.TaskName;
-			newLine["PlanTime"] = task.BeginTime;
-			newLine["Discription"] = task.Discription;
-			_dtTasks.Rows.Add(newLine);
-		}
-
-		public void NewApplication(string applicationName, Icon smallIcon, Icon largeIcon)
-		{
-			var ic = new IconConverter();
-			var newLine = _ds.Tables["Application"].NewRow();
-			newLine["ApplicationName"] = applicationName;
-			newLine["SmallIcon"] = ic.ConvertTo(smallIcon, typeof (byte[]));
-			newLine["LargeIcon"] = ic.ConvertTo(largeIcon, typeof (byte[]));
-			try
-			{
-				_ds.Tables["Application"].Rows.Add(newLine);
-				InvokeNewapp(new NewapphandlerArgs(new TsApplication(applicationName, applicationName, smallIcon, largeIcon)));
-			}
-			catch (Exception e)
-			{
-				ErrorManager.Instance.RiseError("DAL", e.Message);
-			}
-		}
-
 		public DataTableReader GetApplications()
 		{
-			return _ds.Tables["Application"].CreateDataReader();
+			return _dtApplication.CreateDataReader();
 		}
 
 		public DataTableReader GetTasks()
 		{
-			return _ds.Tables["Tasks"].CreateDataReader();
-		}
-
-		public void NewSettingsRule(int taskId, int applicationId)
-		{
-			var newLine = _dtTaskApplication.NewRow();
-			newLine["TaskId"] = taskId;
-			newLine["ApplicationId"] = applicationId;
-			_dtTaskApplication.Rows.Add(newLine);
-		}
-
-		public bool IsApplicationExist(string applicationName)
-		{
-			return _ds.Tables["Application"].Rows.Find(applicationName) != null;
+			return _dtTasks.CreateDataReader();
 		}
 
 		public void Initialize(string demoTxt)
 		{
 			LoadDataBase(demoTxt);
 		}
-	}
 
-	public delegate void Newapphandler(object sender, NewapphandlerArgs args);
-
-	public class NewapphandlerArgs
-	{
-		public TsApplication App { get; private set; }
-
-		public NewapphandlerArgs(TsApplication app)
+		public void NewApplication(DataRow toDataRow)
 		{
-			App = app;
+			_dtApplication.Rows.Add(toDataRow);
+		}
+
+		public void NewTask(DataRow task)
+		{
+			_dtTasks.Rows.Add(task);
 		}
 	}
 }

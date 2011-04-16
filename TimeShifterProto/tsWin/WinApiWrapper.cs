@@ -50,13 +50,11 @@ namespace tsWin
 		/// </summary>
 		/// <param name="pName">Process name (like in task manager)</param>
 		/// <returns>Path string</returns>
+		[Obsolete("This metod is unstable, use GetProcExecutablePath(string pName, string pDesc) instead")]
 		internal static string GetProcExecutablePath(string pName)
 		{
 			Process[] p = Process.GetProcessesByName(pName);
-			string path = string.Empty;
-			if (p.Length > 0)
-				path = p[0].MainModule.FileName;
-			return path;
+			return p.Length > 0 ? p[0].MainModule.FileName : string.Empty;
 		}
 
 		/// <summary>
@@ -70,8 +68,15 @@ namespace tsWin
 			Process[] ps = Process.GetProcessesByName(pName);
 			string path = string.Empty;
 			foreach (Process p in ps)
-				if (FileVersionInfo.GetVersionInfo(p.MainModule.FileName).FileDescription == pDesc)
-					path = p.MainModule.FileName;
+				try
+				{
+					if (FileVersionInfo.GetVersionInfo(p.MainModule.FileName).FileDescription.Trim() == pDesc)
+						path = p.MainModule.FileName;
+				}
+				catch (Exception)
+				{
+					//NOTE! this unsecure code is nesessary to prevent wrong failure
+				}
 			return path;
 		}
 

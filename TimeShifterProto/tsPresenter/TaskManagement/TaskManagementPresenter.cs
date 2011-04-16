@@ -1,4 +1,5 @@
 ﻿using System;
+using tsCoreStructures;
 using tsPresenter.Base;
 
 namespace tsPresenter.TaskManagement

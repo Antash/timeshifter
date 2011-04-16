@@ -12,6 +12,7 @@ namespace tsWin
 		public event ActPidChangedHandler ActPidChanged;
 		public event ActPNameChangedHandler ActPNameChanged;
 		public event ActPDescChangedHandler ActPDescChanged;
+		public event ActApplicationChangedHandler ActApplicationChanged;
 		public event ActWindowTextChangedHandler ActWindowTextChanged;
 
 		/// <summary>
@@ -22,6 +23,12 @@ namespace tsWin
 		#endregion
 
 		#region event invocators
+
+		public void InvokeActApplicationChanged(ActApplicationChangedHandlerArgs args)
+		{
+			ActApplicationChangedHandler handler = ActApplicationChanged;
+			if (handler != null) handler(this, args);
+		}
 
 		public void InvokeActPDescChanged(ActPDescChangedHandlerArgs args)
 		{
@@ -103,8 +110,14 @@ namespace tsWin
 		/// <param name="state">Service parmeter</param>
 		private void TimerTick(object state)
 		{
-			bool isDirty = false;
+			bool invokeStateChRequired = false;
+			bool invokeAppChRequired = false;
 			int newPid = WinApiWrapper.GetActWindowPID();
+
+			// No active process detected
+			if (newPid == 0)
+				return;
+
 			string newWTitle = WinApiWrapper.GetWindowTitle(newPid);
 			string newPName = WinApiWrapper.GetWindowProcName(newPid);
 			string newPdesc = WinApiWrapper.GetProcDescription(newPid);
@@ -113,34 +126,64 @@ namespace tsWin
 			{
 				InvokeActPidChanged(new ActPidChangedArgs(newPid));
 				_actPid = newPid;
-				isDirty = true;
+				invokeStateChRequired = true;
 			}
 			if (newPName != _actPname)
 			{
 				InvokeActPNameChanged(new ActPNameChangedHandlerArgs(newPName));
 				_actPname = newPName;
-				isDirty = true;
+				invokeStateChRequired = true;
+				invokeAppChRequired = true;
 			}
 			if (newPdesc != _actPdesc)
 			{
 				InvokeActPDescChanged(new ActPDescChangedHandlerArgs(newPdesc));
 				_actPdesc = newPdesc;
-				isDirty = true;
+				invokeStateChRequired = true;
+				invokeAppChRequired = true;
 			}
 			if (newWTitle != _actWinText)
 			{
 				InvokeActWindowTextChanged(new ActWindowTextChangedHandlerArgs(newWTitle));
 				_actWinText = newWTitle;
-				isDirty = true;
+				invokeStateChRequired = true;
 			}
-			if (isDirty)
-			{
+
+			if (invokeStateChRequired)
 				InvokeActStateChanged(new ActStateChangedHandlerArgs(newPid, newPName, newPdesc, newWTitle));
-			}
+
+			if (invokeAppChRequired)
+				InvokeActApplicationChanged(new ActApplicationChangedHandlerArgs(newPName, newPdesc));
 		}
 	}
 
 	#region delegates and event args
+
+	public delegate void ActApplicationChangedHandler(object sender, ActApplicationChangedHandlerArgs args);
+
+	public class ActApplicationChangedHandlerArgs
+	{
+		/// <summary>
+		/// Process name
+		/// </summary>
+		public string NewPname { get; private set; }
+
+		/// <summary>
+		/// Process description
+		/// </summary>
+		public string NewPdesc { get; private set; }
+
+		/// <summary>
+		/// Initialize a new instance of ActPDescChangedHandlerArgs
+		/// </summary>
+		/// <param name="newPname">Process name</param>
+		/// <param name="newPdesc">Process description</param>
+		public ActApplicationChangedHandlerArgs(string newPname, string newPdesc)
+		{
+			NewPname = newPname;
+			NewPdesc = newPdesc;
+		}
+	}
 
 	public delegate void ActPDescChangedHandler(object sender, ActPDescChangedHandlerArgs args);
 
