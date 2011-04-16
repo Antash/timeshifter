@@ -72,10 +72,10 @@ namespace tsCore.Classes
 			_tsUserActLogger.UActLog = new UserActLogStructure();
 			string pname = args.ProcessName;
 			string pdesc = args.ProcessDesc;
-			if (!_tsUserActLog.ContainsKey(pdesc))
-				_tsUserActLog.Add(pdesc, snapshot);
+			if (!_tsUserActLog.ContainsKey(pdesc ?? pname))
+				_tsUserActLog.Add(pdesc ?? pname, snapshot);
 			else
-				_tsUserActLog[pdesc].Merge(snapshot);
+				_tsUserActLog[pdesc ?? pname].Merge(snapshot);
 
 			var app = new TsApplication(pname, pdesc);
 
