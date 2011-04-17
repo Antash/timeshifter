@@ -69,6 +69,7 @@ namespace tsCoreStructures
 		/// </summary>
 		public TsTask()
 		{
+			AssignedApplications = new List<TsApplication>();
 		}
 
 		public TsTask(string taskName, string taskDiscription, DateTime ts)
