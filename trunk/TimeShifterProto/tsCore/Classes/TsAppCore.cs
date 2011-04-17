@@ -40,6 +40,8 @@ namespace tsCore.Classes
 			ReadDataBase();
 			AssignRunningProcesses();
 
+			NewTaskApplicationSetting(0, _applicationList.Find(a => a.Description.Contains("Chrome")));
+
 			_tsWinLogger.AppChanged += TsWinLoggerAppChanged;
 			_tsWinLogger.StateChanged += TsWinLoggerStateChanged;
 			_tsWinLogger.ProcessStopped += TsWinLoggerProcessStopped;
@@ -61,16 +63,20 @@ namespace tsCore.Classes
 
 		void TsWinLoggerProcessStopped(object sender, WindowTracker.ProcessEventArgs args)
 		{
-			var incTimeSpan = TimeSpan.Zero;
-			_taskList.Find(t =>
-			   (t.ActualTimeToSpend +=
-				(t.AssignedApplications.Find(a =>
-											 (incTimeSpan =
-											  (a.PID == args.PID ? DateTime.Now : DateTime.MinValue)
-											  - a.StartTime)
-											 == TimeSpan.Zero)
-				 != null ? incTimeSpan : TimeSpan.Zero))
-			   != t.ActualTimeToSpend);
+			TsTask task = _taskList.Find(t => t.AssignedApplications.Find(a => a.PID == args.PID) != null);
+			if (task != null)
+				task.ActualTimeToSpend += DateTime.Now - task.AssignedApplications.Find(a => a.PID == args.PID).StartTime;
+
+			//var incTimeSpan = TimeSpan.Zero;
+			//_taskList.Find(t =>
+			//   (t.ActualTimeToSpend +=
+			//    (t.AssignedApplications.Find(a =>
+			//                                 (incTimeSpan =
+			//                                  (a.PID == args.PID ? DateTime.Now : DateTime.MinValue)
+			//                                  - a.StartTime)
+			//                                 == TimeSpan.Zero)
+			//     != null ? incTimeSpan : TimeSpan.Zero))
+			//   != t.ActualTimeToSpend);
 		}
 
 		void _tsUserActLogger_SnapshotReady(object sender, UserActLogger.SnapshotReadyHandlerArgs args)
@@ -133,8 +139,8 @@ namespace tsCore.Classes
 				if (currApp.PID != args.NewPID)
 				{
 					currApp.StartTime = DateTime.Now;
-				currApp.PID = args.NewPID;
-					}
+					currApp.PID = args.NewPID;
+				}
 			}
 			else
 			//if (!_applicationList.Contains(app))
@@ -194,9 +200,14 @@ namespace tsCore.Classes
 		{
 			if (!_taskList.Contains(task))
 			{
-				_taskList.Add(task);
 				_taskDbs.NewTask(task.ToDataRow());
+				_taskList.Add(task);
 			}
+		}
+
+		public void NewTaskApplicationSetting(int taskID, TsApplication app)
+		{
+			_taskList.Find(t => t.Id == taskID).AssignedApplications.Add(app);
 		}
 	}
 }
