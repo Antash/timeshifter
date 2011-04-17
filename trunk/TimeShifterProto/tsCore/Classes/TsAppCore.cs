@@ -38,6 +38,7 @@ namespace tsCore.Classes
 			_applicationList = new List<TsApplication>();
 
 			ReadDataBase();
+			AssignRunningProcesses();
 
 			_tsWinLogger.AppChanged += TsWinLoggerAppChanged;
 			_tsWinLogger.StateChanged += TsWinLoggerStateChanged;
@@ -45,19 +46,31 @@ namespace tsCore.Classes
 			_tsUserActLogger.SnapshotReady += _tsUserActLogger_SnapshotReady;
 		}
 
+		private void AssignRunningProcesses()
+		{
+			foreach (TsApplication app in _applicationList)
+			{
+				int pid = WindowTracker.GetProcessPid(app.Name + app.Description);
+				if (pid != -1)
+				{
+					app.PID = pid;
+					app.IsRunning = true;
+				}
+			}
+		}
+
 		void TsWinLoggerProcessStopped(object sender, WindowTracker.ProcessEventArgs args)
 		{
-			//NOTE! Это кровавая жесть!!! Никогда! Никогда так не делайте!
 			var incTimeSpan = TimeSpan.Zero;
-			_taskList.Find(t => 
-			               (t.ActualTimeToSpend += 
-			                (t.AssignedApplications.Find(a =>
-			                                             (incTimeSpan = 
-			                                              (a.PID == args.PID ? DateTime.Now : DateTime.MinValue) 
-			                                              - a.StartTime)
-			                                             == TimeSpan.Zero)
-			                 != null ? incTimeSpan : TimeSpan.Zero)) 
-			               != t.ActualTimeToSpend);
+			_taskList.Find(t =>
+			   (t.ActualTimeToSpend +=
+				(t.AssignedApplications.Find(a =>
+											 (incTimeSpan =
+											  (a.PID == args.PID ? DateTime.Now : DateTime.MinValue)
+											  - a.StartTime)
+											 == TimeSpan.Zero)
+				 != null ? incTimeSpan : TimeSpan.Zero))
+			   != t.ActualTimeToSpend);
 		}
 
 		void _tsUserActLogger_SnapshotReady(object sender, UserActLogger.SnapshotReadyHandlerArgs args)
@@ -101,8 +114,6 @@ namespace tsCore.Classes
 				_taskList.Add((TsTask)new TsTask().FromDataReader(dr));
 			}
 			dr.Close();
-
-			_taskList[0].AssignedApplications.Add(_applicationList.Find(a => a.Name.Contains("WIN")));
 		}
 
 		~TsAppCore()
@@ -113,11 +124,22 @@ namespace tsCore.Classes
 
 		void TsWinLoggerAppChanged(object sender, WindowTracker.ActApplicationChangedHandlerArgs args)
 		{
-			var app = new TsApplication(args.NewPname, args.NewPdesc, args.NewPID);
 
-			if (!_applicationList.Contains(app))
+			var currApp = _applicationList.Find(a => 
+				a.Name == args.NewPname && a.Description == args.NewPdesc);
+
+			if (currApp != null)
 			{
-				app.StartTime = DateTime.Now;
+				if (currApp.PID != args.NewPID)
+				{
+					currApp.StartTime = DateTime.Now;
+				currApp.PID = args.NewPID;
+					}
+			}
+			else
+			//if (!_applicationList.Contains(app))
+			{
+				var app = new TsApplication(args.NewPname, args.NewPdesc, args.NewPID) {StartTime = DateTime.Now};
 				app.SmallIcon = IconHelper.GetApplicationIcon(app.Name, app.Description, false).ToBitmap();
 				app.LargeIcon = IconHelper.GetApplicationIcon(app.Name, app.Description, true).ToBitmap();
 				_applicationList.Add(app);

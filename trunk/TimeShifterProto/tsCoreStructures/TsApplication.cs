@@ -77,6 +77,7 @@ namespace tsCoreStructures
 		/// </summary>
 		public TsApplication()
 		{
+			IsRunning = false;
 			RunningWindows = new List<TsWindow>();
 			AllWindows = new List<TsWindow>();
 		}

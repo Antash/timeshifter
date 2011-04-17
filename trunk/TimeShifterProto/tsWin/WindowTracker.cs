@@ -70,7 +70,7 @@ namespace tsWin
 		private string _actPdesc;
 		private string _actWinText;
 		private const long TickPeriod = 1000;
-		private readonly Dictionary<int, string> _processes;
+		private static Dictionary<int, string> _processes;
 
 		/// <summary>
 		/// Initialize a new instance of WindowTracker class
@@ -112,12 +112,12 @@ namespace tsWin
 		/// <summary>
 		/// Gets all running processes which have opened window
 		/// </summary>
-		private void GetRunningProcesses()
+		private static void GetRunningProcesses()
 		{
 			foreach (Process p in Process.GetProcesses())
 			{
 				if (p.MainWindowTitle != string.Empty)
-					_processes.Add(p.Id, p.ProcessName);
+					_processes.Add(p.Id, p.ProcessName + WinApiWrapper.GetProcDescription(p.Id));
 			}
 		}
 
@@ -352,5 +352,18 @@ namespace tsWin
 		}
 
 		#endregion
+
+		/// <summary>
+		/// Gets PID by the process description or -1 if not found
+		/// </summary>
+		/// <param name="procInfo">concatenation of process name & description</param>
+		/// <returns>process id</returns>
+		public static int GetProcessPid(string procInfo)
+		{
+			foreach (int pid in _processes.Keys)
+				if (_processes[pid] == procInfo)
+					return pid;
+			return -1;
+		}
 	}
 }
