@@ -22,6 +22,11 @@ namespace tsCoreStructures
 		public bool IsRunning { get; set; }
 
 		/// <summary>
+		/// Application process id
+		/// </summary>
+		public int PID { get; set; }
+
+		/// <summary>
 		/// Application name (name of the process)
 		/// </summary>
 		[DataBaseColumn]

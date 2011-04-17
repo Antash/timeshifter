@@ -39,12 +39,12 @@ namespace tsCore.Classes
 			_winTracker.ActStateChanged += WinTrackerActStateChanged; 
 		}
 
-		void WinTrackerActApplicationChanged(object sender, ActApplicationChangedHandlerArgs args)
+		void WinTrackerActApplicationChanged(object sender, WindowTracker.ActApplicationChangedHandlerArgs args)
 		{
 			InvokeAppChanged(new AppChangedEventArgs(args.NewPname, args.NewPdesc));
 		}
 
-		void WinTrackerActStateChanged(object sender, ActStateChangedHandlerArgs args)
+		void WinTrackerActStateChanged(object sender, WindowTracker.ActStateChangedHandlerArgs args)
 		{
 			//TODO : add correct task id
 			_lastRecord = new WindowLogStructure(args.NewPID,
