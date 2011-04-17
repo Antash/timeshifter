@@ -22,6 +22,11 @@ namespace tsCoreStructures.Base
 				var attr = prop.GetCustomAttributes(typeof(DataBaseColumnAttribute), false);
 				if (attr.Length > 0)
 				{
+					if (structTable.Columns[prop.Name].AutoIncrement)
+					{
+						prop.SetValue(this, dr[prop.Name], null);
+						continue;
+					}
 					var val = prop.GetValue(this, null);
 					if (val == null || structTable.Columns[prop.Name].DataType.Equals(val.GetType()))
 						dr[prop.Name] = val;
