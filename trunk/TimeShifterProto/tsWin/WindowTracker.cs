@@ -149,11 +149,12 @@ namespace tsWin
 				invokeStateChRequired = true;
 			}
 
-			if (invokeStateChRequired)
-				InvokeActStateChanged(new ActStateChangedHandlerArgs(newPid, newPName, newPdesc, newWTitle));
-
 			if (invokeAppChRequired)
 				InvokeActApplicationChanged(new ActApplicationChangedHandlerArgs(newPName, newPdesc));
+
+			//State changed event must be invoked last
+			if (invokeStateChRequired)
+				InvokeActStateChanged(new ActStateChangedHandlerArgs(newPid, newPName, newPdesc, newWTitle));
 		}
 	}
 

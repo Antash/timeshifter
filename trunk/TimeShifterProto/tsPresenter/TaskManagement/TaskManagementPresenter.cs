@@ -32,12 +32,12 @@ namespace tsPresenter.TaskManagement
 			SetModelPropertiesFromView();
 		}
 
-		void ModelNewApplication(object sender, NewApplicationHandlerArgs args)
+		void ModelNewApplication(object sender, TsApplication.NewApplicationHandlerArgs args)
 		{
 			((ITaskManagementView)View).AddNewApplication(args.App);
 		}
 
-		void ViewAddNewTask(object sender, NewTaskHandlerArgs args)
+		void ViewAddNewTask(object sender, TsTask.NewTaskHandlerArgs args)
 		{
 			((ITaskManagementModel)Model).AddNewTask(args.Task);
 		}

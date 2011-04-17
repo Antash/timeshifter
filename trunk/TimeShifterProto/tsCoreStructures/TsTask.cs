@@ -60,7 +60,7 @@ namespace tsCoreStructures
 		/// <summary>
 		/// Applications which are used in this task
 		/// </summary>
-		public IEnumerable<TsApplication> AssignedApplications { get; set; }
+		public List<TsApplication> AssignedApplications { get; set; }
 
 #region constructors
 
@@ -107,7 +107,7 @@ namespace tsCoreStructures
 		/// </remarks>
 		public DataRow ToDataRow()
 		{
-			return ToDataRow(StructTable);
+			return StructTable != null ? ToDataRow(StructTable) : null;
 		}
 
 		/// <summary>
@@ -118,22 +118,21 @@ namespace tsCoreStructures
 		{
 			return StructTable = base.BuildDataStructure();
 		}
-	}
 
-#region delegates & event args
+		#region delegates & event args
 
-	public delegate void NewTaskHandler(object sender, NewTaskHandlerArgs args);
+		public delegate void NewTaskHandler(object sender, NewTaskHandlerArgs args);
 
-	public class NewTaskHandlerArgs
-	{
-		public TsTask Task { get; private set; }
-
-		public NewTaskHandlerArgs(TsTask task)
+		public class NewTaskHandlerArgs
 		{
-			Task = task;
+			public TsTask Task { get; private set; }
+
+			public NewTaskHandlerArgs(TsTask task)
+			{
+				Task = task;
+			}
 		}
+
+		#endregion
 	}
-
-#endregion
-
 }

@@ -6,14 +6,14 @@ namespace tsPresenter.Settings
 	{
 		public bool IsAutostartEnabled
 		{
-			get { return TsAppCore.Instance.IsAutostartEnabled; }
-			set { TsAppCore.Instance.IsAutostartEnabled = value; }
+			get { return TsAppManager.IsAutostartEnabled; }
+			set { TsAppManager.IsAutostartEnabled = value; }
 		}
 
 		public bool IsCoreRunning
 		{
-			get { return TsAppCore.Instance.IsCoreRunning; }
-			set { TsAppCore.Instance.IsCoreRunning = value; }
+			get { return TsAppManager.IsCoreRunning; }
+			set { TsAppManager.IsCoreRunning = value; }
 		}
 	}
 }

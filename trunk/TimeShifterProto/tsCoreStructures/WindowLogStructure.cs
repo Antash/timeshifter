@@ -7,12 +7,6 @@ namespace tsCoreStructures
 	{
 		public WindowLogStructure()
 		{
-			Pid = 0;
-			TaskId = 0;
-			ProcesName = string.Empty;
-			ProcesDesc = string.Empty;
-			WindowTitle = string.Empty;
-			Ts = DateTime.MinValue;
 		}
 
 		public WindowLogStructure(
@@ -38,9 +32,8 @@ namespace tsCoreStructures
 		public int Pid { get; set; }
 
 		public string ProcesName { get; set; }
-		public string ProcessDesc { get; set; }
 
-		public string ProcesDesc { get; set; }
+		public string ProcessDesc { get; set; }
 
 		public string WindowTitle { get; set; }
 	}

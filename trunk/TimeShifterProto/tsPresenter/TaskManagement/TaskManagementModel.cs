@@ -35,12 +35,12 @@ namespace tsPresenter.TaskManagement
 			}
 		}
 
-		void InstanceNewApplication(object sender, NewApplicationHandlerArgs args)
+		void InstanceNewApplication(object sender, TsApplication.NewApplicationHandlerArgs args)
 		{
 			_applications.Add(new ListViewItem(args.App.Description, _appIconLarge.Count));
 			_appIconLarge.Add(args.App.LargeIcon);
 			_appIconSmall.Add(args.App.SmallIcon);
-			InvokeNewApplication(new NewApplicationHandlerArgs(args.App));
+			InvokeNewApplication(new TsApplication.NewApplicationHandlerArgs(args.App));
 		}
 
 		public List<ListViewItem> Applications
@@ -67,16 +67,16 @@ namespace tsPresenter.TaskManagement
 			set { _tasks = value; }
 		}
 
-		public event NewApplicationHandler NewApplication;
+		public event TsApplication.NewApplicationHandler NewApplication;
 
 		public void AddNewTask(TsTask task)
 		{
 			TsAppCore.Instance.NewTask(task);
 		}
 
-		public void InvokeNewApplication(NewApplicationHandlerArgs args)
+		public void InvokeNewApplication(TsApplication.NewApplicationHandlerArgs args)
 		{
-			NewApplicationHandler handler = NewApplication;
+			TsApplication.NewApplicationHandler handler = NewApplication;
 			if (handler != null) handler(this, args);
 		}
 	}

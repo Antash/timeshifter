@@ -20,11 +20,11 @@ namespace tsCore.Classes
 		private static volatile TsAppCore _instance;
 		private static readonly object SyncRoot = new Object();
 
-		public event NewApplicationHandler NewApplication;
+		public event TsApplication.NewApplicationHandler NewApplication;
 
-		public void InvokeNewApplication(NewApplicationHandlerArgs args)
+		public void InvokeNewApplication(TsApplication.NewApplicationHandlerArgs args)
 		{
-			NewApplicationHandler handler = NewApplication;
+			TsApplication.NewApplicationHandler handler = NewApplication;
 			if (handler != null) handler(this, args);
 		}
 
@@ -40,6 +40,34 @@ namespace tsCore.Classes
 			ReadDataBase();
 
 			_tsWinLogger.AppChanged += TsWinLoggerAppChanged;
+			_tsWinLogger.StateChanged += TsWinLoggerStateChanged;
+			_tsUserActLogger.SnapshotReady += _tsUserActLogger_SnapshotReady;
+		}
+
+		void _tsUserActLogger_SnapshotReady(object sender, UserActLogger.SnapshotReadyHandlerArgs args)
+		{
+			//TODO put here snapshot management code
+			//UserActLogStructure snapshot = _tsUserActLogger.UActLog;
+			//_tsUserActLogger.UActLog = new UserActLogStructure();
+			//string pname = args.ProcessName;
+			//string pdesc = args.ProcessDesc;
+			//if (!_tsUserActLog.ContainsKey(pdesc ?? pname))
+			//    _tsUserActLog.Add(pdesc ?? pname, snapshot);
+			//else
+			//    _tsUserActLog[pdesc ?? pname].Merge(snapshot);
+		}
+
+		void TsWinLoggerStateChanged(object sender, WindowLogger.AppWindowChangedHandlerArgs args)
+		{
+			var actApp = _applicationList.Find(app =>
+										app.Name == args.Record.ProcesName &&
+										app.Description == args.Record.ProcessDesc);
+			if (actApp != null)
+			{
+				var wind = new TsWindow(args.Record.WindowTitle, args.Record.Ts);
+				if (!actApp.RunningWindows.Contains(wind))
+					actApp.RunningWindows.Add(wind);
+			}
 		}
 
 		private void ReadDataBase()
@@ -47,14 +75,14 @@ namespace tsCore.Classes
 			var dr = _taskDbs.GetApplications();
 			while (dr.Read())
 			{
-				_applicationList.Add((TsApplication) new TsApplication().FromDataReader(dr));
+				_applicationList.Add((TsApplication)new TsApplication().FromDataReader(dr));
 			}
 			dr.Close();
 
 			dr = _taskDbs.GetTasks();
 			while (dr.Read())
 			{
-				_taskList.Add((TsTask) new TsTask().FromDataReader(dr));
+				_taskList.Add((TsTask)new TsTask().FromDataReader(dr));
 			}
 			dr.Close();
 		}
@@ -65,26 +93,17 @@ namespace tsCore.Classes
 			_tsWinLogger.WriteBinary(Filename + "win.txt");
 		}
 
-		void TsWinLoggerAppChanged(object sender, AppChangedEventArgs args)
+		void TsWinLoggerAppChanged(object sender, WindowLogger.AppChangedEventArgs args)
 		{
-			UserActLogStructure snapshot = _tsUserActLogger.UActLog;
-			_tsUserActLogger.UActLog = new UserActLogStructure();
-			string pname = args.ProcessName;
-			string pdesc = args.ProcessDesc;
-			if (!_tsUserActLog.ContainsKey(pdesc ?? pname))
-				_tsUserActLog.Add(pdesc ?? pname, snapshot);
-			else
-				_tsUserActLog[pdesc ?? pname].Merge(snapshot);
-
-			var app = new TsApplication(pname, pdesc);
+			var app = new TsApplication(args.ProcessName, args.ProcessDesc);
 
 			if (!_applicationList.Contains(app))
 			{
-				app.SmallIcon = IconHelper.GetApplicationIcon(pname, pdesc, false).ToBitmap();
-				app.LargeIcon = IconHelper.GetApplicationIcon(pname, pdesc, true).ToBitmap();
+				app.SmallIcon = IconHelper.GetApplicationIcon(app.Name, app.Description, false).ToBitmap();
+				app.LargeIcon = IconHelper.GetApplicationIcon(app.Name, app.Description, true).ToBitmap();
 				_applicationList.Add(app);
 				_taskDbs.NewApplication(app.ToDataRow());
-				InvokeNewApplication(new NewApplicationHandlerArgs(app));
+				InvokeNewApplication(new TsApplication.NewApplicationHandlerArgs(app));
 			}
 		}
 
@@ -104,28 +123,20 @@ namespace tsCore.Classes
 			}
 		}
 
-		private readonly string _assemblyLocation = Environment.CommandLine;
-
-		public bool IsAutostartEnabled
-		{
-			get { return AutoStart.IsAutoStartEnabled(_assemblyLocation); }
-			set { AutoStart.SetAutoStart(_assemblyLocation, value); }
-		}
-
-		public bool IsCoreRunning { get; set; }
+		public bool IsRunning { get; private set; }
 
 		public void Enable()
 		{
 			_tsWinLogger.Enable();
 			_tsUserActLogger.Enable();
-			IsCoreRunning = true;
+			IsRunning = true;
 		}
 
 		public void Disable()
 		{
 			_tsWinLogger.Disable();
 			_tsUserActLogger.Disable();
-			IsCoreRunning = false;
+			IsRunning = false;
 		}
 
 		public IEnumerable<TsApplication> Applications

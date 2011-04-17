@@ -10,6 +10,14 @@ namespace tsCore.Classes
 {
 	class WindowLogger : IBinaryIo, IManaged
 	{
+		public event AppWindowChangedHandler StateChanged;
+
+		public void InvokeAppWindowChanged(AppWindowChangedHandlerArgs args)
+		{
+			AppWindowChangedHandler handler = StateChanged;
+			if (handler != null) handler(this, args);
+		}
+
 		public event AppChangedHandler AppChanged;
 
 		public void InvokeAppChanged(AppChangedEventArgs args)
@@ -45,6 +53,7 @@ namespace tsCore.Classes
 			                                args.NewWindowText,
 			                                DateTime.Now,
 			                                0);
+			InvokeAppWindowChanged(new AppWindowChangedHandlerArgs(_lastRecord));
 			_windowLog.Add(_lastRecord);
 		}
 
@@ -76,19 +85,31 @@ namespace tsCore.Classes
 		{
 			_winTracker.Stop();
 		}
-	}
 
-	internal delegate void AppChangedHandler(object sender, AppChangedEventArgs args);
+		internal delegate void AppWindowChangedHandler(object sender, AppWindowChangedHandlerArgs args);
 
-	internal class AppChangedEventArgs
-	{
-		public string ProcessName { get; private set; }
-		public string ProcessDesc { get; private set; }
-
-		public AppChangedEventArgs(string processName, string processDesc)
+		internal class AppWindowChangedHandlerArgs
 		{
-			ProcessName = processName;
-			ProcessDesc = processDesc;
+			public WindowLogStructure Record { get; private set; }
+
+			public AppWindowChangedHandlerArgs(WindowLogStructure record)
+			{
+				Record = record;
+			}
+		}
+
+		internal delegate void AppChangedHandler(object sender, AppChangedEventArgs args);
+
+		internal class AppChangedEventArgs
+		{
+			public string ProcessName { get; private set; }
+			public string ProcessDesc { get; private set; }
+
+			public AppChangedEventArgs(string processName, string processDesc)
+			{
+				ProcessName = processName;
+				ProcessDesc = processDesc;
+			}
 		}
 	}
 }
