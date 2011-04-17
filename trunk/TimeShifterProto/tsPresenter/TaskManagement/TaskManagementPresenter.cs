@@ -4,11 +4,11 @@ using tsPresenter.Base;
 
 namespace tsPresenter.TaskManagement
 {
-	public class TaskManagementPresenter : Presenter 
+	public class TaskManagementPresenter : Presenter
 	{
 		public TaskManagementPresenter(
-			ITaskManagementModel model, 
-			ITaskManagementView view) 
+			ITaskManagementModel model,
+			ITaskManagementView view)
 			: base(model, view)
 		{
 			Initialize();
@@ -16,8 +16,8 @@ namespace tsPresenter.TaskManagement
 
 		protected override void WireUpEvents()
 		{
-			((ITaskManagementModel) Model).NewApplication += ModelNewApplication;
-			((ITaskManagementView) View).Save += ViewSave;
+			((ITaskManagementModel)Model).NewApplication += ModelNewApplication;
+			((ITaskManagementView)View).Save += ViewSave;
 			((ITaskManagementView)View).NewTask += ViewAddNewTask;
 		}
 

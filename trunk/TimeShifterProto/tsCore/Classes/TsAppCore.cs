@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using tsCore.Interfaces;
 using tsCoreStructures;
 using tsDAL;
@@ -146,17 +145,6 @@ namespace tsCore.Classes
 				_taskList.Add(task);
 				_taskDbs.NewTask(task.ToDataRow());
 			}
-		}
-	}
-
-	public class AppAddArgs
-	{
-		public string Name { get; set; }
-		public Icon Image { get; set; }
-		public AppAddArgs(string name, Icon image)
-		{
-			Name = name;
-			Image = image;
 		}
 	}
 }

@@ -59,7 +59,7 @@
 			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 2;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(591, 379);
 			this.tableLayoutPanel1.TabIndex = 0;
@@ -70,27 +70,28 @@
 			this.panel2.Location = new System.Drawing.Point(298, 2);
 			this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(290, 35);
+			this.panel2.Size = new System.Drawing.Size(290, 27);
 			this.panel2.TabIndex = 3;
 			// 
 			// treeView1
 			// 
 			this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeView1.Location = new System.Drawing.Point(3, 41);
+			this.treeView1.Location = new System.Drawing.Point(3, 33);
 			this.treeView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(289, 336);
+			this.treeView1.Size = new System.Drawing.Size(289, 344);
 			this.treeView1.TabIndex = 0;
 			// 
 			// lvApplications
 			// 
+			this.lvApplications.CheckBoxes = true;
 			this.lvApplications.ContextMenuStrip = this.cmsAppList;
 			this.lvApplications.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lvApplications.LargeImageList = this.ilAppLarge;
-			this.lvApplications.Location = new System.Drawing.Point(298, 41);
+			this.lvApplications.Location = new System.Drawing.Point(298, 33);
 			this.lvApplications.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.lvApplications.Name = "lvApplications";
-			this.lvApplications.Size = new System.Drawing.Size(290, 336);
+			this.lvApplications.Size = new System.Drawing.Size(290, 344);
 			this.lvApplications.SmallImageList = this.ilAppSmall;
 			this.lvApplications.TabIndex = 1;
 			this.lvApplications.UseCompatibleStateImageBehavior = false;
@@ -136,17 +137,17 @@
 			this.panel1.Location = new System.Drawing.Point(3, 2);
 			this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(289, 35);
+			this.panel1.Size = new System.Drawing.Size(289, 27);
 			this.panel1.TabIndex = 2;
 			// 
 			// textBox1
 			// 
 			this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.textBox1.Location = new System.Drawing.Point(0, 0);
 			this.textBox1.Margin = new System.Windows.Forms.Padding(4);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(289, 34);
+			this.textBox1.Size = new System.Drawing.Size(289, 26);
 			this.textBox1.TabIndex = 0;
 			this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
 			// 
