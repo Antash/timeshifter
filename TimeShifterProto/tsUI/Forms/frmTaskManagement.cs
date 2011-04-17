@@ -85,7 +85,7 @@ namespace tsUI.Forms
 		}
 
 		public event EventHandler Save;
-		public event NewTaskHandler NewTask;
+		public event TsTask.NewTaskHandler NewTask;
 
 		public void InvokeSave(EventArgs e)
 		{
@@ -93,9 +93,9 @@ namespace tsUI.Forms
 			if (handler != null) handler(this, e);
 		}
 
-		public void InvokeNewTask(NewTaskHandlerArgs e)
+		public void InvokeNewTask(TsTask.NewTaskHandlerArgs e)
 		{
-			NewTaskHandler handler = NewTask;
+			TsTask.NewTaskHandler handler = NewTask;
 			if (handler != null) handler(this, e);
 		}
 
@@ -136,7 +136,7 @@ namespace tsUI.Forms
 				{
 					TsTask _task = new TsTask(textBox1.Text,textBox1.Text, DateTime.Now);
 					AddTask(_task);
-					InvokeNewTask(new NewTaskHandlerArgs(_task));
+					InvokeNewTask(new TsTask.NewTaskHandlerArgs(_task));
 				}
 					
 				textBox1.Text = String.Empty;

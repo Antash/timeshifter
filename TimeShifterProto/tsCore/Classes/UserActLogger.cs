@@ -1,16 +1,41 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 using System.Windows.Forms;
 using tsCore.Interfaces;
 using tsCoreStructures;
 using tsWin;
+using Timer = System.Threading.Timer;
 
 namespace tsCore.Classes
 {
 	class UserActLogger : IBinaryIo, IManaged
 	{
+		internal delegate void SnapshotReadyHandler(object sender, SnapshotReadyHandlerArgs args);
+
+		internal class SnapshotReadyHandlerArgs
+		{
+			public UserActLogStructure UActLog { get; set; }
+
+			public SnapshotReadyHandlerArgs(UserActLogStructure uActLog)
+			{
+				UActLog = uActLog;
+			}
+		}
+
+		public event SnapshotReadyHandler SnapshotReady;
+
+		public void InvokeSnapshotReady(SnapshotReadyHandlerArgs args)
+		{
+			SnapshotReadyHandler handler = SnapshotReady;
+			if (handler != null) handler(this, args);
+		}
+
 		private readonly UserActivityHook _uActTracker;
+		
+		private Timer _t1;
+		private const long TickPeriod = 10000;
 
 		public UserActLogStructure UActLog { get; set; }
 
@@ -20,10 +45,10 @@ namespace tsCore.Classes
 			UActLog = new UserActLogStructure();
 
 			_uActTracker.OnMouseActivity += _uActTracker_OnMouseActivity;
-			_uActTracker.KeyDown += _uActTracker_KeyDown;
+			_uActTracker.KeyDown += UActTrackerKeyDown;
 		}
 
-		private void _uActTracker_KeyDown(object sender, KeyEventArgs e)
+		private void UActTrackerKeyDown(object sender, KeyEventArgs e)
 		{
 			Keys code = e.KeyCode;
 			if (!UActLog.KeyLog.ContainsKey(code))
@@ -67,14 +92,22 @@ namespace tsCore.Classes
 			}
 		}
 
+		private void TimerTick(object state)
+		{
+			InvokeSnapshotReady(new SnapshotReadyHandlerArgs(UActLog));
+		}
+
 		public void Enable()
 		{
+			var autoEvent = new AutoResetEvent(false);
+			_t1 = new Timer(TimerTick, autoEvent, TickPeriod, TickPeriod);
 			_uActTracker.Start();
 		}
 
 		public void Disable()
 		{
 			_uActTracker.Stop();
+			_t1.Dispose();
 		}
 	}
 }

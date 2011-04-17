@@ -48,12 +48,12 @@ namespace tsCoreStructures
 		/// <summary>
 		/// Array of running windows of current application
 		/// </summary>
-		public IEnumerable<TsWindow> RunningWindows { get; set; }
+		public List<TsWindow> RunningWindows { get; set; }
 
 		/// <summary>
 		/// Array of all application windows started ever
 		/// </summary>
-		public IEnumerable<TsWindow> AllWindows { get; set; }
+		public List<TsWindow> AllWindows { get; set; }
 
 #region constructors
 
@@ -62,6 +62,8 @@ namespace tsCoreStructures
 		/// </summary>
 		public TsApplication()
 		{
+			RunningWindows = new List<TsWindow>();
+			AllWindows = new List<TsWindow>();
 		}
 
 		public TsApplication(string name)
@@ -106,7 +108,7 @@ namespace tsCoreStructures
 		/// </remarks>
 		public DataRow ToDataRow()
 		{
-			return StructTable == null ? ToDataRow(StructTable) : null;
+			return StructTable != null ? ToDataRow(StructTable) : null;
 		}
 
 		/// <summary>
@@ -117,22 +119,21 @@ namespace tsCoreStructures
 		{
 			return StructTable = base.BuildDataStructure();
 		}
-	}
 
-#region delegates & event args
+		#region delegates & event args
 
-	public delegate void NewApplicationHandler(object sender, NewApplicationHandlerArgs args);
+		public delegate void NewApplicationHandler(object sender, NewApplicationHandlerArgs args);
 
-	public class NewApplicationHandlerArgs
-	{
-		public TsApplication App { get; private set; }
-
-		public NewApplicationHandlerArgs(TsApplication app)
+		public class NewApplicationHandlerArgs
 		{
-			App = app;
+			public TsApplication App { get; private set; }
+
+			public NewApplicationHandlerArgs(TsApplication app)
+			{
+				App = app;
+			}
 		}
+
+		#endregion
 	}
-
-#endregion
-
 }
