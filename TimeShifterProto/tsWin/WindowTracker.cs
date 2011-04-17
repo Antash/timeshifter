@@ -63,7 +63,6 @@ namespace tsWin
 		#endregion
 
 		private Timer _t1;
-		private readonly ProcessWatcher _processWatcher;
 		private int _actPid;
 		private string _actPname;
 		private string _actPdesc;
@@ -75,18 +74,8 @@ namespace tsWin
 		/// </summary>
 		public WindowTracker (bool startListening)
 		{
-			_processWatcher = new ProcessWatcher();
-			_processWatcher.ProcessDeleted += _processWatcher_ProcessDeleted;
 			if (startListening)
 				Start();
-		}
-
-		/// <summary>
-		/// Invokes when some process closed
-		/// </summary>
-		/// <param name="proc">Process info instance</param>
-		void _processWatcher_ProcessDeleted(Win32_Process proc)
-		{
 		}
 
 		/// <summary>
@@ -97,7 +86,6 @@ namespace tsWin
 			var autoEvent = new AutoResetEvent (false);
 			// Start timer ticks
 			_t1 = new Timer (TimerTick, autoEvent, 0, TickPeriod);
-			_processWatcher.Start();
 		}
 		
 		/// <summary>
@@ -106,7 +94,6 @@ namespace tsWin
 		public void Stop()
 		{
 			_t1.Dispose();
-			_processWatcher.Stop();
 		}
 		
 		/// <summary>

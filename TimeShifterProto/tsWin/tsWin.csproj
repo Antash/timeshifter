@@ -41,13 +41,7 @@
     <Compile Include="IconExtractor.cs" />
     <Compile Include="IconHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProcessWatcher.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="UserActivityHook.cs" />
-    <Compile Include="Win32_Process.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="WinApiWrapper.cs" />
     <Compile Include="WindowTracker.cs" />
   </ItemGroup>
