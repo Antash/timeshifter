@@ -63,19 +63,30 @@ namespace tsWin
 		#endregion
 
 		private Timer _t1;
+		private readonly ProcessWatcher _processWatcher;
 		private int _actPid;
 		private string _actPname;
 		private string _actPdesc;
 		private string _actWinText;
-		private const long TickPeriod = 500;
+		private const long TickPeriod = 1000;
 
 		/// <summary>
 		/// Initialize a new instance of WindowTracker class
 		/// </summary>
 		public WindowTracker (bool startListening)
 		{
+			_processWatcher = new ProcessWatcher();
+			_processWatcher.ProcessDeleted += _processWatcher_ProcessDeleted;
 			if (startListening)
 				Start();
+		}
+
+		/// <summary>
+		/// Invokes when some process closed
+		/// </summary>
+		/// <param name="proc">Process info instance</param>
+		void _processWatcher_ProcessDeleted(Win32_Process proc)
+		{
 		}
 
 		/// <summary>
@@ -86,6 +97,7 @@ namespace tsWin
 			var autoEvent = new AutoResetEvent (false);
 			// Start timer ticks
 			_t1 = new Timer (TimerTick, autoEvent, 0, TickPeriod);
+			_processWatcher.Start();
 		}
 		
 		/// <summary>
@@ -94,6 +106,7 @@ namespace tsWin
 		public void Stop()
 		{
 			_t1.Dispose();
+			_processWatcher.Stop();
 		}
 		
 		/// <summary>
@@ -118,7 +131,7 @@ namespace tsWin
 			if (newPid == 0)
 				return;
 
-			string newWTitle = WinApiWrapper.GetWindowTitle(newPid);
+			string newWTitle = WinApiWrapper.GetWindowTitle();
 			string newPName = WinApiWrapper.GetWindowProcName(newPid);
 			string newPdesc = WinApiWrapper.GetProcDescription(newPid);
 
@@ -156,151 +169,151 @@ namespace tsWin
 			if (invokeStateChRequired)
 				InvokeActStateChanged(new ActStateChangedHandlerArgs(newPid, newPName, newPdesc, newWTitle));
 		}
-	}
 
-	#region delegates and event args
+		#region delegates and event args
 
-	public delegate void ActApplicationChangedHandler(object sender, ActApplicationChangedHandlerArgs args);
+		public delegate void ActApplicationChangedHandler(object sender, ActApplicationChangedHandlerArgs args);
 
-	public class ActApplicationChangedHandlerArgs
-	{
-		/// <summary>
-		/// Process name
-		/// </summary>
-		public string NewPname { get; private set; }
-
-		/// <summary>
-		/// Process description
-		/// </summary>
-		public string NewPdesc { get; private set; }
-
-		/// <summary>
-		/// Initialize a new instance of ActPDescChangedHandlerArgs
-		/// </summary>
-		/// <param name="newPname">Process name</param>
-		/// <param name="newPdesc">Process description</param>
-		public ActApplicationChangedHandlerArgs(string newPname, string newPdesc)
+		public class ActApplicationChangedHandlerArgs
 		{
-			NewPname = newPname;
-			NewPdesc = newPdesc;
+			/// <summary>
+			/// Process name
+			/// </summary>
+			public string NewPname { get; private set; }
+
+			/// <summary>
+			/// Process description
+			/// </summary>
+			public string NewPdesc { get; private set; }
+
+			/// <summary>
+			/// Initialize a new instance of ActPDescChangedHandlerArgs
+			/// </summary>
+			/// <param name="newPname">Process name</param>
+			/// <param name="newPdesc">Process description</param>
+			public ActApplicationChangedHandlerArgs(string newPname, string newPdesc)
+			{
+				NewPname = newPname;
+				NewPdesc = newPdesc;
+			}
 		}
-	}
 
-	public delegate void ActPDescChangedHandler(object sender, ActPDescChangedHandlerArgs args);
+		public delegate void ActPDescChangedHandler(object sender, ActPDescChangedHandlerArgs args);
 
-	public class ActPDescChangedHandlerArgs
-	{
-		/// <summary>
-		/// Process description
-		/// </summary>
-		public string NewPdesc { get; private set; }
-
-		/// <summary>
-		/// Initialize a new instance of ActPDescChangedHandlerArgs
-		/// </summary>
-		/// <param name="newPdesc">Process description</param>
-		public ActPDescChangedHandlerArgs(string newPdesc)
+		public class ActPDescChangedHandlerArgs
 		{
-			NewPdesc = newPdesc;
+			/// <summary>
+			/// Process description
+			/// </summary>
+			public string NewPdesc { get; private set; }
+
+			/// <summary>
+			/// Initialize a new instance of ActPDescChangedHandlerArgs
+			/// </summary>
+			/// <param name="newPdesc">Process description</param>
+			public ActPDescChangedHandlerArgs(string newPdesc)
+			{
+				NewPdesc = newPdesc;
+			}
 		}
-	}
 
-	public delegate void ActStateChangedHandler(object sender, ActStateChangedHandlerArgs args);
+		public delegate void ActStateChangedHandler(object sender, ActStateChangedHandlerArgs args);
 
-	public class ActStateChangedHandlerArgs
-	{
-		/// <summary>
-		/// Process name
-		/// </summary>
-		public string NewPName { get; private set; }
-
-		/// <summary>
-		/// Process description
-		/// </summary>
-		public string NewPdesc { get; private set; }
-
-		/// <summary>
-		/// Window text
-		/// </summary>
-		public string NewWindowText { get; private set; }
-
-		/// <summary>
-		/// Process pid
-		/// </summary>
-		public int NewPID { get; private set; }
-
-		/// <summary>
-		/// Initialize a new instance of ActStateChangedHandlerArgs
-		/// </summary>
-		/// <param name="newPID">Process id</param>
-		/// <param name="newPName">Process name</param>
-		/// <param name="newPdesc">Process description</param>
-		/// <param name="newWindowText">Window text</param>
-		public ActStateChangedHandlerArgs(int newPID, string newPName, string newPdesc, string newWindowText)
+		public class ActStateChangedHandlerArgs
 		{
-			NewPID = newPID;
-			NewPName = newPName;
-			NewPdesc = newPdesc;
-			NewWindowText = newWindowText;
+			/// <summary>
+			/// Process name
+			/// </summary>
+			public string NewPName { get; private set; }
+
+			/// <summary>
+			/// Process description
+			/// </summary>
+			public string NewPdesc { get; private set; }
+
+			/// <summary>
+			/// Window text
+			/// </summary>
+			public string NewWindowText { get; private set; }
+
+			/// <summary>
+			/// Process pid
+			/// </summary>
+			public int NewPID { get; private set; }
+
+			/// <summary>
+			/// Initialize a new instance of ActStateChangedHandlerArgs
+			/// </summary>
+			/// <param name="newPID">Process id</param>
+			/// <param name="newPName">Process name</param>
+			/// <param name="newPdesc">Process description</param>
+			/// <param name="newWindowText">Window text</param>
+			public ActStateChangedHandlerArgs(int newPID, string newPName, string newPdesc, string newWindowText)
+			{
+				NewPID = newPID;
+				NewPName = newPName;
+				NewPdesc = newPdesc;
+				NewWindowText = newWindowText;
+			}
 		}
-	}
 
-	public delegate void ActPNameChangedHandler(object sender, ActPNameChangedHandlerArgs args);
+		public delegate void ActPNameChangedHandler(object sender, ActPNameChangedHandlerArgs args);
 
-	public class ActPNameChangedHandlerArgs
-	{
-		/// <summary>
-		/// Process name
-		/// </summary>
-		public string NewPName { get; private set; }
-
-		/// <summary>
-		/// Initialize a new instance of ActPNameChangedHandlerArgs
-		/// </summary>
-		/// <param name="newPName">Process name</param>
-		public ActPNameChangedHandlerArgs(string newPName)
+		public class ActPNameChangedHandlerArgs
 		{
-			NewPName = newPName;
+			/// <summary>
+			/// Process name
+			/// </summary>
+			public string NewPName { get; private set; }
+
+			/// <summary>
+			/// Initialize a new instance of ActPNameChangedHandlerArgs
+			/// </summary>
+			/// <param name="newPName">Process name</param>
+			public ActPNameChangedHandlerArgs(string newPName)
+			{
+				NewPName = newPName;
+			}
 		}
-	}
 
-	public delegate void ActWindowTextChangedHandler(object sender, ActWindowTextChangedHandlerArgs args);
+		public delegate void ActWindowTextChangedHandler(object sender, ActWindowTextChangedHandlerArgs args);
 
-	public class ActWindowTextChangedHandlerArgs
-	{
-		/// <summary>
-		/// Window text
-		/// </summary>
-		public string NewWindowText { get; private set; }
-
-		/// <summary>
-		/// Initialize a new instance of ActWindowTextChangedHandlerArgs
-		/// </summary>
-		/// <param name="newWindowText">Window text</param>
-		public ActWindowTextChangedHandlerArgs(string newWindowText)
+		public class ActWindowTextChangedHandlerArgs
 		{
-			NewWindowText = newWindowText;
+			/// <summary>
+			/// Window text
+			/// </summary>
+			public string NewWindowText { get; private set; }
+
+			/// <summary>
+			/// Initialize a new instance of ActWindowTextChangedHandlerArgs
+			/// </summary>
+			/// <param name="newWindowText">Window text</param>
+			public ActWindowTextChangedHandlerArgs(string newWindowText)
+			{
+				NewWindowText = newWindowText;
+			}
 		}
-	}
 
-	public delegate void ActPidChangedHandler(object sender, ActPidChangedArgs args);
+		public delegate void ActPidChangedHandler(object sender, ActPidChangedArgs args);
 
-	public class ActPidChangedArgs
-	{
-		/// <summary>
-		/// Process id
-		/// </summary>
-		public int NewPID { get; private set; }
-
-		/// <summary>
-		/// Initialize a new instance of ActPidChangedArgs
-		/// </summary>
-		/// <param name="newPID">Process id</param>
-		public ActPidChangedArgs(int newPID)
+		public class ActPidChangedArgs
 		{
-			NewPID = newPID;
-		}
-	}
+			/// <summary>
+			/// Process id
+			/// </summary>
+			public int NewPID { get; private set; }
 
-	#endregion
+			/// <summary>
+			/// Initialize a new instance of ActPidChangedArgs
+			/// </summary>
+			/// <param name="newPID">Process id</param>
+			public ActPidChangedArgs(int newPID)
+			{
+				NewPID = newPID;
+			}
+		}
+
+		#endregion
+	}
 }
