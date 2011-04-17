@@ -1,4 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace tsWin
 {
@@ -7,22 +10,21 @@ namespace tsWin
 	/// </summary>
 	public class WindowTracker
 	{
-		#region public events
+		#region public events && invocators
 
 		public event ActPidChangedHandler ActPidChanged;
 		public event ActPNameChangedHandler ActPNameChanged;
 		public event ActPDescChangedHandler ActPDescChanged;
 		public event ActApplicationChangedHandler ActApplicationChanged;
 		public event ActWindowTextChangedHandler ActWindowTextChanged;
-
-		/// <summary>
-		/// Indicates that current state of active user application fully changed
-		/// </summary>
 		public event ActStateChangedHandler ActStateChanged;
+		public event ProcessStoppedHandler ProcessStopped;
 
-		#endregion
-
-		#region event invocators
+		public void InvokeProcessStopped(ProcessEventArgs args)
+		{
+			ProcessStoppedHandler handler = ProcessStopped;
+			if (handler != null) handler(this, args);
+		}
 
 		public void InvokeActApplicationChanged(ActApplicationChangedHandlerArgs args)
 		{
@@ -42,7 +44,7 @@ namespace tsWin
 			if (handler != null) handler(this, args);
 		}
 
-		private void InvokeActPidChanged(ActPidChangedArgs args)
+		private void InvokeActPidChanged(ProcessEventArgs args)
 		{
 			ActPidChangedHandler handler = ActPidChanged;
 			if (handler != null) handler(this, args);
@@ -68,12 +70,15 @@ namespace tsWin
 		private string _actPdesc;
 		private string _actWinText;
 		private const long TickPeriod = 1000;
+		private readonly Dictionary<int, string> _processes;
 
 		/// <summary>
 		/// Initialize a new instance of WindowTracker class
 		/// </summary>
 		public WindowTracker (bool startListening)
 		{
+			_processes = new Dictionary<int, string>();
+			GetRunningProcesses();
 			if (startListening)
 				Start();
 		}
@@ -105,6 +110,38 @@ namespace tsWin
 		}
 
 		/// <summary>
+		/// Gets all running processes which have opened window
+		/// </summary>
+		private void GetRunningProcesses()
+		{
+			foreach (Process p in Process.GetProcesses())
+			{
+				if (p.MainWindowTitle != string.Empty)
+					_processes.Add(p.Id, p.ProcessName);
+			}
+		}
+
+		/// <summary>
+		/// Checking process running status
+		/// and invoking event when process killed
+		/// </summary>
+		private void CheckProcessesAlive()
+		{
+			foreach (int pid in new List<int>(_processes.Keys))
+			{
+				try
+				{
+					Process.GetProcessById(pid);
+				}
+				catch (ArgumentException)
+				{
+					_processes.Remove(pid);
+					InvokeProcessStopped(new ProcessEventArgs(pid));
+				}
+			}
+		}
+
+		/// <summary>
 		/// Procedure handles timer ticks 
 		/// </summary>
 		/// <param name="state">Service parmeter</param>
@@ -122,9 +159,14 @@ namespace tsWin
 			string newPName = WinApiWrapper.GetWindowProcName(newPid);
 			string newPdesc = WinApiWrapper.GetProcDescription(newPid);
 
+			if (!_processes.ContainsKey(newPid))
+				_processes.Add(newPid, newPName);
+
+			CheckProcessesAlive();
+
 			if (newPid != _actPid)
 			{
-				InvokeActPidChanged(new ActPidChangedArgs(newPid));
+				InvokeActPidChanged(new ProcessEventArgs(newPid));
 				_actPid = newPid;
 				invokeStateChRequired = true;
 			}
@@ -150,7 +192,7 @@ namespace tsWin
 			}
 
 			if (invokeAppChRequired)
-				InvokeActApplicationChanged(new ActApplicationChangedHandlerArgs(newPName, newPdesc));
+				InvokeActApplicationChanged(new ActApplicationChangedHandlerArgs(newPName, newPdesc, newPid));
 
 			//State changed event must be invoked last
 			if (invokeStateChRequired)
@@ -159,10 +201,16 @@ namespace tsWin
 
 		#region delegates and event args
 
+		public delegate void ProcessStoppedHandler(object sender, ProcessEventArgs args);
+
 		public delegate void ActApplicationChangedHandler(object sender, ActApplicationChangedHandlerArgs args);
 
 		public class ActApplicationChangedHandlerArgs
 		{
+			/// <summary>
+			/// Process id
+			/// </summary>
+			public int NewPID { get; private set; }
 			/// <summary>
 			/// Process name
 			/// </summary>
@@ -178,10 +226,12 @@ namespace tsWin
 			/// </summary>
 			/// <param name="newPname">Process name</param>
 			/// <param name="newPdesc">Process description</param>
-			public ActApplicationChangedHandlerArgs(string newPname, string newPdesc)
+			/// <param name="newPID">Process id</param>
+			public ActApplicationChangedHandlerArgs(string newPname, string newPdesc, int newPID)
 			{
 				NewPname = newPname;
 				NewPdesc = newPdesc;
+				NewPID = newPID;
 			}
 		}
 
@@ -282,22 +332,22 @@ namespace tsWin
 			}
 		}
 
-		public delegate void ActPidChangedHandler(object sender, ActPidChangedArgs args);
+		public delegate void ActPidChangedHandler(object sender, ProcessEventArgs args);
 
-		public class ActPidChangedArgs
+		public class ProcessEventArgs
 		{
 			/// <summary>
 			/// Process id
 			/// </summary>
-			public int NewPID { get; private set; }
+			public int PID { get; private set; }
 
 			/// <summary>
 			/// Initialize a new instance of ActPidChangedArgs
 			/// </summary>
-			/// <param name="newPID">Process id</param>
-			public ActPidChangedArgs(int newPID)
+			/// <param name="pid">Process id</param>
+			public ProcessEventArgs(int pid)
 			{
-				NewPID = newPID;
+				PID = pid;
 			}
 		}
 

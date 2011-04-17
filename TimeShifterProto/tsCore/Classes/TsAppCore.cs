@@ -41,7 +41,23 @@ namespace tsCore.Classes
 
 			_tsWinLogger.AppChanged += TsWinLoggerAppChanged;
 			_tsWinLogger.StateChanged += TsWinLoggerStateChanged;
+			_tsWinLogger.ProcessStopped += TsWinLoggerProcessStopped;
 			_tsUserActLogger.SnapshotReady += _tsUserActLogger_SnapshotReady;
+		}
+
+		void TsWinLoggerProcessStopped(object sender, WindowTracker.ProcessEventArgs args)
+		{
+			//NOTE! Это кровавая жесть!!! Никогда! Никогда так не делайте!
+			var incTimeSpan = TimeSpan.Zero;
+			_taskList.Find(t => 
+			               (t.ActualTimeToSpend += 
+			                (t.AssignedApplications.Find(a =>
+			                                             (incTimeSpan = 
+			                                              (a.PID == args.PID ? DateTime.Now : DateTime.MinValue) 
+			                                              - a.StartTime)
+			                                             == TimeSpan.Zero)
+			                 != null ? incTimeSpan : TimeSpan.Zero)) 
+			               != t.ActualTimeToSpend);
 		}
 
 		void _tsUserActLogger_SnapshotReady(object sender, UserActLogger.SnapshotReadyHandlerArgs args)
@@ -85,6 +101,8 @@ namespace tsCore.Classes
 				_taskList.Add((TsTask)new TsTask().FromDataReader(dr));
 			}
 			dr.Close();
+
+			_taskList[0].AssignedApplications.Add(_applicationList.Find(a => a.Name.Contains("WIN")));
 		}
 
 		~TsAppCore()
@@ -93,12 +111,13 @@ namespace tsCore.Classes
 			_tsWinLogger.WriteBinary(Filename + "win.txt");
 		}
 
-		void TsWinLoggerAppChanged(object sender, WindowLogger.AppChangedEventArgs args)
+		void TsWinLoggerAppChanged(object sender, WindowTracker.ActApplicationChangedHandlerArgs args)
 		{
-			var app = new TsApplication(args.ProcessName, args.ProcessDesc);
+			var app = new TsApplication(args.NewPname, args.NewPdesc, args.NewPID);
 
 			if (!_applicationList.Contains(app))
 			{
+				app.StartTime = DateTime.Now;
 				app.SmallIcon = IconHelper.GetApplicationIcon(app.Name, app.Description, false).ToBitmap();
 				app.LargeIcon = IconHelper.GetApplicationIcon(app.Name, app.Description, true).ToBitmap();
 				_applicationList.Add(app);

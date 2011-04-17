@@ -27,6 +27,16 @@ namespace tsCoreStructures
 		public int PID { get; set; }
 
 		/// <summary>
+		/// Time of process startup
+		/// </summary>
+		public DateTime StartTime { get; set; }
+
+		/// <summary>
+		/// Time of process shutdown
+		/// </summary>
+		public DateTime EndTime { get; set; }
+
+		/// <summary>
 		/// Application name (name of the process)
 		/// </summary>
 		[DataBaseColumn]
@@ -77,15 +87,16 @@ namespace tsCoreStructures
 			Name = name;
 		}
 
-		public TsApplication(string name, string description)
+		public TsApplication(string name, string description, int pid)
 			: this(name)
 		{
 			Name = name;
 			Description = description;
+			PID = pid;
 		}
 
-		public TsApplication(string name, string description, Icon smallIcon, Icon largeIcon)
-			: this(name, description)
+		public TsApplication(string name, string description, int pid, Icon smallIcon, Icon largeIcon)
+			: this(name, description, pid)
 		{
 			SmallIcon = smallIcon.ToBitmap();
 			LargeIcon = largeIcon.ToBitmap();

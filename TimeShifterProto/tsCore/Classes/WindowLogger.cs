@@ -18,11 +18,19 @@ namespace tsCore.Classes
 			if (handler != null) handler(this, args);
 		}
 
-		public event AppChangedHandler AppChanged;
+		public event WindowTracker.ProcessStoppedHandler ProcessStopped;
 
-		public void InvokeAppChanged(AppChangedEventArgs args)
+		public void InvokeProcessStopped(WindowTracker.ProcessEventArgs args)
 		{
-			AppChangedHandler handler = AppChanged;
+			WindowTracker.ProcessStoppedHandler handler = ProcessStopped;
+			if (handler != null) handler(this, args);
+		}
+
+		public event WindowTracker.ActApplicationChangedHandler AppChanged;
+
+		public void InvokeAppChanged(WindowTracker.ActApplicationChangedHandlerArgs args)
+		{
+			WindowTracker.ActApplicationChangedHandler handler = AppChanged;
 			if (handler != null) handler(this, args);
 		}
 		
@@ -36,12 +44,18 @@ namespace tsCore.Classes
 			_windowLog = new List<WindowLogStructure>();
 			_lastRecord = new WindowLogStructure();
 			_winTracker.ActApplicationChanged += WinTrackerActApplicationChanged;
-			_winTracker.ActStateChanged += WinTrackerActStateChanged; 
+			_winTracker.ActStateChanged += WinTrackerActStateChanged;
+			_winTracker.ProcessStopped += WinTrackerProcessStopped;
+		}
+
+		void WinTrackerProcessStopped(object sender, WindowTracker.ProcessEventArgs args)
+		{
+			InvokeProcessStopped(args);
 		}
 
 		void WinTrackerActApplicationChanged(object sender, WindowTracker.ActApplicationChangedHandlerArgs args)
 		{
-			InvokeAppChanged(new AppChangedEventArgs(args.NewPname, args.NewPdesc));
+			InvokeAppChanged(args);
 		}
 
 		void WinTrackerActStateChanged(object sender, WindowTracker.ActStateChangedHandlerArgs args)
@@ -98,18 +112,18 @@ namespace tsCore.Classes
 			}
 		}
 
-		internal delegate void AppChangedHandler(object sender, AppChangedEventArgs args);
+		//internal delegate void AppChangedHandler(object sender, AppChangedEventArgs args);
 
-		internal class AppChangedEventArgs
-		{
-			public string ProcessName { get; private set; }
-			public string ProcessDesc { get; private set; }
+		//internal class AppChangedEventArgs
+		//{
+		//    public string ProcessName { get; private set; }
+		//    public string ProcessDesc { get; private set; }
 
-			public AppChangedEventArgs(string processName, string processDesc)
-			{
-				ProcessName = processName;
-				ProcessDesc = processDesc;
-			}
-		}
+		//    public AppChangedEventArgs(string processName, string processDesc)
+		//    {
+		//        ProcessName = processName;
+		//        ProcessDesc = processDesc;
+		//    }
+		//}
 	}
 }
