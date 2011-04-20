@@ -143,5 +143,46 @@ namespace tsUI.Forms
 			}
 		}
 
+		private void treeView1_DragEnter(object sender, DragEventArgs e)
+		{
+
+		}
+
+		private void lvApplications_DragDrop(object sender, DragEventArgs e)
+		{
+
+		}
+
+		private void lvApplications_ItemDrag(object sender, ItemDragEventArgs e)
+		{
+
+		}
+
+		private void lvApplications_ItemChecked(object sender, ItemCheckedEventArgs e)
+		{
+			
+			if (treeView1.SelectedNode != null)
+			{
+				if (treeView1.SelectedNode.Parent == null)
+				if (e.Item.Checked == true)
+				{
+					TreeNode[] list = treeView1.SelectedNode.Nodes.Find(e.Item.Text, true);
+					if (list.Length.Equals(0))
+					{
+						TreeNode tn = new TreeNode(e.Item.Text);
+						treeView1.SelectedNode.Nodes.Add(tn);
+					}
+				}
+				else
+				{
+					TreeNode[] list = treeView1.SelectedNode.Nodes.Find(e.Item.Text, false);
+					foreach (var treeNode in list)
+					{
+						treeView1.SelectedNode.Nodes.Remove(treeNode);
+					}
+				}
+			}
+		}
+
 	}
 }
