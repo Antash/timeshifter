@@ -40,8 +40,6 @@ namespace tsCore.Classes
 			ReadDataBase();
 			AssignRunningProcesses();
 
-			NewTaskApplicationSetting(0, _applicationList.Find(a => a.Description.Contains("Chrome")));
-
 			_tsWinLogger.AppChanged += TsWinLoggerAppChanged;
 			_tsWinLogger.StateChanged += TsWinLoggerStateChanged;
 			_tsWinLogger.ProcessStopped += TsWinLoggerProcessStopped;
