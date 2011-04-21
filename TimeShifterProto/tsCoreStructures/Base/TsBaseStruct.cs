@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Reflection;
 
 namespace tsCoreStructures.Base
@@ -8,13 +9,15 @@ namespace tsCoreStructures.Base
 	/// </summary>
 	public abstract class TsBaseStruct
 	{
+		protected static Dictionary<string, DataTable> StructTablesDict = new Dictionary<string, DataTable>();
+
 		/// <summary>
 		/// Convert self object to Data row of specified structure
 		/// </summary>
-		/// <param name="structTable">Table structure</param>
 		/// <returns>Data row that contains object</returns>
-		protected DataRow ToDataRow(DataTable structTable)
+		public DataRow ToDataRow()
 		{
+			DataTable structTable = StructTablesDict[GetType().Name];
 			DataRow dr = structTable.NewRow();
 
 			foreach (PropertyInfo prop in GetType().GetProperties())
@@ -43,7 +46,7 @@ namespace tsCoreStructures.Base
 		/// </summary>
 		/// <param name="dr">Row contains data</param>
 		/// <returns>Object of base type (but can be casted to type which call this method)</returns>
-		public virtual TsBaseStruct FromDataRow(DataRow dr)
+		public TsBaseStruct FromDataRow(DataRow dr)
 		{
 			foreach (PropertyInfo prop in GetType().GetProperties())
 			{
@@ -64,7 +67,7 @@ namespace tsCoreStructures.Base
 		/// </summary>
 		/// <param name="dr">Cursor of data reader</param>
 		/// <returns>Object of base type (but can be casted to type which call this method)</returns>
-		public virtual TsBaseStruct FromDataReader(DataTableReader dr)
+		public TsBaseStruct FromDataReader(DataTableReader dr)
 		{
 			foreach (PropertyInfo prop in GetType().GetProperties())
 			{
@@ -105,7 +108,19 @@ namespace tsCoreStructures.Base
 				}
 			}
 
+			if (!StructTablesDict.ContainsKey(structTable.TableName))
+				StructTablesDict.Add(structTable.TableName, structTable);
+
 			return structTable;
+		}
+
+		/// <summary>
+		/// This method gets primary key of the struct table
+		/// </summary>
+		/// <returns>PK columns</returns>
+		public DataColumn[] GetPrimaryKey()
+		{
+			return StructTablesDict[GetType().Name].PrimaryKey;
 		}
 	}
 }

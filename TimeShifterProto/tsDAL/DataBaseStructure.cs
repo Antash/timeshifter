@@ -3,6 +3,7 @@ using System.Data;
 using System.IO;
 using tsCoreFW;
 using tsCoreStructures;
+using tsCoreStructures.Base;
 
 namespace tsDAL
 {
@@ -28,6 +29,7 @@ namespace tsDAL
 			_dtApplication = new TsApplication().BuildDataStructure();
 			_ds.Tables.Add(_dtApplication);
 
+			_dtTaskApplication = new AssociativeBaseStruct(new TsTask(), new TsApplication()).BuildDataStructure();
 			//_dtTaskApplication = new DataTable("TaskApplication");
 
 			//_dtTaskApplication.Columns.Add("TaskId", typeof(int));
