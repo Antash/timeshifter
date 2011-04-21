@@ -70,7 +70,7 @@ namespace tsCoreStructures
 		/// </summary>
 		public List<TsWindow> AllWindows { get; set; }
 
-#region constructors
+		#region constructors
 
 		/// <summary>
 		/// Creates new instance of TsApplication
@@ -103,7 +103,7 @@ namespace tsCoreStructures
 			LargeIcon = largeIcon.ToBitmap();
 		}
 
-#endregion
+		#endregion
 
 		/// <summary>
 		/// Class comparer
@@ -113,28 +113,6 @@ namespace tsCoreStructures
 		public bool Equals(TsApplication other)
 		{
 			return Name == other.Name && Description == other.Description;
-		}
-
-		/// <summary>
-		/// Converts class instance to data row
-		/// </summary>
-		/// <returns>Data row contains class copy</returns>
-		/// <remarks>
-		/// You must to call BuildDataStructure() before calling this method
-		/// in order to create class data structure
-		/// </remarks>
-		public DataRow ToDataRow()
-		{
-			return StructTable != null ? ToDataRow(StructTable) : null;
-		}
-
-		/// <summary>
-		/// Builds class table structure
-		/// </summary>
-		/// <returns>Ready-to-use in DAL DataTable</returns>
-		public override DataTable BuildDataStructure()
-		{
-			return StructTable = base.BuildDataStructure();
 		}
 
 		#region delegates & event args
