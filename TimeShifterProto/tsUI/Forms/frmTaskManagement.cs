@@ -86,6 +86,7 @@ namespace tsUI.Forms
 
 		public event EventHandler Save;
 		public event TsTask.NewTaskHandler NewTask;
+		public event EventHandler NewSettings;
 
 		public void InvokeSave(EventArgs e)
 		{
@@ -169,6 +170,7 @@ namespace tsUI.Forms
 			//и самое главное - сделать обработку всего этого в презентере и модели
 			if (treeView1.SelectedNode != null && treeView1.SelectedNode.Parent == null)
 			{
+				InvokeNewSettings(new EventArgs());
 				if (e.Item.Checked)
 				{
 					treeView1.SelectedNode.Nodes.Add(e.Item.Text, e.Item.Text);
@@ -178,6 +180,13 @@ namespace tsUI.Forms
 					treeView1.SelectedNode.Nodes.RemoveByKey(e.Item.Text);
 				}
 			}
+		}
+
+
+		public void InvokeNewSettings(EventArgs e)
+		{
+			EventHandler handler = NewSettings;
+			if (handler != null) handler(this, e);
 		}
 	}
 }

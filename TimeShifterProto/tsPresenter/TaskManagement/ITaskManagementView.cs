@@ -16,5 +16,6 @@ namespace tsPresenter.TaskManagement
 		void AddNewApplication(TsApplication app);
 		event EventHandler Save;
 		event TsTask.NewTaskHandler NewTask;
+		event EventHandler NewSettings;
 	}	
 }
