@@ -19,6 +19,7 @@ namespace tsPresenter.TaskManagement
 			((ITaskManagementModel)Model).NewApplication += ModelNewApplication;
 			((ITaskManagementView)View).Save += ViewSave;
 			((ITaskManagementView)View).NewTask += ViewAddNewTask;
+			((ITaskManagementView)View).NewSettings += ViewAddNewSettings;
 		}
 
 		protected override sealed void Initialize()
@@ -40,6 +41,11 @@ namespace tsPresenter.TaskManagement
 		void ViewAddNewTask(object sender, TsTask.NewTaskHandlerArgs args)
 		{
 			((ITaskManagementModel)Model).AddNewTask(args.Task);
+		}
+
+		void ViewAddNewSettings(object sender, EventArgs args)
+		{
+			((ITaskManagementModel)Model).AddNewSetting(args.ToString());
 		}
 	}
 }

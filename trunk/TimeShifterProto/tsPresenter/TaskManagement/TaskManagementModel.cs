@@ -79,5 +79,14 @@ namespace tsPresenter.TaskManagement
 			TsApplication.NewApplicationHandler handler = NewApplication;
 			if (handler != null) handler(this, args);
 		}
+
+		public void AddNewSetting(string task)
+		{
+			// 1) Проверка настройки
+			// 2) Добавление\Удаление настройки в таблицу настроек
+			// 3) Оповещение формы об измененных данных
+		}
+
+
 	}
 }
