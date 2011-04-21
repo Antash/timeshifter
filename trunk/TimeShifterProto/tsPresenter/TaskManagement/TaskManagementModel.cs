@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using tsCore.Classes;
 using tsCoreStructures;
+using tsCoreStructures.Base;
 
 namespace tsPresenter.TaskManagement
 {
@@ -23,7 +23,7 @@ namespace tsPresenter.TaskManagement
 
 			foreach (TsApplication app in TsAppCore.Instance.Applications)
 			{
-				_applications.Add(new ListViewItem(app.Description, _appIconSmall.Count));
+				_applications.Add(new ListViewItem(app.Description, _appIconSmall.Count) {Tag = app});
 				_appIconLarge.Add(app.LargeIcon);
 				_appIconSmall.Add(app.LargeIcon);
 			}
@@ -32,13 +32,13 @@ namespace tsPresenter.TaskManagement
 
 			foreach (TsTask task in TsAppCore.Instance.Tasks)
 			{
-				_tasks.Add(new TreeNode(task.TaskName));
+				_tasks.Add(new TreeNode(task.TaskName) {Tag = task});
 			}
 		}
 
 		void InstanceNewApplication(object sender, TsApplication.NewApplicationHandlerArgs args)
 		{
-			_applications.Add(new ListViewItem(args.App.Description, _appIconLarge.Count));
+			_applications.Add(new ListViewItem(args.App.Description, _appIconLarge.Count) { Tag = args.App });
 			_appIconLarge.Add(args.App.LargeIcon);
 			_appIconSmall.Add(args.App.SmallIcon);
 			InvokeNewApplication(new TsApplication.NewApplicationHandlerArgs(args.App));
@@ -75,15 +75,18 @@ namespace tsPresenter.TaskManagement
 			TsAppCore.Instance.NewTask(task);
 		}
 
-		public void AddNewSetting(TsTask.NewSettingsHandlerArgs args)
-		{
-			//throw new NotImplementedException();
-		}
-
 		public void InvokeNewApplication(TsApplication.NewApplicationHandlerArgs args)
 		{
 			TsApplication.NewApplicationHandler handler = NewApplication;
 			if (handler != null) handler(this, args);
+		}
+
+		public void AddNewSetting(AssociativeBaseStruct.AssociativeHandlerArgs setting)
+		{
+			TsAppCore.Instance.ApplicationSettingControl(
+				((TsTask)setting.Obj1).Id,
+				((TsApplication)setting.Obj2).Id,
+				setting.IsCreating);
 		}
 	}
 }

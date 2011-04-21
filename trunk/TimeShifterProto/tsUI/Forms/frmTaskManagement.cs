@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using tsCoreStructures;
+using tsCoreStructures.Base;
 using tsPresenter.TaskManagement;
 
 namespace tsUI.Forms
@@ -86,7 +87,7 @@ namespace tsUI.Forms
 
 		public event EventHandler Save;
 		public event TsTask.NewTaskHandler NewTask;
-		public event TsTask.NewSettingsHandler NewSettings;
+		public event AssociativeBaseStruct.AssociativeHandler NewSettings;
 
 		public void InvokeSave(EventArgs e)
 		{
@@ -124,7 +125,7 @@ namespace tsUI.Forms
 
 		private void AddTask(TsTask task)
 		{
-			TreeNode tn = new TreeNode(task.TaskName) { Name = task.TaskName };
+			TreeNode tn = new TreeNode(task.TaskName) { Name = task.TaskName, Tag = task };
 			if (!treeView1.Nodes.ContainsKey(task.TaskName))
 				treeView1.Nodes.Add(tn);
 		}
@@ -136,8 +137,8 @@ namespace tsUI.Forms
 				if (textBox1.Text != String.Empty)
 				{
 					TsTask _task = new TsTask(textBox1.Text,textBox1.Text, DateTime.Now);
-					AddTask(_task);
 					InvokeNewTask(new TsTask.NewTaskHandlerArgs(_task));
+					AddTask(_task);
 				}
 					
 				textBox1.Text = String.Empty;
@@ -168,13 +169,21 @@ namespace tsUI.Forms
 			//дочерними нодами
 
 			//и самое главное - сделать обработку всего этого в презентере и модели
+			
+			// Обратная связь оказалась не нужна.
+			// Все прекрасно работает, так как объекты передаются по ссылкам и все изменения 
+			// произошедшие внутри видны сдесь.
+			// единственное что, сначала надо, чтобы отработало событие. 
+			// А потом работать с актуальным объектом
+			
 			if (treeView1.SelectedNode != null && treeView1.SelectedNode.Parent == null)
 			{
-				// Надо не создавать новые, а искать существующие
-				TsTask _task = new TsTask(treeView1.SelectedNode.Text, treeView1.SelectedNode.Text, DateTime.Now);
-				TsApplication _application = new TsApplication();
+				InvokeNewSettings(
+					new AssociativeBaseStruct.AssociativeHandlerArgs(
+						(TsBaseStruct)treeView1.SelectedNode.Tag,
+						(TsBaseStruct)e.Item.Tag,
+						e.Item.Checked));
 
-				InvokeNewSettings(new TsTask.NewSettingsHandlerArgs(_task, _application, e.Item.Checked));
 				if (e.Item.Checked)
 				{
 					treeView1.SelectedNode.Nodes.Add(e.Item.Text, e.Item.Text);
@@ -186,10 +195,9 @@ namespace tsUI.Forms
 			}
 		}
 
-
-		public void InvokeNewSettings(TsTask.NewSettingsHandlerArgs e)
+		public void InvokeNewSettings(AssociativeBaseStruct.AssociativeHandlerArgs e)
 		{
-			TsTask.NewSettingsHandler handler = NewSettings;
+			AssociativeBaseStruct.AssociativeHandler handler = NewSettings;
 			if (handler != null) handler(this, e);
 		}
 	}

@@ -9,6 +9,9 @@ namespace tsCoreStructures.Base
 	/// </summary>
 	public abstract class TsBaseStruct
 	{
+		/// <summary>
+		/// Dictionary contains struct tables (key - user defined or type name)
+		/// </summary>
 		protected static Dictionary<string, DataTable> StructTablesDict = new Dictionary<string, DataTable>();
 
 		/// <summary>
@@ -89,7 +92,18 @@ namespace tsCoreStructures.Base
 		/// <returns>Data Table with correct structure to store class copy</returns>
 		public virtual DataTable BuildDataStructure()
 		{
-			var structTable = new DataTable { TableName = GetType().Name };
+			return BuildDataStructure(GetType().Name);
+		}
+
+		/// <summary>
+		/// Creates class table structure
+		/// </summary>
+		/// <param name="tableName">Structure table name</param>
+		/// <returns>Data Table with correct structure to store class copy</returns>
+		protected DataTable BuildDataStructure(string tableName)
+		{
+			var structTable = new DataTable { TableName = tableName };
+			var primaryKeyColumns = new List<DataColumn>();
 
 			foreach (PropertyInfo prop in GetType().GetProperties())
 			{
@@ -104,12 +118,18 @@ namespace tsCoreStructures.Base
 						AutoIncrement = ((DataBaseColumnAttribute)attr[0]).IsAutoIncrement,
 					};
 
+					if (((DataBaseColumnAttribute)attr[0]).IsPrimaryKey)
+						primaryKeyColumns.Add(dc);
+
 					structTable.Columns.Add(dc);
 				}
 			}
 
-			if (!StructTablesDict.ContainsKey(structTable.TableName))
-				StructTablesDict.Add(structTable.TableName, structTable);
+			if (primaryKeyColumns.Count > 0)
+				structTable.Constraints.Add(tableName + "PK", primaryKeyColumns.ToArray(), true);
+
+			if (!StructTablesDict.ContainsKey(tableName))
+				StructTablesDict.Add(tableName, structTable);
 
 			return structTable;
 		}

@@ -18,32 +18,34 @@ namespace tsCoreStructures.Base
 		{
 			AllowNull = true;
 			IsPrimaryKey = false;
+			IsAutoIncrement = false;
+			ConvertType = null;
 		}
 
-		public DataBaseColumnAttribute(Type convertType)
-		{
-			ConvertType = convertType;
-			AllowNull = true;
-			IsPrimaryKey = false;
-		}
+		//public DataBaseColumnAttribute(Type convertType)
+		//{
+		//    ConvertType = convertType;
+		//    AllowNull = true;
+		//    IsPrimaryKey = false;
+		//}
 
-		public DataBaseColumnAttribute(bool isAutoIncrement)
-		{
-			AllowNull = false;
-			IsPrimaryKey = true;
-			IsAutoIncrement = isAutoIncrement;
-		}
+		//public DataBaseColumnAttribute(bool isAutoIncrement)
+		//{
+		//    AllowNull = false;
+		//    IsPrimaryKey = true;
+		//    IsAutoIncrement = isAutoIncrement;
+		//}
 
-		public DataBaseColumnAttribute(bool isUnique, bool isPrimaryKey)
-		{
-			AllowNull = isUnique;
-			IsPrimaryKey = isPrimaryKey;
-		}
+		//public DataBaseColumnAttribute(bool isUnique, bool isPrimaryKey)
+		//{
+		//    AllowNull = isUnique;
+		//    IsPrimaryKey = isPrimaryKey;
+		//}
 
-		public DataBaseColumnAttribute(bool isUnique, bool isPrimaryKey, Type convertType)
-			:this (isUnique, isPrimaryKey)
-		{
-			ConvertType = convertType;
-		}
+		//public DataBaseColumnAttribute(bool isUnique, bool isPrimaryKey, Type convertType)
+		//    :this (isUnique, isPrimaryKey)
+		//{
+		//    ConvertType = convertType;
+		//}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using tsCoreStructures;
+using tsCoreStructures.Base;
 using tsPresenter.Base;
 
 namespace tsPresenter.TaskManagement
@@ -43,9 +44,9 @@ namespace tsPresenter.TaskManagement
 			((ITaskManagementModel)Model).AddNewTask(args.Task);
 		}
 
-		void ViewAddNewSettings(object sender, TsTask.NewSettingsHandlerArgs newSettingsHandlerArgs)
+		void ViewAddNewSettings(object sender, AssociativeBaseStruct.AssociativeHandlerArgs args)
 		{
-			((ITaskManagementModel)Model).AddNewSetting(newSettingsHandlerArgs);
+			((ITaskManagementModel)Model).AddNewSetting(args);
 		}
 	}
 }
