@@ -123,7 +123,7 @@ namespace tsUI.Forms
 
 		private void AddTask(TsTask task)
 		{
-			TreeNode tn = new TreeNode(task.TaskName);
+			TreeNode tn = new TreeNode(task.TaskName) { Name = task.TaskName };
 			if (!treeView1.Nodes.ContainsKey(task.TaskName))
 				treeView1.Nodes.Add(tn);
 		}
@@ -160,29 +160,24 @@ namespace tsUI.Forms
 
 		private void lvApplications_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-			
-			if (treeView1.SelectedNode != null)
+			//NOTE 2 Юра: так красивше.
+			//надо еще добавить такую штуку, чтобы чекбоксы появлялись 
+			//только при выделении нодов первого уровня в дереве
+			//и соответственно галоски в них сами расставлялись в соответсявии с 
+			//дочерними нодами
+
+			//и самое главное - сделать обработку всего этого в презентере и модели
+			if (treeView1.SelectedNode != null && treeView1.SelectedNode.Parent == null)
 			{
-				if (treeView1.SelectedNode.Parent == null)
-				if (e.Item.Checked == true)
+				if (e.Item.Checked)
 				{
-					TreeNode[] list = treeView1.SelectedNode.Nodes.Find(e.Item.Text, true);
-					if (list.Length.Equals(0))
-					{
-						TreeNode tn = new TreeNode(e.Item.Text);
-						treeView1.SelectedNode.Nodes.Add(tn);
-					}
+					treeView1.SelectedNode.Nodes.Add(e.Item.Text, e.Item.Text);
 				}
 				else
 				{
-					TreeNode[] list = treeView1.SelectedNode.Nodes.Find(e.Item.Text, false);
-					foreach (var treeNode in list)
-					{
-						treeView1.SelectedNode.Nodes.Remove(treeNode);
-					}
+					treeView1.SelectedNode.Nodes.RemoveByKey(e.Item.Text);
 				}
 			}
 		}
-
 	}
 }
