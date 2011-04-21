@@ -64,17 +64,6 @@ namespace tsCore.Classes
 			TsTask task = _taskList.Find(t => t.AssignedApplications.Find(a => a.PID == args.PID) != null);
 			if (task != null)
 				task.ActualTimeToSpend += DateTime.Now - task.AssignedApplications.Find(a => a.PID == args.PID).StartTime;
-
-			//var incTimeSpan = TimeSpan.Zero;
-			//_taskList.Find(t =>
-			//   (t.ActualTimeToSpend +=
-			//    (t.AssignedApplications.Find(a =>
-			//                                 (incTimeSpan =
-			//                                  (a.PID == args.PID ? DateTime.Now : DateTime.MinValue)
-			//                                  - a.StartTime)
-			//                                 == TimeSpan.Zero)
-			//     != null ? incTimeSpan : TimeSpan.Zero))
-			//   != t.ActualTimeToSpend);
 		}
 
 		void _tsUserActLogger_SnapshotReady(object sender, UserActLogger.SnapshotReadyHandlerArgs args)
@@ -141,13 +130,12 @@ namespace tsCore.Classes
 				}
 			}
 			else
-			//if (!_applicationList.Contains(app))
 			{
 				var app = new TsApplication(args.NewPname, args.NewPdesc, args.NewPID) {StartTime = DateTime.Now};
 				app.SmallIcon = IconHelper.GetApplicationIcon(app.Name, app.Description, false).ToBitmap();
 				app.LargeIcon = IconHelper.GetApplicationIcon(app.Name, app.Description, true).ToBitmap();
-				_applicationList.Add(app);
 				_taskDbs.NewApplication(app.ToDataRow());
+				_applicationList.Add(app);
 				InvokeNewApplication(new TsApplication.NewApplicationHandlerArgs(app));
 			}
 		}
@@ -203,9 +191,16 @@ namespace tsCore.Classes
 			}
 		}
 
-		public void NewTaskApplicationSetting(int taskID, TsApplication app)
+		public void ApplicationSettingControl(int taskID, int appID, bool isCreating)
 		{
-			_taskList.Find(t => t.Id == taskID).AssignedApplications.Add(app);
+			//TODO Add info to settings table
+			if (isCreating)
+				_taskList.Find(t => t.Id == taskID).AssignedApplications.Add(
+					_applicationList.Find(a => a.Id == appID));
+			else
+				_taskList.Find(t => t.Id == taskID).AssignedApplications.Remove(
+					_applicationList.Find(a => a.Id == appID));
+
 		}
 	}
 }

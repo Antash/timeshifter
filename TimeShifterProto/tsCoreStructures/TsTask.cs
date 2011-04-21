@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using tsCoreStructures.Base;
 
 namespace tsCoreStructures
@@ -11,14 +10,9 @@ namespace tsCoreStructures
 	public class TsTask : TsBaseStruct, IEquatable<TsTask>
 	{
 		/// <summary>
-		/// Table contains class data structure
-		/// </summary>
-		protected static DataTable StructTable;
-
-		/// <summary>
 		/// Unique task id
 		/// </summary>
-		[DataBaseColumn(true)]
+		[DataBaseColumn(IsPrimaryKey = true, IsAutoIncrement = true)]
 		public int Id { get; set; }
 
 		/// <summary>

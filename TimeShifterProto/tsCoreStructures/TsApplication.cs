@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using tsCoreStructures.Base;
 
@@ -12,9 +11,10 @@ namespace tsCoreStructures
 	public class TsApplication : TsBaseStruct, IEquatable<TsApplication>
 	{
 		/// <summary>
-		/// Table contains class data structure
+		/// Unique application id
 		/// </summary>
-		protected static DataTable StructTable;
+		[DataBaseColumn(IsPrimaryKey = true, IsAutoIncrement = true)]
+		public int Id { get; set; }
 
 		/// <summary>
 		/// Indicates that current application is running
@@ -51,13 +51,13 @@ namespace tsCoreStructures
 		/// <summary>
 		/// Small application icon
 		/// </summary>
-		[DataBaseColumn(typeof(byte[]))]
+		[DataBaseColumn(ConvertType = typeof(byte[]))]
 		public Image SmallIcon { get; set; }
 
 		/// <summary>
 		/// Large application icon
 		/// </summary>
-		[DataBaseColumn(typeof(byte[]))]
+		[DataBaseColumn(ConvertType = typeof(byte[]))]
 		public Image LargeIcon { get; set; }
 
 		/// <summary>

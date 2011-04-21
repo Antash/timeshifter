@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using tsCoreStructures;
+using tsCoreStructures.Base;
 using tsPresenter.Base;
 
 namespace tsPresenter.TaskManagement
@@ -16,8 +17,6 @@ namespace tsPresenter.TaskManagement
 		void AddNewApplication(TsApplication app);
 		event EventHandler Save;
 		event TsTask.NewTaskHandler NewTask;
-		// Тоха, мне нужен класс настроек гдя можно сделать событие, пока что через таски
-
-		event TsTask.NewSettingsHandler NewSettings;
+		event AssociativeBaseStruct.AssociativeHandler NewSettings;
 	}	
 }
