@@ -43,9 +43,9 @@ namespace tsPresenter.TaskManagement
 			((ITaskManagementModel)Model).AddNewTask(args.Task);
 		}
 
-		void ViewAddNewSettings(object sender, EventArgs args)
+		void ViewAddNewSettings(object sender, TsTask.NewSettingsHandlerArgs newSettingsHandlerArgs)
 		{
-			((ITaskManagementModel)Model).AddNewSetting(args.ToString());
+			((ITaskManagementModel)Model).AddNewSetting(newSettingsHandlerArgs);
 		}
 	}
 }

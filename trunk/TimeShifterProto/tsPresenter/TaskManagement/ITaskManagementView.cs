@@ -16,7 +16,8 @@ namespace tsPresenter.TaskManagement
 		void AddNewApplication(TsApplication app);
 		event EventHandler Save;
 		event TsTask.NewTaskHandler NewTask;
-		// Тоха, мне нужен класс настроек гдя можно сделать событие, пока что простой хэндлер
-		event EventHandler NewSettings;
+		// Тоха, мне нужен класс настроек гдя можно сделать событие, пока что через таски
+
+		event TsTask.NewSettingsHandler NewSettings;
 	}	
 }
