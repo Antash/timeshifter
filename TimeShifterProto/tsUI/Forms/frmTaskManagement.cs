@@ -86,7 +86,7 @@ namespace tsUI.Forms
 
 		public event EventHandler Save;
 		public event TsTask.NewTaskHandler NewTask;
-		public event EventHandler NewSettings;
+		public event TsTask.NewSettingsHandler NewSettings;
 
 		public void InvokeSave(EventArgs e)
 		{
@@ -170,7 +170,11 @@ namespace tsUI.Forms
 			//и самое главное - сделать обработку всего этого в презентере и модели
 			if (treeView1.SelectedNode != null && treeView1.SelectedNode.Parent == null)
 			{
-				InvokeNewSettings(new EventArgs());
+				// Надо не создавать новые, а искать существующие
+				TsTask _task = new TsTask(treeView1.SelectedNode.Text, treeView1.SelectedNode.Text, DateTime.Now);
+				TsApplication _application = new TsApplication();
+
+				InvokeNewSettings(new TsTask.NewSettingsHandlerArgs(_task, _application, e.Item.Checked));
 				if (e.Item.Checked)
 				{
 					treeView1.SelectedNode.Nodes.Add(e.Item.Text, e.Item.Text);
@@ -183,9 +187,9 @@ namespace tsUI.Forms
 		}
 
 
-		public void InvokeNewSettings(EventArgs e)
+		public void InvokeNewSettings(TsTask.NewSettingsHandlerArgs e)
 		{
-			EventHandler handler = NewSettings;
+			TsTask.NewSettingsHandler handler = NewSettings;
 			if (handler != null) handler(this, e);
 		}
 	}

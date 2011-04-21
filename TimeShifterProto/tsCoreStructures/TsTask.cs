@@ -112,6 +112,22 @@ namespace tsCoreStructures
 			}
 		}
 
+		public delegate void NewSettingsHandler(object sender, NewSettingsHandlerArgs args);
+
+		public class NewSettingsHandlerArgs
+		{
+			public TsTask Task { get; private set; }
+			public TsApplication Application { get; private set; }
+			public bool IsEnable { get; private set; }
+
+			public NewSettingsHandlerArgs(TsTask task, TsApplication application, bool isEnable)
+			{
+				Task = task;
+				Application = application;
+				IsEnable = isEnable;
+			}
+		}
+
 		#endregion
 	}
 }

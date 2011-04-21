@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using tsCore.Classes;
@@ -74,19 +75,15 @@ namespace tsPresenter.TaskManagement
 			TsAppCore.Instance.NewTask(task);
 		}
 
+		public void AddNewSetting(TsTask.NewSettingsHandlerArgs args)
+		{
+			//throw new NotImplementedException();
+		}
+
 		public void InvokeNewApplication(TsApplication.NewApplicationHandlerArgs args)
 		{
 			TsApplication.NewApplicationHandler handler = NewApplication;
 			if (handler != null) handler(this, args);
 		}
-
-		public void AddNewSetting(string task)
-		{
-			// 1) Проверка настройки
-			// 2) Добавление\Удаление настройки в таблицу настроек
-			// 3) Оповещение формы об измененных данных
-		}
-
-
 	}
 }
