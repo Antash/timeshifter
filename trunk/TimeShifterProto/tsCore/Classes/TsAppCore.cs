@@ -61,9 +61,10 @@ namespace tsCore.Classes
 
 		void TsWinLoggerProcessStopped(object sender, WindowTracker.ProcessEventArgs args)
 		{
-			TsTask task = _taskList.Find(t => t.AssignedApplications.Find(a => a.PID == args.PID) != null);
-			if (task != null)
-				task.ActualTimeToSpend += DateTime.Now - task.AssignedApplications.Find(a => a.PID == args.PID).StartTime;
+			//TODO Another logic is needed
+			//TsTask task = _taskList.Find(t => t.AssignedApplications.Find(a => a.PID == args.PID) != null);
+			//if (task != null)
+			//    task.ActualTimeToSpend += DateTime.Now - task.AssignedApplications.Find(a => a.PID == args.PID).StartTime;
 		}
 
 		void _tsUserActLogger_SnapshotReady(object sender, UserActLogger.SnapshotReadyHandlerArgs args)
@@ -81,14 +82,27 @@ namespace tsCore.Classes
 
 		void TsWinLoggerStateChanged(object sender, WindowLogger.AppWindowChangedHandlerArgs args)
 		{
-			var actApp = _applicationList.Find(app =>
-										app.Name == args.Record.ProcesName &&
-										app.Description == args.Record.ProcessDesc);
-			if (actApp != null)
+			var prevApp = _applicationList.Find(app =>
+										app.Name == args.OldState.ProcesName &&
+										app.Description == args.OldState.ProcessDesc);
+			var newApp = _applicationList.Find(app =>
+							app.Name == args.NewState.ProcesName &&
+							app.Description == args.NewState.ProcessDesc);
+
+			if (prevApp != null)
 			{
-				var wind = new TsWindow(args.Record.WindowTitle, args.Record.Ts);
-				if (!actApp.RunningWindows.Contains(wind))
-					actApp.RunningWindows.Add(wind);
+				TsApplication app = null;
+				TsTask task = _taskList.Find(t => (app = t.AssignedApplications.Find(a => a.PID == prevApp.PID)) != null);
+				if (task != null)
+					task.ActualTimeToSpend += DateTime.Now - app.StartTime;
+				//TODO : work with application's windows
+				//var wind = new TsWindow(args.OldState.WindowTitle, args.OldState.Ts);
+				//if (!actApp.RunningWindows.Contains(wind))
+				//    actApp.RunningWindows.Add(wind);
+			}
+			if (newApp != null)
+			{
+				newApp.StartTime = DateTime.Now;
 			}
 		}
 

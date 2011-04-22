@@ -61,14 +61,15 @@ namespace tsCore.Classes
 		void WinTrackerActStateChanged(object sender, WindowTracker.ActStateChangedHandlerArgs args)
 		{
 			//TODO : add correct task id
-			_lastRecord = new WindowLogStructure(args.NewPID,
+			var newState = new WindowLogStructure(args.NewPID,
 			                                args.NewPName,
 											args.NewPdesc,
 			                                args.NewWindowText,
 			                                DateTime.Now,
 			                                0);
-			InvokeAppWindowChanged(new AppWindowChangedHandlerArgs(_lastRecord));
-			_windowLog.Add(_lastRecord);
+			InvokeAppWindowChanged(new AppWindowChangedHandlerArgs(_lastRecord, newState));
+			_windowLog.Add(newState);
+			_lastRecord = newState;
 		}
 
 		public void ReadBinary(string filename)
@@ -104,11 +105,13 @@ namespace tsCore.Classes
 
 		internal class AppWindowChangedHandlerArgs
 		{
-			public WindowLogStructure Record { get; private set; }
+			public WindowLogStructure OldState { get; private set; }
+			public WindowLogStructure NewState { get; private set; }
 
-			public AppWindowChangedHandlerArgs(WindowLogStructure record)
+			public AppWindowChangedHandlerArgs(WindowLogStructure oldState, WindowLogStructure newState)
 			{
-				Record = record;
+				OldState = oldState;
+				NewState = newState;
 			}
 		}
 
