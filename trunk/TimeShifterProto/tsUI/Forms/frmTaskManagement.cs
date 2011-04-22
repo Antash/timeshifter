@@ -103,9 +103,11 @@ namespace tsUI.Forms
 
 		private void AddApp(TsApplication app)
 		{
+			if (lvApplications.Items.Find(app.Id.ToString(), false).Length > 0)
+				return;
 			ilAppLarge.Images.Add(app.LargeIcon ?? Properties.Resources.defAppL);
 			ilAppSmall.Images.Add(app.SmallIcon ?? Properties.Resources.defAppS);
-			lvApplications.Items.Add(new ListViewItem(app.Description, ilAppSmall.Images.Count - 1) {Tag = app});
+			lvApplications.Items.Add(new ListViewItem(app.Description, ilAppSmall.Images.Count - 1) { Name = app.Id.ToString(), Tag = app });
 		}
 
 		private void toLargeIcons_Click(object sender, EventArgs e)
