@@ -107,6 +107,15 @@ namespace tsCore.Classes
 				_taskList.Add((TsTask)new TsTask().FromDataReader(dr));
 			}
 			dr.Close();
+
+			dr = _taskDbs.GetTaskApplicationSettings();
+			while (dr.Read())
+			{
+				var setting = (TaskApplication) new TaskApplication().FromDataReader(dr);
+				_taskList.Find(t => t.Id == setting.TaskId).AssignedApplications.Add(
+					_applicationList.Find(a => a.Id == setting.ApplicationId));
+			}
+			dr.Close();
 		}
 
 		~TsAppCore()
@@ -195,12 +204,17 @@ namespace tsCore.Classes
 		{
 			//TODO Add info to settings table
 			if (isCreating)
+			{
+				_taskDbs.AddTaskApplicationSetting(new TaskApplication {TaskId = taskID, ApplicationId = appID}.ToDataRow());
 				_taskList.Find(t => t.Id == taskID).AssignedApplications.Add(
 					_applicationList.Find(a => a.Id == appID));
+			}
 			else
+			{
+				_taskDbs.DelTaskApplicationSetting(new TaskApplication { TaskId = taskID, ApplicationId = appID }.ToDataRow());
 				_taskList.Find(t => t.Id == taskID).AssignedApplications.Remove(
 					_applicationList.Find(a => a.Id == appID));
-
+			}
 		}
 	}
 }
