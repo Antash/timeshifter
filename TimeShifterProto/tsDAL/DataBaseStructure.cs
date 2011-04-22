@@ -29,24 +29,8 @@ namespace tsDAL
 			_dtApplication = new TsApplication().BuildDataStructure();
 			_ds.Tables.Add(_dtApplication);
 
-			_dtTaskApplication = new AssociativeBaseStruct(new TsTask(), new TsApplication()).BuildDataStructure();
-			//_dtTaskApplication = new DataTable("TaskApplication");
-
-			//_dtTaskApplication.Columns.Add("TaskId", typeof(int));
-			//_dtTaskApplication.Columns.Add("ApplicationId", typeof(string));
-			//_dtTaskApplication.Constraints.Add("TaskApplicationPK", new[] {
-			//    _dtTaskApplication.Columns["TaskId"],
-			//    _dtTaskApplication.Columns["ApplicationId"]},
-			//    true);
-
-			//_ds.Tables.Add(_dtTaskApplication);
-
-			//_ds.Relations.Add("TaskTaskApplicationFK",
-			//    _ds.Tables["Tasks"].Columns["Id"],
-			//    _ds.Tables["TaskApplication"].Columns["TaskId"]);
-			//_ds.Relations.Add("ApplicationTaskApplicationFK",
-			//    _ds.Tables["Application"].Columns["ApplicationName"],
-			//    _ds.Tables["TaskApplication"].Columns["ApplicationId"]);
+			_dtTaskApplication = new TaskApplication().BuildDataStructure();
+			_ds.Tables.Add(_dtTaskApplication);
 		}
 
 		public void CreateSchemaXml(string fileName)
@@ -82,6 +66,11 @@ namespace tsDAL
 			return _dtTasks.CreateDataReader();
 		}
 
+		public DataTableReader GetTaskApplicationSettings()
+		{
+			return _dtTaskApplication.CreateDataReader();
+		}
+
 		public void NewApplication(DataRow toDataRow)
 		{
 			_dtApplication.Rows.Add(toDataRow);
@@ -90,6 +79,16 @@ namespace tsDAL
 		public void NewTask(DataRow task)
 		{
 			_dtTasks.Rows.Add(task);
+		}
+
+		public void AddTaskApplicationSetting(DataRow toDataRow)
+		{
+			_dtTaskApplication.Rows.Add(toDataRow);
+		}
+
+		public void DelTaskApplicationSetting(DataRow toDataRow)
+		{
+			_dtTaskApplication.Rows.Remove(_dtTaskApplication.Rows.Find(new[]{toDataRow[0], toDataRow[1]}));
 		}
 	}
 }
