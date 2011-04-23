@@ -6,9 +6,21 @@ namespace tsPresenter.Reports
 {
 	public class ReportsModel : IReportsModel
 	{
-		public DataSet ReportDataSet
+		private DataTable _repDs;
+
+		public ReportsModel()
 		{
-			get { throw new NotImplementedException(); }
+			Update();
+		}
+
+		public DataTable ReportDataSet
+		{
+			get { return _repDs; }
+		}
+
+		public void Update()
+		{
+			_repDs = TsAppCore.Instance.CreateReport();
 		}
 	}
 }

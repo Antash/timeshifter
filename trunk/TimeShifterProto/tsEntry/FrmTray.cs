@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using tsPresenter.Settings;
 using tsPresenter.TaskManagement;
+using tsPresenter.Reports;
 using tsUI.Forms;
 
 namespace tsEntry
@@ -15,10 +16,12 @@ namespace tsEntry
 
 			_tmModel = new TaskManagementModel();
 			_sModel = new SettingsModel();
+			_repModel = new ReportsModel();
 		}
 
 		private readonly ITaskManagementModel _tmModel;
 		private readonly ISettingsModel _sModel;
+		private readonly IReportsModel _repModel;
 
 		private void CreateTmView()
 		{
@@ -55,6 +58,14 @@ namespace tsEntry
 		private void niTS_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
 			CreateTmView();
+		}
+
+		private void reportToolStripMenuItem_Click(object sender, System.EventArgs e)
+		{
+			IReportsView repView = new FrmReport();
+			_repModel.Update();
+			new ReportsPresenter(_repModel, repView);
+			repView.Show();
 		}
 	}
 }

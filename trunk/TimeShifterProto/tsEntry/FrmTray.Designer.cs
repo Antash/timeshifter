@@ -34,6 +34,7 @@
 			this.taskManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.reportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStripTsTray.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -47,10 +48,11 @@
 			// 
 			this.contextMenuStripTsTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.taskManagerToolStripMenuItem,
+            this.reportToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.exitToolStripMenuItem});
 			this.contextMenuStripTsTray.Name = "contextMenuStripTsTray";
-			this.contextMenuStripTsTray.Size = new System.Drawing.Size(164, 98);
+			this.contextMenuStripTsTray.Size = new System.Drawing.Size(164, 122);
 			// 
 			// taskManagerToolStripMenuItem
 			// 
@@ -73,6 +75,13 @@
 			this.exitToolStripMenuItem.Text = "exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
+			// reportToolStripMenuItem
+			// 
+			this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
+			this.reportToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+			this.reportToolStripMenuItem.Text = "report";
+			this.reportToolStripMenuItem.Click += new System.EventHandler(this.reportToolStripMenuItem_Click);
+			// 
 			// FrmTray
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -94,5 +103,6 @@
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem taskManagerToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem reportToolStripMenuItem;
 	}
 }
