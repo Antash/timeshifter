@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.IO;
+using System.Linq;
 using tsCoreFW;
 using tsCoreStructures;
 using tsCoreStructures.Base;
@@ -71,14 +72,29 @@ namespace tsDAL
 			return _dtTaskApplication.CreateDataReader();
 		}
 
-		public void NewApplication(DataRow toDataRow)
+		public void NewApplication(TsApplication app)
 		{
-			_dtApplication.Rows.Add(toDataRow);
+			_dtApplication.Rows.Add(app.ToDataRow());
 		}
 
-		public void NewTask(DataRow task)
+		public void NewTask(TsTask task)
 		{
-			_dtTasks.Rows.Add(task);
+			_dtTasks.Rows.Add(task.ToDataRow());
+		}
+
+		public void DelTask(TsTask task)
+		{
+			_dtTasks.Rows.Remove(_dtTasks.Rows.Find(task.Id));
+		}
+
+		public void UpdateTask(TsTask task)
+		{
+			//TODO : very bad code!
+			//refactoring is needed
+			var q = (from oldTask in _dtTasks.AsEnumerable()
+					where (int)oldTask["Id"] == task.Id
+					select oldTask).First();
+			q.SetField("ActualTimeToSpend", task.ActualTimeToSpend);
 		}
 
 		public void AddTaskApplicationSetting(DataRow toDataRow)
