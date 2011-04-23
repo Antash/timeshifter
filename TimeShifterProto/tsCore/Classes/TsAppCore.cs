@@ -94,7 +94,10 @@ namespace tsCore.Classes
 				TsApplication app = null;
 				TsTask task = _taskList.Find(t => (app = t.AssignedApplications.Find(a => a.PID == prevApp.PID)) != null);
 				if (task != null)
+				{
 					task.ActualTimeToSpend += DateTime.Now - app.StartTime;
+					_taskDbs.UpdateTask(task);
+				}
 				//TODO : work with application's windows
 				//var wind = new TsWindow(args.OldState.WindowTitle, args.OldState.Ts);
 				//if (!actApp.RunningWindows.Contains(wind))
@@ -157,7 +160,7 @@ namespace tsCore.Classes
 				var app = new TsApplication(args.NewPname, args.NewPdesc, args.NewPID) {StartTime = DateTime.Now};
 				app.SmallIcon = IconHelper.GetApplicationIcon(app.Name, app.Description, false).ToBitmap();
 				app.LargeIcon = IconHelper.GetApplicationIcon(app.Name, app.Description, true).ToBitmap();
-				_taskDbs.NewApplication(app.ToDataRow());
+				_taskDbs.NewApplication(app);
 				_applicationList.Add(app);
 				InvokeNewApplication(new TsApplication.NewApplicationHandlerArgs(app));
 			}
@@ -209,7 +212,7 @@ namespace tsCore.Classes
 		{
 			if (!_taskList.Contains(task))
 			{
-				_taskDbs.NewTask(task.ToDataRow());
+				_taskDbs.NewTask(task);
 				_taskList.Add(task);
 			}
 		}

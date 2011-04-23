@@ -35,11 +35,16 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\IModel.cs" />
     <Compile Include="Base\IView.cs" />
     <Compile Include="Base\Presenter.cs" />
+    <Compile Include="Reports\IReportsModel.cs" />
+    <Compile Include="Reports\IReportsView.cs" />
+    <Compile Include="Reports\ReportsModel.cs" />
+    <Compile Include="Reports\ReportsPresenter.cs" />
     <Compile Include="Settings\ISettingsModel.cs" />
     <Compile Include="Settings\SettingsModel.cs" />
     <Compile Include="TaskManagement\ITaskManagementModel.cs" />
