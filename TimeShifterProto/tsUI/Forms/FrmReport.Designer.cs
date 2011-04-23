@@ -38,11 +38,12 @@
 			this.gvReport.AllowUserToDeleteRows = false;
 			this.gvReport.AllowUserToOrderColumns = true;
 			this.gvReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.gvReport.Location = new System.Drawing.Point(12, 12);
+			this.gvReport.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gvReport.Location = new System.Drawing.Point(0, 0);
 			this.gvReport.Name = "gvReport";
 			this.gvReport.ReadOnly = true;
 			this.gvReport.RowTemplate.Height = 24;
-			this.gvReport.Size = new System.Drawing.Size(491, 277);
+			this.gvReport.Size = new System.Drawing.Size(515, 357);
 			this.gvReport.TabIndex = 0;
 			// 
 			// FrmReport

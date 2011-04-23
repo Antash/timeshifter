@@ -17,7 +17,7 @@ namespace tsUI.Forms
 			InitializeComponent();
 		}
 
-		public DataSet ReportDataSet
+		public DataTable ReportDataSet
 		{
 			set { gvReport.DataSource = value; }
 		}

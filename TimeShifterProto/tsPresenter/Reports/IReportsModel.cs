@@ -5,6 +5,7 @@ namespace tsPresenter.Reports
 {
 	public interface IReportsModel : IModel
 	{
-		DataSet ReportDataSet { get; }
+		DataTable ReportDataSet { get; }
+		void Update();
 	}
 }

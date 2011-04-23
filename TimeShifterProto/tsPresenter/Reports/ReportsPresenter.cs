@@ -7,8 +7,8 @@ namespace tsPresenter.Reports
 	public class ReportsPresenter : Presenter
 	{
 		public ReportsPresenter(
-			ISettingsModel model, 
-			ISettingsView view) 
+			IReportsModel model, 
+			IReportsView view) 
 			: base(model, view)
 		{
 			Initialize();

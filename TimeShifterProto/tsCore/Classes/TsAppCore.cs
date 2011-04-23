@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using tsCore.Interfaces;
 using tsCoreStructures;
 using tsDAL;
@@ -232,6 +233,11 @@ namespace tsCore.Classes
 				_taskList.Find(t => t.Id == taskID).AssignedApplications.Remove(
 					_applicationList.Find(a => a.Id == appID));
 			}
+		}
+
+		public DataTable CreateReport()
+		{
+			return _taskDbs.CreateReport();
 		}
 	}
 }

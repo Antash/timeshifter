@@ -5,6 +5,6 @@ namespace tsPresenter.Reports
 {
 	public interface IReportsView : IView
 	{
-		DataSet ReportDataSet { set; }
+		DataTable ReportDataSet { set; }
 	}
 }

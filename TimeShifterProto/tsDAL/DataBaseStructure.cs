@@ -106,5 +106,24 @@ namespace tsDAL
 		{
 			_dtTaskApplication.Rows.Remove(_dtTaskApplication.Rows.Find(new[]{toDataRow[0], toDataRow[1]}));
 		}
+
+		public DataTable CreateReport()
+		{
+			//TODO : needs to be refactored
+			var q = (from oldTask in _dtTasks.AsEnumerable()
+			         select new
+			                	{
+									name = oldTask.Field<string>("TaskName"),
+									atts = oldTask.Field<TimeSpan>("ActualTimeToSpend")
+			                	});
+			var resRep = new DataTable();
+			resRep.Columns.Add("name", typeof (string));
+			resRep.Columns.Add("atts", typeof (TimeSpan));
+			foreach (var r in q)
+			{
+				resRep.Rows.Add(r.name, r.atts);
+			}
+			return resRep;
+		}
 	}
 }
