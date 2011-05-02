@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using tsCoreStructures;
 using tsCoreStructures.Base;
 using tsPresenter.TaskManagement;
@@ -11,8 +12,11 @@ namespace tsUI.Forms
 {
 	public partial class FrmTaskManagement : Form, ITaskManagementView
 	{
+		private bool _supressChecked;
+
 		public FrmTaskManagement()
 		{
+			_supressChecked = true;
 			InitializeComponent();
 		}
 
@@ -53,7 +57,7 @@ namespace tsUI.Forms
 				foreach (Image item in value)
 					ilAppLarge.Images.Add(item ?? Properties.Resources.defAppL);
 			}
-			get 
+			get
 			{
 				var res = new List<Image>();
 				res.AddRange(ilAppLarge.Images.OfType<Image>());
@@ -71,8 +75,18 @@ namespace tsUI.Forms
 			}
 			set
 			{
+				int inc = 0;
 				foreach (TreeNode item in value)
+				{
 					treeView1.Nodes.Add((TreeNode)item.Clone());
+					foreach (TsApplication assignedApp in ((tsCoreStructures.TsTask)(item.Tag)).AssignedApplications)
+					{
+						treeView1.Nodes[inc].Nodes.Add(assignedApp.Description, assignedApp.Description);
+						//lvApplications.Items[assignedApp.Description].Checked = true;
+						//Applications.Find(assignedApp)
+					}
+					inc += 1;
+				}
 			}
 		}
 
@@ -138,11 +152,11 @@ namespace tsUI.Forms
 			{
 				if (textBox1.Text != String.Empty)
 				{
-					TsTask _task = new TsTask(textBox1.Text,textBox1.Text, DateTime.Now);
+					TsTask _task = new TsTask(textBox1.Text, textBox1.Text, DateTime.Now);
 					InvokeNewTask(new TsTask.NewTaskHandlerArgs(_task));
 					AddTask(_task);
 				}
-					
+
 				textBox1.Text = String.Empty;
 			}
 		}
@@ -164,6 +178,8 @@ namespace tsUI.Forms
 
 		private void lvApplications_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
+			if (_supressChecked || !lvApplications.Focused)
+				return;
 			//NOTE 2 Юра: так красивше.
 			//надо еще добавить такую штуку, чтобы чекбоксы появлялись 
 			//только при выделении нодов первого уровня в дереве
@@ -171,13 +187,13 @@ namespace tsUI.Forms
 			//дочерними нодами
 
 			//и самое главное - сделать обработку всего этого в презентере и модели
-			
+
 			// Обратная связь оказалась не нужна.
 			// Все прекрасно работает, так как объекты передаются по ссылкам и все изменения 
 			// произошедшие внутри видны сдесь.
 			// единственное что, сначала надо, чтобы отработало событие. 
 			// А потом работать с актуальным объектом
-			
+
 			if (treeView1.SelectedNode != null && treeView1.SelectedNode.Parent == null)
 			{
 				InvokeNewSettings(
@@ -201,6 +217,36 @@ namespace tsUI.Forms
 		{
 			AssociativeBaseStruct.AssociativeHandler handler = NewSettings;
 			if (handler != null) handler(this, e);
+		}
+
+		private void FrmTaskManagement_Load(object sender, EventArgs e)
+		{
+			_supressChecked = false;
+		}
+
+		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			if (e.Node.Parent == null)
+			{
+				lvApplications.Visible = true;
+				TsTask currentTask = (TsTask)e.Node.Tag;
+				_supressChecked = true;
+
+				foreach (ListViewItem appItem in lvApplications.Items)
+				{
+					TsApplication currentApp = (TsApplication)appItem.Tag;
+					if (currentTask.AssignedApplications.Find(a => a.PID == currentApp.PID) == null)
+					{ appItem.Checked = false; }
+					else
+					{ appItem.Checked = true; }
+				}
+
+				_supressChecked = false;
+			}
+			else
+			{
+				lvApplications.Visible = false;
+			}
 		}
 	}
 }

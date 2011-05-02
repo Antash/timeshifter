@@ -23,7 +23,7 @@ namespace tsPresenter.TaskManagement
 
 			foreach (TsApplication app in TsAppCore.Instance.Applications)
 			{
-				_applications.Add(new ListViewItem(app.Description, _appIconSmall.Count) {Tag = app});
+				_applications.Add(new ListViewItem(app.Description, _appIconSmall.Count) {Name = app.Description, Tag = app});
 				_appIconLarge.Add(app.LargeIcon);
 				_appIconSmall.Add(app.LargeIcon);
 			}
@@ -38,7 +38,7 @@ namespace tsPresenter.TaskManagement
 
 		void InstanceNewApplication(object sender, TsApplication.NewApplicationHandlerArgs args)
 		{
-			_applications.Add(new ListViewItem(args.App.Description, _appIconLarge.Count) { Tag = args.App });
+			_applications.Add(new ListViewItem(args.App.Description, _appIconLarge.Count) { Name = args.App.Description, Tag = args.App });
 			_appIconLarge.Add(args.App.LargeIcon);
 			_appIconSmall.Add(args.App.SmallIcon);
 			InvokeNewApplication(new TsApplication.NewApplicationHandlerArgs(args.App));
