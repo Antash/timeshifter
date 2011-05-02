@@ -56,31 +56,33 @@
 			this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 2;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(591, 379);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(443, 308);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// panel2
 			// 
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel2.Location = new System.Drawing.Point(298, 2);
-			this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.panel2.Location = new System.Drawing.Point(223, 2);
+			this.panel2.Margin = new System.Windows.Forms.Padding(2);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(290, 27);
+			this.panel2.Size = new System.Drawing.Size(218, 21);
 			this.panel2.TabIndex = 3;
 			// 
 			// treeView1
 			// 
 			this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeView1.Location = new System.Drawing.Point(3, 33);
-			this.treeView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.treeView1.FullRowSelect = true;
+			this.treeView1.Location = new System.Drawing.Point(2, 27);
+			this.treeView1.Margin = new System.Windows.Forms.Padding(2);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(289, 344);
+			this.treeView1.Size = new System.Drawing.Size(217, 279);
 			this.treeView1.TabIndex = 0;
+			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView1_DragEnter);
 			// 
 			// lvApplications
@@ -89,10 +91,10 @@
 			this.lvApplications.ContextMenuStrip = this.cmsAppList;
 			this.lvApplications.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lvApplications.LargeImageList = this.ilAppLarge;
-			this.lvApplications.Location = new System.Drawing.Point(298, 33);
-			this.lvApplications.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.lvApplications.Location = new System.Drawing.Point(223, 27);
+			this.lvApplications.Margin = new System.Windows.Forms.Padding(2);
 			this.lvApplications.Name = "lvApplications";
-			this.lvApplications.Size = new System.Drawing.Size(290, 344);
+			this.lvApplications.Size = new System.Drawing.Size(218, 279);
 			this.lvApplications.SmallImageList = this.ilAppSmall;
 			this.lvApplications.TabIndex = 1;
 			this.lvApplications.UseCompatibleStateImageBehavior = false;
@@ -139,10 +141,10 @@
 			// 
 			this.panel1.Controls.Add(this.textBox1);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(3, 2);
-			this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.panel1.Location = new System.Drawing.Point(2, 2);
+			this.panel1.Margin = new System.Windows.Forms.Padding(2);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(289, 27);
+			this.panel1.Size = new System.Drawing.Size(217, 21);
 			this.panel1.TabIndex = 2;
 			// 
 			// textBox1
@@ -150,22 +152,22 @@
 			this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.textBox1.Location = new System.Drawing.Point(0, 0);
-			this.textBox1.Margin = new System.Windows.Forms.Padding(4);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(289, 26);
+			this.textBox1.Size = new System.Drawing.Size(217, 23);
 			this.textBox1.TabIndex = 0;
 			this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
 			// 
 			// FrmTaskManagement
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(591, 379);
+			this.ClientSize = new System.Drawing.Size(443, 308);
 			this.Controls.Add(this.tableLayoutPanel1);
-			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.Margin = new System.Windows.Forms.Padding(2);
 			this.Name = "FrmTaskManagement";
 			this.Text = "TaskManagement";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmTaskManagement_FormClosed);
+			this.Load += new System.EventHandler(this.FrmTaskManagement_Load);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.cmsAppList.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
