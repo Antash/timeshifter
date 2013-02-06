@@ -49,7 +49,7 @@ namespace tsPresenter.Base
 				{
 					PropertyInfo modelProperty = Model.GetType().GetProperty(viewProperty.Name);
 
-					if (modelProperty != null && modelProperty.PropertyType.Equals(viewProperty.PropertyType))
+					if (modelProperty != null && modelProperty.PropertyType == viewProperty.PropertyType)
 					{
 						object valueToAssign = Convert.ChangeType(viewProperty.GetValue(View, null), modelProperty.PropertyType);
 
@@ -73,7 +73,7 @@ namespace tsPresenter.Base
 				{
 					PropertyInfo modelProperty = Model.GetType().GetProperty(viewProperty.Name);
 
-					if (modelProperty != null && modelProperty.PropertyType.Equals(viewProperty.PropertyType))
+					if (modelProperty != null && modelProperty.PropertyType == viewProperty.PropertyType)
 					{
 						object modelValue = modelProperty.GetValue(Model, null);
 
