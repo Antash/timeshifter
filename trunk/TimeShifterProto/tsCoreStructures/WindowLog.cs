@@ -3,19 +3,18 @@
 namespace tsCoreStructures
 {
 	[Serializable]
-	public class WindowLogStructure
+	public class WindowLog
 	{
-		public WindowLogStructure()
+		public WindowLog()
 		{
 		}
 
-		public WindowLogStructure(
-								int pid,
-								string procesName,
-								string processDesc,
-								string windowTitle,
-								DateTime ts,
-								int taskId)
+		public WindowLog(int pid,
+			            string procesName,
+			            string processDesc,
+			            string windowTitle,
+			            DateTime ts,
+			            int taskId)
 		{
 			Pid = pid;
 			TaskId = taskId;

@@ -6,14 +6,14 @@ using System.Windows.Forms;
 namespace tsCoreStructures
 {
 	[Serializable]
-	public class UserActLogStructure
+	public class UserActLog
 	{
 		public DateTime StartTime { get; set; }
 		public TimeSpan Duration { get; set; }
 		public Dictionary<Keys, int> KeyLog { get; set; }
 		public MouseActData MouseLog { get; set; }
 
-		public UserActLogStructure()
+		public UserActLog()
 		{
 			StartTime = DateTime.Now;
 			Duration = TimeSpan.Zero;
@@ -21,7 +21,7 @@ namespace tsCoreStructures
 			MouseLog = new MouseActData();
 		}
 
-		public void Merge(UserActLogStructure additionLog)
+		public void Merge(UserActLog additionLog)
 		{
 			Duration += additionLog.Duration;
 			MouseLog.Merge(additionLog.MouseLog);
