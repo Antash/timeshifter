@@ -99,7 +99,9 @@ namespace tsWin
 		/// <returns>Process name String</returns>
 		internal static string GetWindowProcName(int pid)
 		{
-			return pid != 0 ? Process.GetProcessById(pid).ProcessName : string.Empty;
+            if (pid <= 0)
+                throw new ArgumentException("Process id should be >= 0.");
+			return Process.GetProcessById(pid).ProcessName;
 		}
 
 		/// <summary>
@@ -109,7 +111,19 @@ namespace tsWin
 		/// <returns>Process description String</returns>
 		internal static string GetProcDescription(int pid)
 		{
-			return pid != 0 ? FileVersionInfo.GetVersionInfo(GetProcExecutablePath(pid)).FileDescription : string.Empty;
+            if (pid <= 0)
+		        throw new ArgumentException("Process id should be >= 0.");
+		    var path = GetProcExecutablePath(pid);
+		    try
+		    {
+                return FileVersionInfo.GetVersionInfo(path).FileDescription;
+		    }
+		    catch (Exception)
+		    {
+                // Any problem during reading executable details
+                //TODO : log error here
+                return string.Empty;
+		    }
 		}
 
 		/// <summary>
@@ -154,7 +168,16 @@ namespace tsWin
 		/// <returns>Path string</returns>
 		internal static string GetProcExecutablePath(int pid)
 		{
-			return pid != 0 ? Process.GetProcessById(pid).MainModule.FileName : string.Empty;
+		    if (pid <= 0)
+		        throw new ArgumentException("Process id should be >= 0.");
+		    try
+		    {
+		        return Process.GetProcessById(pid).MainModule.FileName;
+		    }
+		    catch (Exception)
+		    {
+		        throw new MemberAccessException("Cannot extract executable path.");
+		    }
 		}
 
 		/// <summary>
@@ -164,7 +187,9 @@ namespace tsWin
 		/// <returns>Window Caption</returns>
 		internal static string GetWindowTitle(int pid)
 		{
-			return pid != 0 ? Process.GetProcessById(pid).MainWindowTitle : string.Empty;
+            if (pid <= 0)
+                throw new ArgumentException("Process id should be >= 0.");
+			return Process.GetProcessById(pid).MainWindowTitle;
 		}
 
 		/// <summary>
