@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsEntry", "tsEntry\tsEntry.csproj", "{AE51E3FB-802A-490D-8055-74BCAB81C760}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsUI", "tsUI\tsUI.csproj", "{22E1BE8B-1AE0-4DF9-A481-CF3658A93B08}"
@@ -14,8 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsCoreStructures", "tsCoreStructures\tsCoreStructures.csproj", "{930BD161-424B-45AE-B541-326F70F739C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsPresenter", "tsPresenter\tsPresenter.csproj", "{6BD88D8B-AF1D-4703-81F4-AA2AB69B728E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsOptions", "isOptions\tsOptions.csproj", "{47E378B2-5E19-42AD-999D-F4AB5D519914}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tsCoreFW", "tsCoreFW\tsCoreFW.csproj", "{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}"
 EndProject
@@ -103,16 +101,6 @@ Global
 		{6BD88D8B-AF1D-4703-81F4-AA2AB69B728E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6BD88D8B-AF1D-4703-81F4-AA2AB69B728E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6BD88D8B-AF1D-4703-81F4-AA2AB69B728E}.Release|x86.ActiveCfg = Release|Any CPU
-		{47E378B2-5E19-42AD-999D-F4AB5D519914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47E378B2-5E19-42AD-999D-F4AB5D519914}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47E378B2-5E19-42AD-999D-F4AB5D519914}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{47E378B2-5E19-42AD-999D-F4AB5D519914}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{47E378B2-5E19-42AD-999D-F4AB5D519914}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{47E378B2-5E19-42AD-999D-F4AB5D519914}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47E378B2-5E19-42AD-999D-F4AB5D519914}.Release|Any CPU.Build.0 = Release|Any CPU
-		{47E378B2-5E19-42AD-999D-F4AB5D519914}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{47E378B2-5E19-42AD-999D-F4AB5D519914}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{47E378B2-5E19-42AD-999D-F4AB5D519914}.Release|x86.ActiveCfg = Release|Any CPU
 		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{490DC0B1-4DE6-4EE6-BDE9-15B9BBE4756A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

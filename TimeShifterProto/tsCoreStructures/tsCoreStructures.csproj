@@ -50,8 +50,8 @@
     <Compile Include="TsTask.cs" />
     <Compile Include="TsApplication.cs" />
     <Compile Include="TsWindow.cs" />
-    <Compile Include="UserActLogStructure.cs" />
-    <Compile Include="WindowLogStructure.cs" />
+    <Compile Include="UserActLog.cs" />
+    <Compile Include="WindowLog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

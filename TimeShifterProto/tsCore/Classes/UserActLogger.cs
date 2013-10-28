@@ -16,9 +16,9 @@ namespace tsCore.Classes
 
 		internal class SnapshotReadyHandlerArgs
 		{
-			public UserActLogStructure UActLog { get; set; }
+			public UserActLog UActLog { get; set; }
 
-			public SnapshotReadyHandlerArgs(UserActLogStructure uActLog)
+			public SnapshotReadyHandlerArgs(UserActLog uActLog)
 			{
 				UActLog = uActLog;
 			}
@@ -37,12 +37,12 @@ namespace tsCore.Classes
 		private Timer _t1;
 		private const long TickPeriod = 10000;
 
-		public UserActLogStructure UActLog { get; set; }
+		public UserActLog UActLog { get; set; }
 
 		public UserActLogger()
 		{
 			_uActTracker = new UserActivityHook(false, false);
-			UActLog = new UserActLogStructure();
+			UActLog = new UserActLog();
 
 			_uActTracker.OnMouseActivity += _uActTracker_OnMouseActivity;
 			_uActTracker.KeyDown += UActTrackerKeyDown;
@@ -78,7 +78,7 @@ namespace tsCore.Classes
 			using (Stream stream = File.Open(filename, FileMode.Open))
 			{
 				var bin = new BinaryFormatter();
-				var tmp = (UserActLogStructure)bin.Deserialize(stream);
+				var tmp = (UserActLog)bin.Deserialize(stream);
 				UActLog = tmp;
 			}
 		}

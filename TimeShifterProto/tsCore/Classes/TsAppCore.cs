@@ -16,7 +16,7 @@ namespace tsCore.Classes
 		private readonly DataBaseStructure _taskDbs;
 		private readonly List<TsTask> _taskList;
 		private readonly List<TsApplication> _applicationList;
-		private readonly Dictionary<string, UserActLogStructure> _tsUserActLog;
+		private readonly Dictionary<string, UserActLog> _tsUserActLog;
 
 		private static volatile TsAppCore _instance;
 		private static readonly object SyncRoot = new Object();
@@ -33,7 +33,7 @@ namespace tsCore.Classes
 		{
 			_tsWinLogger = new WindowLogger();
 			_tsUserActLogger = new UserActLogger();
-			_tsUserActLog = new Dictionary<string, UserActLogStructure>();
+			_tsUserActLog = new Dictionary<string, UserActLog>();
 			_taskDbs = new DataBaseStructure(Filename);
 			_taskList = new List<TsTask>();
 			_applicationList = new List<TsApplication>();

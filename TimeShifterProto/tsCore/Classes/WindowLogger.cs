@@ -35,14 +35,14 @@ namespace tsCore.Classes
 		}
 		
 		private readonly WindowTracker _winTracker;
-		private List<WindowLogStructure> _windowLog;
-		private WindowLogStructure _lastRecord;
+		private List<WindowLog> _windowLog;
+		private WindowLog _lastRecord;
 
 		public WindowLogger()
 		{
 			_winTracker = new WindowTracker(false);
-			_windowLog = new List<WindowLogStructure>();
-			_lastRecord = new WindowLogStructure();
+			_windowLog = new List<WindowLog>();
+			_lastRecord = new WindowLog();
 			_winTracker.ActApplicationChanged += WinTrackerActApplicationChanged;
 			_winTracker.ActStateChanged += WinTrackerActStateChanged;
 			_winTracker.ProcessStopped += WinTrackerProcessStopped;
@@ -61,7 +61,7 @@ namespace tsCore.Classes
 		void WinTrackerActStateChanged(object sender, WindowTracker.ActStateChangedHandlerArgs args)
 		{
 			//TODO : add correct task id
-			var newState = new WindowLogStructure(args.NewPID,
+			var newState = new WindowLog(args.NewPID,
 			                                args.NewPName,
 											args.NewPdesc,
 			                                args.NewWindowText,
@@ -77,7 +77,7 @@ namespace tsCore.Classes
 			using (Stream stream = File.Open(filename, FileMode.Open))
 			{
 				var bin = new BinaryFormatter();
-				var tmp = (List<WindowLogStructure>)bin.Deserialize(stream);
+				var tmp = (List<WindowLog>)bin.Deserialize(stream);
 				_windowLog = tmp;
 			}
 		}
@@ -105,10 +105,10 @@ namespace tsCore.Classes
 
 		internal class AppWindowChangedHandlerArgs
 		{
-			public WindowLogStructure OldState { get; private set; }
-			public WindowLogStructure NewState { get; private set; }
+			public WindowLog OldState { get; private set; }
+			public WindowLog NewState { get; private set; }
 
-			public AppWindowChangedHandlerArgs(WindowLogStructure oldState, WindowLogStructure newState)
+			public AppWindowChangedHandlerArgs(WindowLog oldState, WindowLog newState)
 			{
 				OldState = oldState;
 				NewState = newState;

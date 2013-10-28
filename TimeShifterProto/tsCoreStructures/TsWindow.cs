@@ -8,11 +8,11 @@ namespace tsCoreStructures
 		public string Text { get; set; }
 		public DateTime OpenTime { get; set; }
 		public DateTime CloseTime { get; set; }
-		public List<UserActLogStructure> UserActSnapshots { get; set; }
+		public List<UserActLog> UserActSnapshots { get; set; }
 
 		public TsWindow()
 		{
-			UserActSnapshots = new List<UserActLogStructure>();
+			UserActSnapshots = new List<UserActLog>();
 		}
 
 		public TsWindow(string text, DateTime openTime)
